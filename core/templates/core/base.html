@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title></title>
+
+
+    <script type="text/javascript" src="/static/js/morphic.js"></script>
+    <script type="text/javascript" src="/static/js/widgets.js"></script>
+    <script type="text/javascript" src="/static/js/blocks.js"></script>
+    <script type="text/javascript" src="/static/js/threads.js"></script>
+    <script type="text/javascript" src="/static/js/objects.js"></script>
+    <script type="text/javascript" src="/static/js/gui.js"></script>
+    <script type="text/javascript" src="/static/js/paint.js"></script>
+    <script type="text/javascript" src="/static/js/lists.js"></script>
+    <script type="text/javascript" src="/static/js/byob.js"></script>
+    <script type="text/javascript" src="/static/js/xml.js"></script>
+    <script type="text/javascript" src="/static/js/store.js"></script>
+    <script type="text/javascript" src="/static/js/locale.js"></script>
+    <script type="text/javascript" src="/static/js/cloud.js"></script>
+    <script type="text/javascript" src="/static/js/sha512.js"></script>
+    <script type="text/javascript">
+        var world;
+        window.onload = function () {
+            world = new WorldMorph(document.getElementById('world'));
+            new IDE_Morph().openIn(world);
+            setInterval(loop, 1);
+        };
+        function loop() {
+            world.doOneCycle();
+        }
+    </script>
+</head>
+<body style="margin: 0;">
+<canvas id="world" tabindex="1" style="position: absolute;" />
+</body>
+</html>
