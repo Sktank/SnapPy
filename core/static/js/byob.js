@@ -178,7 +178,7 @@ CustomBlockDefinition.prototype.templateInstance = function () {
 };
 
 CustomBlockDefinition.prototype.prototypeInstance = function () {
-    var block, slot, myself = this;
+    var block, slot, self = this;
 
     // make a new block instance and mark it as prototype
     if (this.type === 'command') {
@@ -194,7 +194,7 @@ CustomBlockDefinition.prototype.prototypeInstance = function () {
     // assign slot declarations to prototype inputs
     block.parts().forEach(function (part) {
         if (part instanceof BlockInputFragmentMorph) {
-            slot = myself.declarations[part.fragment.labelString];
+            slot = self.declarations[part.fragment.labelString];
             if (slot) {
                 part.fragment.type = slot[0];
                 part.fragment.defaultValue = slot[1];
@@ -225,13 +225,13 @@ CustomBlockDefinition.prototype.copyAndBindTo = function (sprite) {
 // CustomBlockDefinition accessing
 
 CustomBlockDefinition.prototype.blockSpec = function () {
-    var myself = this,
+    var self = this,
         ans = [],
         parts = this.parseSpec(this.spec),
         spec;
     parts.forEach(function (part) {
         if (part[0] === '%') {
-            spec = myself.typeOf(part.slice(1));
+            spec = self.typeOf(part.slice(1));
         } else {
             spec = part;
         }
@@ -355,14 +355,14 @@ CustomCommandBlockMorph.prototype.restoreInputs = function (oldInputs) {
     // try to restore my previous inputs when my spec has been changed
     var i = 0,
         old,
-        myself = this;
+        self = this;
 
     if (this.isPrototype) {return; }
     this.inputs().forEach(function (inp) {
         old = oldInputs[i];
         if (old instanceof ReporterBlockMorph &&
             (!(inp instanceof TemplateSlotMorph))) {
-            myself.silentReplaceInput(inp, old);
+            self.silentReplaceInput(inp, old);
         } else if (old instanceof InputSlotMorph
             && inp instanceof InputSlotMorph) {
             inp.setContents(old.evaluate());
@@ -379,11 +379,11 @@ CustomCommandBlockMorph.prototype.restoreInputs = function (oldInputs) {
 
 CustomCommandBlockMorph.prototype.refreshDefaults = function () {
     // fill my editable slots with the defaults specified in my definition
-    var inputs = this.inputs(), idx = 0, myself = this;
+    var inputs = this.inputs(), idx = 0, self = this;
 
     inputs.forEach(function (inp) {
         if (inp instanceof InputSlotMorph) {
-            inp.setContents(myself.definition.defaultValueOfInputIdx(idx));
+            inp.setContents(self.definition.defaultValueOfInputIdx(idx));
         }
         idx += 1;
     });
@@ -394,7 +394,7 @@ CustomCommandBlockMorph.prototype.refreshPrototype = function () {
     var hat,
         protoSpec,
         frags = [],
-        myself = this,
+        self = this,
         words,
         newFrag,
         i = 0;
@@ -411,7 +411,7 @@ CustomCommandBlockMorph.prototype.refreshPrototype = function () {
             if (part.fragment.type) { // marked as input, take label as is
                 frags.push(part.fragment);
             } else { // not an input, devide into several non-input fragments
-                words = myself.definition.parseSpec(
+                words = self.definition.parseSpec(
                     part.fragment.labelString
                 );
                 words.forEach(function (word) {
@@ -428,37 +428,37 @@ CustomCommandBlockMorph.prototype.refreshPrototype = function () {
 
 
     // update the prototype's type
-    // and possibly exchange 'this' for 'myself'
+    // and possibly exchange 'this' for 'self'
     if (this instanceof CustomCommandBlockMorph
         && ((hat.type === 'reporter') || (hat.type === 'predicate'))) {
-        myself = new CustomReporterBlockMorph(
+        self = new CustomReporterBlockMorph(
             this.definition,
             hat.type === 'predicate',
             true
         );
-        hat.silentReplaceInput(this, myself);
+        hat.silentReplaceInput(this, self);
     } else if (this instanceof CustomReporterBlockMorph) {
         if (hat.type === 'command') {
-            myself = new CustomCommandBlockMorph(
+            self = new CustomCommandBlockMorph(
                 this.definition,
                 true
             );
-            hat.silentReplaceInput(this, myself);
+            hat.silentReplaceInput(this, self);
         } else {
             this.isPredicate = (hat.type === 'predicate');
             this.drawNew();
         }
     }
-    myself.setCategory(hat.blockCategory || 'other');
+    self.setCategory(hat.blockCategory || 'other');
     hat.fixBlockColor();
 
     // update the (new) prototype's appearance
-    myself.setSpec(protoSpec);
+    self.setSpec(protoSpec);
 
     // update the (new) prototype's (new) fragments
     // with the previously edited ones
 
-    myself.parts().forEach(function (part) {
+    self.parts().forEach(function (part) {
         if (!(part instanceof BlockLabelPlaceHolderMorph)) {
             if (frags[i]) { // don't delete the default fragment
                 part.fragment = frags[i];
@@ -565,7 +565,7 @@ CustomCommandBlockMorph.prototype.mouseClickLeft = function () {
 };
 
 CustomCommandBlockMorph.prototype.edit = function () {
-    var myself = this, block, hat;
+    var self = this, block, hat;
 
     if (this.isPrototype) {
         block = this.definition.blockInstance();
@@ -577,17 +577,17 @@ CustomCommandBlockMorph.prototype.edit = function () {
                 if (definition) { // temporarily update everything
                     hat.blockCategory = definition.category;
                     hat.type = definition.type;
-                    myself.refreshPrototype();
+                    self.refreshPrototype();
                 }
             },
-            myself
+            self
         ).openForChange(
             'Change block',
             hat.blockCategory,
             hat.type,
-            myself.world(),
+            self.world(),
             block.fullImage(),
-            myself.isInUse()
+            self.isInUse()
         );
     } else {
         new BlockEditorMorph(this.definition, this.receiver()).popUp();
@@ -671,25 +671,25 @@ CustomCommandBlockMorph.prototype.exportBlockDefinition = function () {
 };
 
 CustomCommandBlockMorph.prototype.deleteBlockDefinition = function () {
-    var idx, rcvr, stage, ide, myself = this, block;
+    var idx, rcvr, stage, ide, self = this, block;
     if (this.isPrototype) {
         return null; // under construction...
     }
-    block = myself.definition.blockInstance();
+    block = self.definition.blockInstance();
     block.addShadow();
     new DialogBoxMorph(
         this,
         function () {
-            rcvr = myself.receiver();
-            rcvr.deleteAllBlockInstances(myself.definition);
-            if (myself.definition.isGlobal) {
+            rcvr = self.receiver();
+            rcvr.deleteAllBlockInstances(self.definition);
+            if (self.definition.isGlobal) {
                 stage = rcvr.parentThatIsA(StageMorph);
-                idx = stage.globalBlocks.indexOf(myself.definition);
+                idx = stage.globalBlocks.indexOf(self.definition);
                 if (idx !== -1) {
                     stage.globalBlocks.splice(idx, 1);
                 }
             } else {
-                idx = rcvr.customBlocks.indexOf(myself.definition);
+                idx = rcvr.customBlocks.indexOf(self.definition);
                 if (idx !== -1) {
                     rcvr.customBlocks.splice(idx, 1);
                 }
@@ -704,7 +704,7 @@ CustomCommandBlockMorph.prototype.deleteBlockDefinition = function () {
     ).askYesNo(
         'Delete Custom Block',
         localize('block deletion dialog text'), // long string lookup
-        myself.world(),
+        self.world(),
         block.fullImage()
     );
 };
@@ -736,14 +736,14 @@ CustomCommandBlockMorph.prototype.mouseLeave = function () {
 // CustomCommandBlockMorph bubble help:
 
 CustomCommandBlockMorph.prototype.bubbleHelp = function (contents, color) {
-    var myself = this;
+    var self = this;
     this.fps = 2;
     this.step = function () {
         if (this.bounds.containsPoint(this.world().hand.position())) {
-            myself.popUpbubbleHelp(contents, color);
+            self.popUpbubbleHelp(contents, color);
         }
-        myself.fps = 0;
-        delete myself.step;
+        self.fps = 0;
+        delete self.step;
     };
 };
 
@@ -1021,7 +1021,7 @@ JaggedBlockMorph.prototype.drawEdges = function (context) {
     for (i = 0; i < jags; i += 1) {
         context.strokeStyle = this.cachedClrBright;
         context.beginPath();
-        context.moveTo(shift, y);
+        context.xTo(shift, y);
         y -= delta / 2;
         context.lineTo(this.jag / 2 + shift, y);
         context.stroke();
@@ -1119,19 +1119,19 @@ BlockDialogMorph.prototype.openForChange = function (
 // category buttons
 
 BlockDialogMorph.prototype.createCategoryButtons = function () {
-    var myself = this,
+    var self = this,
         oldFlag = Morph.prototype.trackChanges;
 
     Morph.prototype.trackChanges = false;
     SpriteMorph.prototype.categories.forEach(function (cat) {
-        myself.addCategoryButton(cat);
+        self.addCategoryButton(cat);
     });
     Morph.prototype.trackChanges = oldFlag;
 };
 
 BlockDialogMorph.prototype.addCategoryButton = function (category) {
     var labelWidth = 75,
-        myself = this,
+        self = this,
         colors = [
             SpriteMorph.prototype.paletteColor,
             SpriteMorph.prototype.paletteColor.darker(50),
@@ -1143,19 +1143,19 @@ BlockDialogMorph.prototype.addCategoryButton = function (category) {
         colors,
         this, // this block dialog box is the target
         function () {
-            myself.category = category;
-            myself.categories.children.forEach(function (each) {
+            self.category = category;
+            self.categories.children.forEach(function (each) {
                 each.refresh();
             });
-            if (myself.types) {
-                myself.types.children.forEach(function (each) {
+            if (self.types) {
+                self.types.children.forEach(function (each) {
                     each.setColor(colors[2]);
                 });
             }
-            myself.edit();
+            self.edit();
         },
         category[0].toUpperCase().concat(category.slice(1)), // UCase label
-        function () {return myself.category === category; }, // query
+        function () {return self.category === category; }, // query
         null, // env
         null, // hint
         null, // template cache
@@ -1219,7 +1219,7 @@ BlockDialogMorph.prototype.fixCategoriesLayout = function () {
 
 BlockDialogMorph.prototype.createTypeButtons = function () {
     var block,
-        myself = this,
+        self = this,
         clr = SpriteMorph.prototype.blockColor[this.category];
 
 
@@ -1227,27 +1227,27 @@ BlockDialogMorph.prototype.createTypeButtons = function () {
     block.setColor(clr);
     block.setSpec(localize('Command'));
     this.addBlockTypeButton(
-        function () {myself.setType('command'); },
+        function () {self.setType('command'); },
         block,
-        function () {return myself.blockType === 'command'; }
+        function () {return self.blockType === 'command'; }
     );
 
     block = new ReporterBlockMorph();
     block.setColor(clr);
     block.setSpec(localize('Reporter'));
     this.addBlockTypeButton(
-        function () {myself.setType('reporter'); },
+        function () {self.setType('reporter'); },
         block,
-        function () {return myself.blockType === 'reporter'; }
+        function () {return self.blockType === 'reporter'; }
     );
 
     block = new ReporterBlockMorph(true);
     block.setColor(clr);
     block.setSpec(localize('Predicate'));
     this.addBlockTypeButton(
-        function () {myself.setType('predicate'); },
+        function () {self.setType('predicate'); },
         block,
-        function () {return myself.blockType === 'predicate'; }
+        function () {return self.blockType === 'predicate'; }
     );
 };
 
@@ -1301,17 +1301,17 @@ BlockDialogMorph.prototype.setType = function (blockType) {
 // scope radio buttons
 
 BlockDialogMorph.prototype.createScopeButtons = function () {
-    var myself = this;
+    var self = this;
 
     this.addScopeButton(
-        function () {myself.setScope('gobal'); },
+        function () {self.setScope('gobal'); },
         "for all sprites",
-        function () {return myself.isGlobal; }
+        function () {return self.isGlobal; }
     );
     this.addScopeButton(
-        function () {myself.setScope('local'); },
+        function () {self.setScope('local'); },
         "for this sprite only",
-        function () {return !myself.isGlobal; }
+        function () {return !self.isGlobal; }
     );
 };
 
@@ -1491,7 +1491,7 @@ function BlockEditorMorph(definition, target) {
 }
 
 BlockEditorMorph.prototype.init = function (definition, target) {
-    var scripts, proto, scriptsFrame, block, comment, myself = this;
+    var scripts, proto, scriptsFrame, block, comment, self = this;
 
     // additional properties:
     this.definition = definition;
@@ -1501,7 +1501,7 @@ BlockEditorMorph.prototype.init = function (definition, target) {
     BlockEditorMorph.uber.init.call(
         this,
         target,
-        function () {myself.updateDefinition(); },
+        function () {self.updateDefinition(); },
         target
     );
 
@@ -1610,7 +1610,7 @@ BlockEditorMorph.prototype.cancel = function () {
 
 BlockEditorMorph.prototype.close = function () {
     var doubles, block,
-        myself = this;
+        self = this;
 
     // assert that no scope conflicts exists, i.e. that a global
     // definition doesn't contain any local custom blocks, as they
@@ -1629,7 +1629,7 @@ BlockEditorMorph.prototype.close = function () {
                 'Local Block(s) in Global Definition',
                 'This global block definition contains one or more\n'
                     + 'local custom blocks which must be removed first.',
-                myself.world(),
+                self.world(),
                 block.fullImage()
             );
             return;
@@ -1646,7 +1646,7 @@ BlockEditorMorph.prototype.close = function () {
             'Same Named Blocks',
             'Another custom block with this name exists.\n'
                 + 'Would you like to replace it?',
-            myself.world(),
+            self.world(),
             block.fullImage()
         );
         return;
@@ -1677,7 +1677,7 @@ BlockEditorMorph.prototype.updateDefinition = function () {
     var head, ide,
         pos = this.body.contents.position(),
         element,
-        myself = this;
+        self = this;
 
     this.definition.receiver = this.target; // only for serialization
     this.definition.spec = this.prototypeSpec();
@@ -1692,7 +1692,7 @@ BlockEditorMorph.prototype.updateDefinition = function () {
             element = morph.fullCopy();
             element.parent = null;
             element.setPosition(morph.position().subtract(pos));
-            myself.definition.scripts.push(element);
+            self.definition.scripts.push(element);
         }
     });
 
@@ -2043,7 +2043,7 @@ BlockLabelFragmentMorph.prototype.mouseClickLeft = function () {
      the user acknowledges and closes the block editor
      */
     var frag = this.fragment.copy(),
-        myself = this,
+        self = this,
         isPlaceHolder = this instanceof BlockLabelPlaceHolderMorph,
         isOnlyElement = this.parent.parseSpec(this.parent.blockSpec).length
             < 2;
@@ -2051,7 +2051,7 @@ BlockLabelFragmentMorph.prototype.mouseClickLeft = function () {
     new InputSlotDialogMorph(
         frag,
         null,
-        function () {myself.updateBlockLabel(frag); },
+        function () {self.updateBlockLabel(frag); },
         this,
         this.parent.definition.category
     ).open(
@@ -2298,24 +2298,24 @@ InputSlotDialogMorph.prototype.init = function (
 InputSlotDialogMorph.prototype.createTypeButtons = function () {
     var block,
         arrow,
-        myself = this,
+        self = this,
         clr = SpriteMorph.prototype.blockColor[this.category];
 
 
     block = new JaggedBlockMorph(localize('Title text'));
     block.setColor(clr);
     this.addBlockTypeButton(
-        function () {myself.setType(null); },
+        function () {self.setType(null); },
         block,
-        function () {return myself.fragment.type === null; }
+        function () {return self.fragment.type === null; }
     );
 
     block = new JaggedBlockMorph('%inputName');
     block.setColor(clr);
     this.addBlockTypeButton(
-        function () {myself.setType('%s'); },
+        function () {self.setType('%s'); },
         block,
-        function () {return myself.fragment.type !== null; }
+        function () {return self.fragment.type !== null; }
     );
 
     // add an arrow button for long form/short form toggling
@@ -2330,13 +2330,13 @@ InputSlotDialogMorph.prototype.createTypeButtons = function () {
 
     // configure arrow button
     arrow.refresh = function () {
-        if (myself.fragment.type === null) {
-            myself.isExpanded = false;
+        if (self.fragment.type === null) {
+            self.isExpanded = false;
             arrow.hide();
-            myself.drawNew();
+            self.drawNew();
         } else {
             arrow.show();
-            if (myself.isExpanded) {
+            if (self.isExpanded) {
                 arrow.direction = 'down';
             } else {
                 arrow.direction = 'right';
@@ -2348,12 +2348,12 @@ InputSlotDialogMorph.prototype.createTypeButtons = function () {
 
     arrow.mouseClickLeft = function () {
         if (arrow.isVisible) {
-            myself.isExpanded = !myself.isExpanded;
-            myself.types.children.forEach(function (c) {
+            self.isExpanded = !self.isExpanded;
+            self.types.children.forEach(function (c) {
                 c.refresh();
             });
-            myself.drawNew();
-            myself.edit();
+            self.drawNew();
+            self.edit();
         }
     };
 
@@ -2486,7 +2486,7 @@ InputSlotDialogMorph.prototype.deleteFragment = function () {
 
 InputSlotDialogMorph.prototype.createSlotTypeButtons = function () {
     // populate my 'slots' area with radio buttons, labels and input fields
-    var myself = this, defLabel, defInput,
+    var self = this, defLabel, defInput,
         oldFlag = Morph.prototype.trackChanges;
 
     Morph.prototype.trackChanges = false;
@@ -2507,19 +2507,19 @@ InputSlotDialogMorph.prototype.createSlotTypeButtons = function () {
 
     // arity and upvars
     this.slots.radioButtonSingle = this.addSlotArityButton(
-        function () {myself.setSlotArity('single'); },
+        function () {self.setSlotArity('single'); },
         "Single input.",
-        function () {return myself.fragment.isSingleInput(); }
+        function () {return self.fragment.isSingleInput(); }
     );
     this.addSlotArityButton(
-        function () {myself.setSlotArity('multiple'); },
+        function () {self.setSlotArity('multiple'); },
         "Multiple inputs (value is list of inputs)",
-        function () {return myself.fragment.isMultipleInput(); }
+        function () {return self.fragment.isMultipleInput(); }
     );
     this.addSlotArityButton(
-        function () {myself.setSlotArity('upvar'); },
+        function () {self.setSlotArity('upvar'); },
         "Upvar - make internal variable visible to caller",
-        function () {return myself.fragment.isUpvar(); }
+        function () {return self.fragment.isUpvar(); }
     );
 
     // default values
@@ -2527,9 +2527,9 @@ InputSlotDialogMorph.prototype.createSlotTypeButtons = function () {
     defLabel.fontSize = this.slots.radioButtonSingle.fontSize;
     defLabel.setColor(new Color(255, 255, 255));
     defLabel.refresh = function () {
-        if (myself.isExpanded && contains(
+        if (self.isExpanded && contains(
             ['%s', '%n', '%txt', '%anyUE'],
-            myself.fragment.type
+            self.fragment.type
         )) {
             defLabel.show();
         } else {
@@ -2547,7 +2547,7 @@ InputSlotDialogMorph.prototype.createSlotTypeButtons = function () {
     defInput.refresh = function () {
         if (defLabel.isVisible) {
             defInput.show();
-            if (myself.fragment.type === '%n') {
+            if (self.fragment.type === '%n') {
                 defInput.setIsNumeric(true);
             } else {
                 defInput.setIsNumeric(false);
@@ -2608,14 +2608,14 @@ InputSlotDialogMorph.prototype.addSlotTypeButton = function (
      and show. But in the future computers and browsers may be
      faster.
      */
-    var myself = this,
-        action = function () {myself.setSlotType(spec); },
+    var self = this,
+        action = function () {self.setSlotType(spec); },
         query,
         element = new JaggedBlockMorph(spec),
         button;
 
     query = function () {
-        return myself.fragment.singleInputType() === spec;
+        return self.fragment.singleInputType() === spec;
     };
     element.setCategory(this.category);
     element.rebuild();
@@ -2800,17 +2800,17 @@ VariableDialogMorph.prototype.init = function (target, action, environment) {
 };
 
 VariableDialogMorph.prototype.createTypeButtons = function () {
-    var myself = this;
+    var self = this;
 
     this.addTypeButton(
-        function () {myself.setType('gobal'); },
+        function () {self.setType('gobal'); },
         "for all sprites",
-        function () {return myself.isGlobal; }
+        function () {return self.isGlobal; }
     );
     this.addTypeButton(
-        function () {myself.setType('local'); },
+        function () {self.setType('local'); },
         "for this sprite only",
-        function () {return !myself.isGlobal; }
+        function () {return !self.isGlobal; }
     );
 };
 
@@ -2902,7 +2902,7 @@ function BlockExportDialogMorph(serializer, blocks) {
 }
 
 BlockExportDialogMorph.prototype.init = function (serializer, blocks) {
-    var myself = this;
+    var self = this;
 
     // additional properties:
     this.serializer = serializer;
@@ -2913,7 +2913,7 @@ BlockExportDialogMorph.prototype.init = function (serializer, blocks) {
     BlockExportDialogMorph.uber.init.call(
         this,
         null, // target
-        function () {myself.exportBlocks(); },
+        function () {self.exportBlocks(); },
         null // environment
     );
 
@@ -2927,7 +2927,7 @@ BlockExportDialogMorph.prototype.init = function (serializer, blocks) {
 
 BlockExportDialogMorph.prototype.buildContents = function () {
     var palette, x, y, block, checkBox, lastCat,
-        myself = this,
+        self = this,
         padding = 4;
 
     // create plaette
@@ -2946,7 +2946,7 @@ BlockExportDialogMorph.prototype.buildContents = function () {
     x = palette.left() + padding;
     y = palette.top() + padding;
     SpriteMorph.prototype.categories.forEach(function (category) {
-        myself.blocks.forEach(function (definition) {
+        self.blocks.forEach(function (definition) {
             if (definition.category === category) {
                 if (lastCat && (category !== lastCat)) {
                     y += padding;
@@ -2955,19 +2955,19 @@ BlockExportDialogMorph.prototype.buildContents = function () {
                 block = definition.templateInstance();
                 checkBox = new ToggleMorph(
                     'checkbox',
-                    myself,
+                    self,
                     function () {
-                        var idx = myself.blocks.indexOf(definition);
+                        var idx = self.blocks.indexOf(definition);
                         if (idx > -1) {
-                            myself.blocks.splice(idx, 1);
+                            self.blocks.splice(idx, 1);
                         } else {
-                            myself.blocks.push(definition);
+                            self.blocks.push(definition);
                         }
                     },
                     null,
                     function () {
                         return contains(
-                            myself.blocks,
+                            self.blocks,
                             definition
                         );
                     },
@@ -3082,7 +3082,7 @@ function BlockImportDialogMorph(blocks, target, name) {
 }
 
 BlockImportDialogMorph.prototype.init = function (blocks, target, name) {
-    var myself = this;
+    var self = this;
 
     // additional properties:
     this.blocks = blocks.slice(0);
@@ -3092,7 +3092,7 @@ BlockImportDialogMorph.prototype.init = function (blocks, target, name) {
     BlockExportDialogMorph.uber.init.call(
         this,
         target,
-        function () {myself.importBlocks(name); },
+        function () {self.importBlocks(name); },
         null // environment
     );
 

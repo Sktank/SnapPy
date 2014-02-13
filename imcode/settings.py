@@ -12,7 +12,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'sqlite_data',                      # Or path to database file if using sqlite3.
+        'NAME': 'data',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -121,7 +121,10 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'core',
-)
+    'front',
+    'rest_framework',
+    'south'
+    )
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -150,4 +153,13 @@ LOGGING = {
             'propagate': True,
         },
     }
+}
+
+LOGIN_URL = 'login'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticatedOrReadOnly',),
+    'PAGINATE_BY': 10
 }

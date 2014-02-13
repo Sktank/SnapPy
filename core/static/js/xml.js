@@ -221,7 +221,7 @@ XML_Element.prototype.childrenNamed = function (tagName) {
 };
 
 XML_Element.prototype.parentNamed = function (tagName) {
-    // including myself
+    // including self
     if (this.tag === tagName) {
         return this;
     }

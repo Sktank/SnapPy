@@ -1798,7 +1798,7 @@ DialogBoxMorph.prototype.promptCredentials = function (
         years = {},
         currentYear = new Date().getFullYear(),
         firstYear = currentYear - 20,
-        myself = this;
+        self = this;
 
     function labelText(string) {
         return new TextMorph(
@@ -1817,20 +1817,20 @@ DialogBoxMorph.prototype.promptCredentials = function (
 
     function linkButton(label, url) {
         var btn = new PushButtonMorph(
-            myself,
+            self,
             function () {
                 window.open(url);
             },
             '  ' + localize(label) + '  '
         );
         btn.fontSize = 10;
-        btn.corner = myself.buttonCorner;
-        btn.edge = myself.buttonEdge;
-        btn.outline = myself.buttonOutline;
-        btn.outlineColor = myself.buttonOutlineColor;
-        btn.outlineGradient = myself.buttonOutlineGradient;
-        btn.padding = myself.buttonPadding;
-        btn.contrast = myself.buttonContrast;
+        btn.corner = self.buttonCorner;
+        btn.edge = self.buttonEdge;
+        btn.outline = self.buttonOutline;
+        btn.outlineColor = self.buttonOutlineColor;
+        btn.outlineGradient = self.buttonOutlineGradient;
+        btn.padding = self.buttonPadding;
+        btn.contrast = self.buttonContrast;
         btn.drawNew();
         btn.fixLayout();
         return btn;
@@ -2094,7 +2094,7 @@ DialogBoxMorph.prototype.promptCredentials = function (
 
     this.accept = function () {
         if (validInputs()) {
-            DialogBoxMorph.prototype.accept.call(myself);
+            DialogBoxMorph.prototype.accept.call(self);
         }
     };
 
@@ -2795,7 +2795,7 @@ AlignmentMorph.prototype.drawNew = function () {
 };
 
 AlignmentMorph.prototype.fixLayout = function () {
-    var myself = this,
+    var self = this,
         last = null,
         newBounds;
     if (this.children.length === 0) {
@@ -2804,23 +2804,23 @@ AlignmentMorph.prototype.fixLayout = function () {
     this.children.forEach(function (c) {
         var cfb = c.fullBounds(),
             lfb;
-        if (c.isVisible || myself.respectHiddens) {
+        if (c.isVisible || self.respectHiddens) {
             if (last) {
                 lfb = last.fullBounds();
-                if (myself.orientation === 'row') {
+                if (self.orientation === 'row') {
                     c.setPosition(
                         lfb.topRight().add(new Point(
-                            myself.padding,
+                            self.padding,
                             (lfb.height() - cfb.height()) / 2
                         ))
                     );
                 } else { // orientation === 'column'
                     c.setPosition(
                         lfb.bottomLeft().add(new Point(
-                            myself.alignment === 'center' ?
+                            self.alignment === 'center' ?
                                 (lfb.width() - cfb.width()) / 2
                                 : 0,
-                            myself.padding
+                            self.padding
                         ))
                     );
                 }

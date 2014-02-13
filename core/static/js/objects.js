@@ -213,91 +213,118 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'motion',
             spec: 'move %n steps',
             defaults: [10],
-            code: ['move ', ' steps']
+            code: ['turtle.forward(', ')'],
+            import: 'turtle'
         },
         turn: {
             type: 'command',
             category: 'motion',
             spec: 'turn %clockwise %n degrees',
             defaults: [15],
-            code: ['turn right ', ' degrees']
+            code: ['turtle.right(', ')'],
+            import: 'turtle'
         },
         turnLeft: {
             type: 'command',
             category: 'motion',
             spec: 'turn %counterclockwise %n degrees',
-            defaults: [15]
+            defaults: [15],
+            code: ['turtle.left(', ')'],
+            import: 'turtle'
         },
         setHeading: {
             type: 'command',
             category: 'motion',
-            spec: 'point in direction %dir'
+            spec: 'point in direction %dir',
+            code: ['turtle.setheading(', ')'],
+            import: 'turtle'
         },
         doFaceTowards: {
             type: 'command',
             category: 'motion',
-            spec: 'point towards %dst'
+            spec: 'point towards %dst',
+            code: ['turtle.setheading(', ')'],
+            import: 'turtle'
         },
         gotoXY: {
             type: 'command',
             category: 'motion',
             spec: 'go to x: %n y: %n',
-            defaults: [0, 0]
+            defaults: [0, 0],
+            code: ['turtle.setposition(',',',')'],
+            import: 'turtle'
         },
         doGotoObject: {
             type: 'command',
             category: 'motion',
-            spec: 'go to %dst'
+            spec: 'go to %dst',
+            import: 'turtle'
         },
         doGlide: {
             type: 'command',
             category: 'motion',
             spec: 'glide %n secs to x: %n y: %n',
-            defaults: [1, 0, 0]
+            defaults: [1, 0, 0],
+            import: 'turtle'
         },
         changeXPosition: {
             type: 'command',
             category: 'motion',
             spec: 'change x by %n',
-            defaults: [10]
+            defaults: [10],
+            code: ['turtle.setx(turtle.xcor() +', ')'],
+            import: 'turtle'
         },
         setXPosition: {
             type: 'command',
             category: 'motion',
             spec: 'set x to %n',
-            defaults: [0]
+            defaults: [0],
+            code: ['turtle.setx(', ')'],
+            import: 'turtle'
         },
         changeYPosition: {
             type: 'command',
             category: 'motion',
             spec: 'change y by %n',
-            defaults: [10]
+            defaults: [10],
+            code: ['turtle.sety(turtle.ycor() +', ')'],
+            import: 'turtle'
         },
         setYPosition: {
             type: 'command',
             category: 'motion',
             spec: 'set y to %n',
-            defaults: [0]
+            defaults: [0],
+            code: ['turtle.sety(', ')'],
+            import: 'turtle'
         },
         bounceOffEdge: {
             type: 'command',
             category: 'motion',
-            spec: 'if on edge, bounce'
+            spec: 'if on edge, bounce',
+            import: 'turtle'
         },
         xPosition: {
             type: 'reporter',
             category: 'motion',
-            spec: 'x position'
+            spec: 'x position',
+            code: ['turtle.xcor()'],
+            import: 'turtle'
         },
         yPosition: {
             type: 'reporter',
             category: 'motion',
-            spec: 'y position'
+            spec: 'y position',
+            code: ['turtle.ycor()'],
+            import: 'turtle'
         },
         direction: {
             type: 'reporter',
             category: 'motion',
-            spec: 'direction'
+            spec: 'direction',
+            code: ['turtle.heading()'],
+            import: 'turtle'
         },
 
         // Looks
@@ -458,63 +485,80 @@ SpriteMorph.prototype.initBlocks = function () {
         clear: {
             type: 'command',
             category: 'pen',
-            spec: 'clear'
+            spec: 'clear',
+            code: ['turtle.clear()'],
+            import: 'turtle'
         },
         down: {
             type: 'command',
             category: 'pen',
-            spec: 'pen down'
+            spec: 'pen down',
+            code: ['turtle.pendown()'],
+            import: 'turtle'
         },
         up: {
             type: 'command',
             category: 'pen',
-            spec: 'pen up'
+            spec: 'pen up',
+            code: ['turtle.penup()'],
+            import: 'turtle'
         },
         setColor: {
             type: 'command',
             category: 'pen',
-            spec: 'set pen color to %clr'
+            spec: 'set pen color to %clr',
+            import: 'turtle'
         },
         changeHue: {
             type: 'command',
             category: 'pen',
             spec: 'change pen color by %n',
-            defaults: [10]
+            defaults: [10],
+            import: 'turtle'
         },
         setHue: {
             type: 'command',
             category: 'pen',
             spec: 'set pen color to %n',
-            defaults: [0]
+            defaults: [0],
+            import: 'turtle'
         },
         changeBrightness: {
             type: 'command',
             category: 'pen',
             spec: 'change pen shade by %n',
-            defaults: [10]
+            defaults: [10],
+            import: 'turtle'
         },
         setBrightness: {
             type: 'command',
             category: 'pen',
             spec: 'set pen shade to %n',
-            defaults: [100]
+            defaults: [100],
+            import: 'turtle'
         },
         changeSize: {
             type: 'command',
             category: 'pen',
             spec: 'change pen size by %n',
-            defaults: [1]
+            defaults: [1],
+            code: ['turtle.pensize(turtle.pensize() +', ')'],
+            import: 'turtle'
         },
         setSize: {
             type: 'command',
             category: 'pen',
             spec: 'set pen size to %n',
-            defaults: [1]
+            defaults: [1],
+            code: ['turtle.pensize(', ')'],
+            import: 'turtle'
         },
         doStamp: {
             type: 'command',
             category: 'pen',
-            spec: 'stamp'
+            spec: 'stamp',
+            code: ['turtle.stamp()'],
+            import: 'turtle'
         },
 
         // Control
@@ -557,7 +601,9 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'command',
             category: 'control',
             spec: 'wait %n secs',
-            defaults: [1]
+            defaults: [1],
+            code: ['time.sleep(', ')'],
+            import: 'time'
         },
         doWaitUntil: {
             type: 'command',
@@ -581,17 +627,19 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'command',
             category: 'control',
             spec: 'repeat until %b %c',
-            code: ['while not ', ':']
+            code: ['while not', ':']
         },
         doIf: {
             type: 'command',
             category: 'control',
-            spec: 'if %b %c'
+            spec: 'if %b %c',
+            code: ['if', ':']
         },
         doIfElse: {
             type: 'command',
             category: 'control',
-            spec: 'if %b %c else %c'
+            spec: 'if %b %c else %c',
+            code: ['if', ':']
         },
         doStop: {
             type: 'command',
@@ -842,7 +890,8 @@ SpriteMorph.prototype.initBlocks = function () {
         reportRound: {
             type: 'reporter',
             category: 'operators',
-            spec: 'round %n'
+            spec: 'round %n',
+            code: ['round(', ')']
         },
         reportMonadic: {
             type: 'reporter',
@@ -860,7 +909,9 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'reporter',
             category: 'operators',
             spec: 'pick random %n to %n',
-            defaults: [1, 10]
+            defaults: [1, 10],
+            code: ['random.randint(', ',', ')'],
+            import: 'random'
         },
         reportLessThan: {
             type: 'predicate',
@@ -896,7 +947,7 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'predicate',
             category: 'operators',
             spec: 'not %b',
-            code: ['', ' not ', '']
+            code: ['not', '']
         },
         reportTrue: {
             type: 'predicate',
@@ -988,13 +1039,15 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'command',
             category: 'variables',
             spec: 'set %var to %s',
-            defaults: [null, 0]
+            defaults: [null, 0],
+            code: ['', '=', '']
         },
         doChangeVar: {
             type: 'command',
             category: 'variables',
             spec: 'change %var by %n',
-            defaults: [null, 1]
+            defaults: [null, 1],
+            code: ['', '+=', '']
         },
         doShowVar: {
             type: 'command',
@@ -1270,7 +1323,7 @@ SpriteMorph.prototype.setName = function (string) {
 // SpriteMorph rendering
 
 SpriteMorph.prototype.drawNew = function () {
-    var myself = this,
+    var self = this,
         currentCenter = this.center(),
         facing, // actual costume heading based on my rotation style
         isFlipped,
@@ -1308,7 +1361,7 @@ SpriteMorph.prototype.drawNew = function () {
         corners = pic.bounds().corners().map(function (point) {
             return point.rotateBy(
                 radians(facing - 90),
-                myself.costume.center()
+                self.costume.center()
             );
         });
         origin = corners[0];
@@ -1362,12 +1415,12 @@ SpriteMorph.prototype.drawNew = function () {
             cst = this.costume;
             handle = setInterval(
                 function () {
-                    myself.wearCostume(cst);
+                    self.wearCostume(cst);
                     clearInterval(handle);
                 },
                 100
             );
-            return myself.wearCostume(null);
+            return self.wearCostume(null);
 
         }
     }
@@ -1434,6 +1487,7 @@ SpriteMorph.prototype.blockForSelector = function (selector, setDefaults) {
         : info.type === 'ring' ? new RingMorph()
         : new ReporterBlockMorph(info.type === 'predicate');
     block.color = this.blockColor[info.category];
+    block.import = info.import;
     block.category = info.category;
     block.code = info.code;
     block.selector = selector;
@@ -1472,7 +1526,7 @@ SpriteMorph.prototype.variableBlock = function (varName) {
 // SpriteMorph block templates
 
 SpriteMorph.prototype.blockTemplates = function (category) {
-    var blocks = [], myself = this, varNames, button,
+    var blocks = [], self = this, varNames, button,
         cat = category || 'motion', txt;
 
     function block(selector) {
@@ -1480,9 +1534,17 @@ SpriteMorph.prototype.blockTemplates = function (category) {
             return null;
         }
         var newBlock = SpriteMorph.prototype.blockForSelector(selector, true);
-        newBlock.isTemplate = true;
+
+        //if we are in the code view, we dont want to be able to move the blocks
+        if (this.ide.currentTab === 'code') {
+            newBlock.isDraggable = false;
+        }
+        else {
+            newBlock.isTemplate = true;
+        }
         return newBlock;
     }
+
 
     function variableBlock(varName) {
         var newBlock = SpriteMorph.prototype.variableBlock(varName);
@@ -1500,15 +1562,15 @@ SpriteMorph.prototype.blockTemplates = function (category) {
             'checkbox',
             this,
             function () {
-                myself.toggleWatcher(
+                self.toggleWatcher(
                     selector,
                     localize(info.spec),
-                    myself.blockColor[info.category]
+                    self.blockColor[info.category]
                 );
             },
             null,
             function () {
-                return myself.showingWatcher(selector);
+                return self.showingWatcher(selector);
             },
             null
         );
@@ -1519,11 +1581,11 @@ SpriteMorph.prototype.blockTemplates = function (category) {
             'checkbox',
             this,
             function () {
-                myself.toggleVariableWatcher(varName);
+                self.toggleVariableWatcher(varName);
             },
             null,
             function () {
-                return myself.showingVariableWatcher(varName);
+                return self.showingVariableWatcher(varName);
             },
             null
         );
@@ -1802,19 +1864,19 @@ SpriteMorph.prototype.blockTemplates = function (category) {
                 new VariableDialogMorph(
                     null,
                     function (pair) {
-                        if (pair && !myself.variables.silentFind(pair[0])) {
-                            myself.addVariable(pair[0], pair[1]);
-                            myself.toggleVariableWatcher(pair[0], pair[1]);
-                            myself.blocksCache[cat] = null;
-                            myself.paletteCache[cat] = null;
-                            myself.parentThatIsA(IDE_Morph).refreshPalette();
+                        if (pair && !self.variables.silentFind(pair[0])) {
+                            self.addVariable(pair[0], pair[1]);
+                            self.toggleVariableWatcher(pair[0], pair[1]);
+                            self.blocksCache[cat] = null;
+                            self.paletteCache[cat] = null;
+                            self.parentThatIsA(IDE_Morph).refreshPalette();
                         }
                     },
-                    myself
+                    self
                 ).prompt(
                     'Variable name',
                     null,
-                    myself.world()
+                    self.world()
                 );
             },
             'Make a variable'
@@ -1829,14 +1891,14 @@ SpriteMorph.prototype.blockTemplates = function (category) {
                 null,
                 function () {
                     var menu = new MenuMorph(
-                        myself.deleteVariable,
+                        self.deleteVariable,
                         null,
-                        myself
+                        self
                     );
-                    myself.variables.allNames().forEach(function (name) {
+                    self.variables.allNames().forEach(function (name) {
                         menu.addItem(name, name);
                     });
-                    menu.popUpAtHand(myself.world());
+                    menu.popUpAtHand(self.world());
                 },
                 'Delete a variable'
             );
@@ -1893,8 +1955,8 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         button = new PushButtonMorph(
             null,
             function () {
-                var ide = myself.parentThatIsA(IDE_Morph),
-                    stage = myself.parentThatIsA(StageMorph);
+                var ide = self.parentThatIsA(IDE_Morph),
+                    stage = self.parentThatIsA(StageMorph);
                 new BlockDialogMorph(
                     null,
                     function (definition) {
@@ -1902,18 +1964,18 @@ SpriteMorph.prototype.blockTemplates = function (category) {
                             if (definition.isGlobal) {
                                 stage.globalBlocks.push(definition);
                             } else {
-                                myself.customBlocks.push(definition);
+                                self.customBlocks.push(definition);
                             }
                             ide.flushPaletteCache();
                             ide.refreshPalette();
-                            new BlockEditorMorph(definition, myself).popUp();
+                            new BlockEditorMorph(definition, self).popUp();
                         }
                     },
-                    myself
+                    self
                 ).prompt(
                     'Make a block',
                     null,
-                    myself.world()
+                    self.world()
                 );
             },
             'Make a block'
@@ -1941,7 +2003,7 @@ SpriteMorph.prototype.freshPalette = function (category) {
         ry = 0,
         blocks,
         hideNextSpace = false,
-        myself = this,
+        self = this,
         stage = this.parentThatIsA(StageMorph),
         oldFlag = Morph.prototype.trackChanges;
 
@@ -2040,9 +2102,9 @@ SpriteMorph.prototype.freshPalette = function (category) {
 
     blocks = this.blocksCache[category];
     if (!blocks) {
-        blocks = myself.blockTemplates(category);
+        blocks = self.blockTemplates(category);
         if (this.isCachingPrimitives) {
-            myself.blocksCache[category] = blocks;
+            self.blocksCache[category] = blocks;
         }
     }
 
@@ -2536,7 +2598,7 @@ SpriteMorph.prototype.setScale = function (percentage) {
     this.nestingScale = realScale;
     this.scale = Math.max(realScale, 0.01);
 
-    // apply to myself
+    // apply to self
     this.changed();
     this.drawNew();
     this.changed();
@@ -2721,19 +2783,19 @@ SpriteMorph.prototype.slideBackTo = function (situation, inSteps) {
         stepCount = 0,
         oldStep = this.step,
         oldFps = this.fps,
-        myself = this;
+        self = this;
 
     this.fps = 0;
     this.step = function () {
-        myself.moveBy(new Point(xStep, yStep));
+        self.moveBy(new Point(xStep, yStep));
         stepCount += 1;
         if (stepCount === steps) {
-            situation.origin.add(myself);
+            situation.origin.add(self);
             if (situation.origin.reactToDropOf) {
-                situation.origin.reactToDropOf(myself);
+                situation.origin.reactToDropOf(self);
             }
-            myself.step = oldStep;
-            myself.fps = oldFps;
+            self.step = oldStep;
+            self.fps = oldFps;
         }
     };
 };
@@ -2789,7 +2851,7 @@ SpriteMorph.prototype.setHeading = function (degrees) {
         y = this.yPosition(),
         turn = degrees - this.heading;
 
-    // apply to myself
+    // apply to self
     this.changed();
     SpriteMorph.uber.setHeading.call(this, degrees);
     this.silentGotoXY(x, y, true); // just me
@@ -3056,7 +3118,7 @@ SpriteMorph.prototype.getLastAnswer = function () {
 
 SpriteMorph.prototype.findVariableWatcher = function (varName) {
     var stage = this.parentThatIsA(StageMorph),
-        myself = this;
+        self = this;
     if (stage === null) {
         return null;
     }
@@ -3064,8 +3126,8 @@ SpriteMorph.prototype.findVariableWatcher = function (varName) {
         stage.children,
         function (morph) {
             return morph instanceof WatcherMorph
-                && (morph.target === myself.variables
-                || morph.target === myself.variables.parentFrame)
+                && (morph.target === self.variables
+                || morph.target === self.variables.parentFrame)
                 && morph.getter === varName;
         }
     );
@@ -3178,11 +3240,11 @@ SpriteMorph.prototype.showingWatcher = function (selector) {
 };
 
 SpriteMorph.prototype.watcherFor = function (stage, selector) {
-    var myself = this;
+    var self = this;
     return detect(stage.children, function (morph) {
         return morph instanceof WatcherMorph &&
             morph.getter === selector &&
-            morph.target === (morph.isGlobal(selector) ? stage : myself);
+            morph.target === (morph.isGlobal(selector) ? stage : self);
     });
 };
 
@@ -3331,11 +3393,11 @@ SpriteMorph.prototype.doubleDefinitionsFor = function (definition) {
 
 SpriteMorph.prototype.replaceDoubleDefinitionsFor = function (definition) {
     var doubles = this.doubleDefinitionsFor(definition),
-        myself = this,
+        self = this,
         stage,
         ide;
     doubles.forEach(function (double) {
-        myself.allBlockInstances(double).forEach(function (block) {
+        self.allBlockInstances(double).forEach(function (block) {
             block.definition = definition;
             block.refresh();
         });
@@ -3470,7 +3532,7 @@ SpriteMorph.prototype.detachFromAnchor = function () {
 };
 
 SpriteMorph.prototype.allParts = function () {
-    // includes myself
+    // includes self
     var result = [this];
     this.parts.forEach(function (part) {
         result = result.concat(part.allParts());
@@ -3479,7 +3541,7 @@ SpriteMorph.prototype.allParts = function () {
 };
 
 SpriteMorph.prototype.allAnchors = function () {
-    // includes myself
+    // includes self
     var result = [this];
     if (this.anchor !== null) {
         result = result.concat(this.anchor.allAnchors());
@@ -3610,7 +3672,7 @@ SpriteMorph.prototype.mouseLeave = function () {
 };
 
 SpriteMorph.prototype.wantsDropOf = function (morph) {
-    // allow myself to be the anchor of another sprite
+    // allow self to be the anchor of another sprite
     // by drag & drop
     return this.enableNesting
         && morph instanceof SpriteIconMorph
@@ -3723,7 +3785,7 @@ StageMorph.prototype.setScale = function (number) {
         relativePos,
         bubble,
         oldFlag = Morph.prototype.trackChanges,
-        myself = this;
+        self = this;
 
     if (delta === 1) {return; }
     Morph.prototype.trackChanges = false;
@@ -3745,14 +3807,14 @@ StageMorph.prototype.setScale = function (number) {
                 morph.positionTalkBubble();
             }
         } else if (morph instanceof StagePrompterMorph) {
-            if (myself.scale < 1) {
-                morph.setWidth(myself.width() - 10);
+            if (self.scale < 1) {
+                morph.setWidth(self.width() - 10);
             } else {
-                morph.setWidth(myself.dimensions.x - 20);
+                morph.setWidth(self.dimensions.x - 20);
             }
             morph.fixLayout();
-            morph.setCenter(myself.center());
-            morph.setBottom(myself.bottom());
+            morph.setCenter(self.center());
+            morph.setBottom(self.bottom());
         }
     });
     Morph.prototype.trackChanges = oldFlag;
@@ -4019,12 +4081,12 @@ StageMorph.prototype.step = function () {
 };
 
 StageMorph.prototype.developersMenu = function () {
-    var myself = this,
+    var self = this,
         menu = StageMorph.uber.developersMenu.call(this);
     menu.addItem(
         "stop",
         function () {
-            myself.threads.stopAll();
+            self.threads.stopAll();
         },
         'terminate all running threads'
     );
@@ -4083,7 +4145,7 @@ StageMorph.prototype.fireKeyEvent = function (key) {
     var evt = key.toLowerCase(),
         hats = [],
         procs = [],
-        myself = this;
+        self = this;
 
     this.keysPressed[evt] = true;
     if (evt === 'enter') {
@@ -4098,7 +4160,7 @@ StageMorph.prototype.fireKeyEvent = function (key) {
         }
     });
     hats.forEach(function (block) {
-        procs.push(myself.threads.startProcess(block, myself.isThreadSafe));
+        procs.push(self.threads.startProcess(block, self.isThreadSafe));
     });
     return procs;
 };
@@ -4118,7 +4180,7 @@ StageMorph.prototype.fireGreenFlagEvent = function () {
     var procs = [],
         hats = [],
         ide = this.parentThatIsA(IDE_Morph),
-        myself = this;
+        self = this;
 
     this.children.concat(this).forEach(function (morph) {
         if (morph instanceof SpriteMorph || morph instanceof StageMorph) {
@@ -4126,9 +4188,9 @@ StageMorph.prototype.fireGreenFlagEvent = function () {
         }
     });
     hats.forEach(function (block) {
-        procs.push(myself.threads.startProcess(
+        procs.push(self.threads.startProcess(
             block,
-            myself.isThreadSafe
+            self.isThreadSafe
         ));
     });
     if (ide) {
@@ -4158,12 +4220,12 @@ StageMorph.prototype.fireStopAllEvent = function () {
 };
 
 StageMorph.prototype.removeAllClones = function () {
-    var myself = this,
+    var self = this,
         clones = this.children.filter(
             function (morph) {return morph.isClone; }
         );
     clones.forEach(function (clone) {
-        myself.threads.stopAllForReceiver(clone);
+        self.threads.stopAllForReceiver(clone);
         clone.destroy();
     });
     this.cloneCount = 0;
@@ -4172,11 +4234,11 @@ StageMorph.prototype.removeAllClones = function () {
 // StageMorph block templates
 
 StageMorph.prototype.blockTemplates = function (category) {
-    var blocks = [], myself = this, varNames, button,
+    var blocks = [], self = this, varNames, button,
         cat = category || 'motion', txt;
 
     function block(selector) {
-        if (myself.hiddenPrimitives[selector]) {
+        if (self.hiddenPrimitives[selector]) {
             return null;
         }
         var newBlock = SpriteMorph.prototype.blockForSelector(selector, true);
@@ -4192,7 +4254,7 @@ StageMorph.prototype.blockTemplates = function (category) {
     }
 
     function watcherToggle(selector) {
-        if (myself.hiddenPrimitives[selector]) {
+        if (self.hiddenPrimitives[selector]) {
             return null;
         }
         var info = SpriteMorph.prototype.blocks[selector];
@@ -4200,15 +4262,15 @@ StageMorph.prototype.blockTemplates = function (category) {
             'checkbox',
             this,
             function () {
-                myself.toggleWatcher(
+                self.toggleWatcher(
                     selector,
                     localize(info.spec),
-                    myself.blockColor[info.category]
+                    self.blockColor[info.category]
                 );
             },
             null,
             function () {
-                return myself.showingWatcher(selector);
+                return self.showingWatcher(selector);
             },
             null
         );
@@ -4219,11 +4281,11 @@ StageMorph.prototype.blockTemplates = function (category) {
             'checkbox',
             this,
             function () {
-                myself.toggleVariableWatcher(varName);
+                self.toggleVariableWatcher(varName);
             },
             null,
             function () {
-                return myself.showingVariableWatcher(varName);
+                return self.showingVariableWatcher(varName);
             },
             null
         );
@@ -4439,19 +4501,19 @@ StageMorph.prototype.blockTemplates = function (category) {
                 new VariableDialogMorph(
                     null,
                     function (pair) {
-                        if (pair && !myself.variables.silentFind(pair[0])) {
-                            myself.addVariable(pair[0], pair[1]);
-                            myself.toggleVariableWatcher(pair[0], pair[1]);
-                            myself.blocksCache[cat] = null;
-                            myself.paletteCache[cat] = null;
-                            myself.parentThatIsA(IDE_Morph).refreshPalette();
+                        if (pair && !self.variables.silentFind(pair[0])) {
+                            self.addVariable(pair[0], pair[1]);
+                            self.toggleVariableWatcher(pair[0], pair[1]);
+                            self.blocksCache[cat] = null;
+                            self.paletteCache[cat] = null;
+                            self.parentThatIsA(IDE_Morph).refreshPalette();
                         }
                     },
-                    myself
+                    self
                 ).prompt(
                     'Variable name',
                     null,
-                    myself.world()
+                    self.world()
                 );
             },
             'Make a variable'
@@ -4463,14 +4525,14 @@ StageMorph.prototype.blockTemplates = function (category) {
                 null,
                 function () {
                     var menu = new MenuMorph(
-                        myself.deleteVariable,
+                        self.deleteVariable,
                         null,
-                        myself
+                        self
                     );
-                    myself.variables.allNames().forEach(function (name) {
+                    self.variables.allNames().forEach(function (name) {
                         menu.addItem(name, name);
                     });
-                    menu.popUpAtHand(myself.world());
+                    menu.popUpAtHand(self.world());
                 },
                 'Delete a variable'
             );
@@ -4524,26 +4586,26 @@ StageMorph.prototype.blockTemplates = function (category) {
         button = new PushButtonMorph(
             null,
             function () {
-                var ide = myself.parentThatIsA(IDE_Morph);
+                var ide = self.parentThatIsA(IDE_Morph);
                 new BlockDialogMorph(
                     null,
                     function (definition) {
                         if (definition.spec !== '') {
                             if (definition.isGlobal) {
-                                myself.globalBlocks.push(definition);
+                                self.globalBlocks.push(definition);
                             } else {
-                                myself.customBlocks.push(definition);
+                                self.customBlocks.push(definition);
                             }
                             ide.flushPaletteCache();
                             ide.refreshPalette();
-                            new BlockEditorMorph(definition, myself).popUp();
+                            new BlockEditorMorph(definition, self).popUp();
                         }
                     },
-                    myself
+                    self
                 ).prompt(
                     'Make a block',
                     null,
-                    myself.world()
+                    self.world()
                 );
             },
             'Make a block'
@@ -4565,7 +4627,7 @@ StageMorph.prototype.userMenu = function () {
     var ide = this.parentThatIsA(IDE_Morph),
         menu = new MenuMorph(this),
         shiftClicked = this.world().currentKey === 16,
-        myself = this;
+        self = this;
 
     if (ide && ide.isAppMode) {
         menu.addItem('help', 'nop');
@@ -4576,7 +4638,7 @@ StageMorph.prototype.userMenu = function () {
     menu.addItem(
         "pic...",
         function () {
-            window.open(myself.fullImageClassic().toDataURL());
+            window.open(self.fullImageClassic().toDataURL());
         },
         'open a new window\nwith a picture of the stage'
     );
@@ -4586,7 +4648,7 @@ StageMorph.prototype.userMenu = function () {
             "turn pen trails into new costume...",
             function () {
                 var costume = new Costume(
-                    myself.trailsCanvas,
+                    self.trailsCanvas,
                     Date.now().toString()
                 ).copy();
                 ide.currentSprite.addCostume(costume);
@@ -4602,10 +4664,10 @@ StageMorph.prototype.userMenu = function () {
 };
 
 StageMorph.prototype.showAll = function () {
-    var myself = this;
+    var self = this;
     this.children.forEach(function (m) {
         m.show();
-        m.keepWithin(myself);
+        m.keepWithin(self);
         if (m.fixLayout) {m.fixLayout(); }
     });
 };
@@ -4619,7 +4681,7 @@ StageMorph.prototype.thumbnail = function (extentPoint, excludedSprite) {
      answer a new Canvas of extentPoint dimensions containing
      my thumbnail representation keeping the originial aspect ratio
      */
-    var myself = this,
+    var self = this,
         src = this.image,
         scale = Math.min(
             (extentPoint.x / src.width),
@@ -4647,8 +4709,8 @@ StageMorph.prototype.thumbnail = function (extentPoint, excludedSprite) {
             fb = morph.fullBounds();
             ctx.drawImage(
                 morph.fullImage(),
-                fb.origin.x - myself.bounds.origin.x,
-                fb.origin.y - myself.bounds.origin.y
+                fb.origin.x - self.bounds.origin.x,
+                fb.origin.y - self.bounds.origin.y
             );
         }
     });
@@ -5162,7 +5224,7 @@ Costume.prototype.copy = function () {
 
 Costume.prototype.flipped = function () {
     /*
-     answer a copy of myself flipped horizontally
+     answer a copy of self flipped horizontally
      (mirrored along a vertical axis), used for
      SpriteMorph's rotation style type 2
      */
@@ -5186,7 +5248,7 @@ Costume.prototype.flipped = function () {
 // Costume actions
 
 Costume.prototype.edit = function (aWorld, anIDE, isnew, oncancel, onsubmit) {
-    var myself = this,
+    var self = this,
         editor = new PaintEditorMorph();
     editor.oncancel = oncancel || nop;
     editor.openIn(
@@ -5198,13 +5260,13 @@ Costume.prototype.edit = function (aWorld, anIDE, isnew, oncancel, onsubmit) {
             new Point(240, 180) :
             this.rotationCenter,
         function (img, rc) {
-            myself.contents = img;
-            myself.rotationCenter = rc;
-            myself.shrinkWrap();
-            myself.version = Date.now();
+            self.contents = img;
+            self.rotationCenter = rc;
+            self.shrinkWrap();
+            self.version = Date.now();
             aWorld.changed();
             if (anIDE) {
-                anIDE.currentSprite.wearCostume(myself);
+                anIDE.currentSprite.wearCostume(self);
                 anIDE.hasChangedMedia = true;
             }
             (onsubmit || nop)();
@@ -6052,7 +6114,7 @@ WatcherMorph.prototype.updateLabel = function () {
 
 WatcherMorph.prototype.fixLayout = function () {
     var fontSize = SyntaxElementMorph.prototype.fontSize, isList,
-        myself = this;
+        self = this;
 
     this.changed();
 
@@ -6091,7 +6153,7 @@ WatcherMorph.prototype.fixLayout = function () {
         this.sliderMorph.button.pressColor.b += 100;
         this.sliderMorph.setHeight(fontSize);
         this.sliderMorph.action = function (num) {
-            myself.target.vars[myself.getter] = Math.round(num);
+            self.target.vars[self.getter] = Math.round(num);
         };
         this.add(this.sliderMorph);
     }
@@ -6185,7 +6247,7 @@ WatcherMorph.prototype.fixLayout = function () {
 // WatcherMorph user menu:
 
 WatcherMorph.prototype.userMenu = function () {
-    var myself = this,
+    var self = this,
         menu = new MenuMorph(this),
         on = '\u25CF',
         off = '\u25CB';
@@ -6216,7 +6278,7 @@ WatcherMorph.prototype.userMenu = function () {
             'import...',
             function () {
                 var inp = document.createElement('input'),
-                    ide = myself.parentThatIsA(IDE_Morph);
+                    ide = self.parentThatIsA(IDE_Morph);
                 if (ide.filePicker) {
                     document.body.removeChild(ide.filePicker);
                     ide.filePicker = null;
@@ -6239,8 +6301,8 @@ WatcherMorph.prototype.userMenu = function () {
                         function readText(aFile) {
                             var frd = new FileReader();
                             frd.onloadend = function (e) {
-                                myself.target.setVar(
-                                    myself.getter,
+                                self.target.setVar(
+                                    self.getter,
                                     e.target.result
                                 );
                             };
@@ -6390,7 +6452,7 @@ function StagePrompterMorph(question) {
 
 StagePrompterMorph.prototype.init = function (question) {
     // question is optional in case the Stage is asking
-    var myself = this;
+    var self = this;
 
     // additional properties
     this.isDone = false;
@@ -6409,7 +6471,7 @@ StagePrompterMorph.prototype.init = function (question) {
     this.inputField = new InputFieldMorph();
     this.button = new PushButtonMorph(
         null,
-        function () {myself.accept(); },
+        function () {self.accept(); },
         '\u2713'
     );
 

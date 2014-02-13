@@ -1,0 +1,24 @@
+{% extends 'front/base.html' %}
+
+{% block body %}
+
+
+<div class="btn-group" style="float: right;">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        {{ username }} <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+</div>
+{% endblock %}
+
+
+{% block jsinline %}
+    <script type="text/javascript" src="/static/js/underscore.js"></script>
+    <script type="text/javascript" src="/static/js/backbone.js"></script>
+
+    <script>
+
+    </script>
+{% endblock %}

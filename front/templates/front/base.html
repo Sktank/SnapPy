@@ -1,0 +1,29 @@
+{% extends "front/layout.html" %}
+
+{% block body %}
+
+    <div class="container">
+
+    {% block header %}
+        <div class="row">
+{#                <div class="col-md-2">#}
+{#                    {% block logo_img %}#}
+{#                    {% endblock %}#}
+{#                </div>#}
+                <div class="col-md-12">
+                    {% block navbar %}
+                    {% endblock %}
+                </div>
+        </div>
+
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    </div>
+
+
+
+{% endblock %}
+

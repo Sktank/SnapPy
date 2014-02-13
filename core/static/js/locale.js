@@ -90,13 +90,13 @@ Localizer.prototype.languageName = function (lang) {
 
 Localizer.prototype.credits = function () {
     var txt = '',
-        myself = this;
+        self = this;
     this.languages().forEach(function (lang) {
         txt = txt + '\n'
-            + myself.languageName(lang)
+            + self.languageName(lang)
             + ' (' + lang + ') - '
-            + myself.dict[lang].language_translator
-            + ' - ' + myself.dict[lang].last_changed;
+            + self.dict[lang].language_translator
+            + ' - ' + self.dict[lang].last_changed;
     });
     return txt;
 };
@@ -104,11 +104,11 @@ Localizer.prototype.credits = function () {
 Localizer.prototype.unload = function () {
     var dict,
         keep = ['language_name', 'language_translator', 'last_changed'],
-        myself = this;
+        self = this;
     this.languages().forEach(function (lang) {
         var key;
         if (lang !== 'en') {
-            dict = myself.dict[lang];
+            dict = self.dict[lang];
             for (key in dict) {
                 if (Object.prototype.hasOwnProperty.call(dict, key)
                     && !contains(keep, key)) {

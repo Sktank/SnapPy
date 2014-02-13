@@ -6,34 +6,56 @@
 
     <title></title>
 
-
-    <script type="text/javascript" src="/static/js/morphic.js"></script>
-    <script type="text/javascript" src="/static/js/widgets.js"></script>
-    <script type="text/javascript" src="/static/js/blocks.js"></script>
-    <script type="text/javascript" src="/static/js/threads.js"></script>
-    <script type="text/javascript" src="/static/js/objects.js"></script>
-    <script type="text/javascript" src="/static/js/gui.js"></script>
-    <script type="text/javascript" src="/static/js/paint.js"></script>
-    <script type="text/javascript" src="/static/js/lists.js"></script>
-    <script type="text/javascript" src="/static/js/byob.js"></script>
-    <script type="text/javascript" src="/static/js/xml.js"></script>
-    <script type="text/javascript" src="/static/js/store.js"></script>
-    <script type="text/javascript" src="/static/js/locale.js"></script>
-    <script type="text/javascript" src="/static/js/cloud.js"></script>
-    <script type="text/javascript" src="/static/js/sha512.js"></script>
-    <script type="text/javascript">
-        var world;
-        window.onload = function () {
-            world = new WorldMorph(document.getElementById('world'));
-            new IDE_Morph().openIn(world);
-            setInterval(loop, 1);
-        };
-        function loop() {
-            world.doOneCycle();
+    <style type="text/css">
+        #codeEditor {
+            float: left;
+            position: absolute;
+            z-index: -1;
         }
-    </script>
+    </style>
 </head>
 <body style="margin: 0;">
-<canvas id="world" tabindex="1" style="position: absolute;" />
+{#<h3>Python Scripts Go Here</h3>#}
+{#<div id="codeEditor">#}
+{#</div>#}
+{#<span style="z-index:10;">hello</span>#}
+<canvas id="world" tabindex="1" style="position: absolute; z-index:-2;" />
+<script type="text/javascript">
+    var editorContainer = document.createElement("iframe");
+    editorContainer.id = "codeEditor";
+    editorContainer.src = "{% url 'visualizer' %}";
+    editorContainer.style.display = "none";
+    document.body.appendChild(editorContainer);
+    window.onload = function () {
+        window.world = new WorldMorph(document.getElementById('world'));
+        window.ide = new IDE_Morph();
+        ide.codemirror = editorContainer;
+        ide.openIn(world);
+        setInterval(loop, 1);
+    };
+    function loop() {
+        world.doOneCycle();
+    }
+</script>
+
+<script type="text/javascript" src="/static/js/executeVisualizer.js"></script>
+<script type="text/javascript" src="/static/js/morphic.js"></script>
+<script type="text/javascript" src="/static/js/widgets.js"></script>
+<script type="text/javascript" src="/static/js/blocks.js"></script>
+<script type="text/javascript" src="/static/js/threads.js"></script>
+<script type="text/javascript" src="/static/js/objects.js"></script>
+<script type="text/javascript" src="/static/js/gui.js"></script>
+<script type="text/javascript" src="/static/js/paint.js"></script>
+<script type="text/javascript" src="/static/js/lists.js"></script>
+<script type="text/javascript" src="/static/js/byob.js"></script>
+<script type="text/javascript" src="/static/js/xml.js"></script>
+<script type="text/javascript" src="/static/js/store.js"></script>
+<script type="text/javascript" src="/static/js/locale.js"></script>
+<script type="text/javascript" src="/static/js/cloud.js"></script>
+<script type="text/javascript" src="/static/js/sha512.js"></script>
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/codemirror/lib/codemirror.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/codemirror/lib/codemirror.css">
+<script src="/static/codemirror/mode/python/python.js"></script>
 </body>
 </html>

@@ -1,0 +1,29 @@
+
+<!--
+The base layout of the page.
+Include all scripts and stylings here
+-->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+{#    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css"/>#}
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/awesome/css/font-awesome.min.css"/>
+    <title></title>
+</head>
+<body>
+<div class="container-fluid">
+    {% block body %}
+
+    {% endblock %}
+</div>
+{% block js %}
+<script type="text/javascript" src="/static/js/libraries/jquery.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    {% block jsinline %}
+    {% endblock %}
+{% endblock %}
+</body>
+</html>

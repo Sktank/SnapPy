@@ -357,7 +357,7 @@ function ListWatcherMorph(list, parentCell) {
 }
 
 ListWatcherMorph.prototype.init = function (list, parentCell) {
-    var myself = this;
+    var self = this;
 
     this.list = list || new List();
     this.start = 1;
@@ -377,7 +377,7 @@ ListWatcherMorph.prototype.init = function (list, parentCell) {
         MorphicPreferences.isFlat ? new Point() : new Point(1, 1),
         new Color(255, 255, 255)
     );
-    this.label.mouseClickLeft = function () {myself.startIndexMenu(); };
+    this.label.mouseClickLeft = function () {self.startIndexMenu(); };
 
 
     this.frame = new ScrollFrameMorph(null, 10);
@@ -398,7 +398,7 @@ ListWatcherMorph.prototype.init = function (list, parentCell) {
         'down',
         SyntaxElementMorph.prototype.fontSize
     );
-    this.arrow.mouseClickLeft = function () {myself.startIndexMenu(); };
+    this.arrow.mouseClickLeft = function () {self.startIndexMenu(); };
     this.arrow.setRight(this.handle.right());
     this.arrow.setBottom(this.handle.top());
     this.handle.add(this.arrow);
@@ -591,12 +591,12 @@ ListWatcherMorph.prototype.updateLength = function (notDone) {
 ListWatcherMorph.prototype.startIndexMenu = function () {
     var i,
         range,
-        myself = this,
+        self = this,
         items = Math.ceil(this.list.length() / this.range),
         menu = new MenuMorph(
-            function (idx) {myself.setStartIndex(idx); },
+            function (idx) {self.setStartIndex(idx); },
             null,
-            myself
+            self
         );
     menu.addItem('1...', 1);
     for (i = 1; i < items; i += 1) {

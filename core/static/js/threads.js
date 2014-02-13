@@ -133,6 +133,7 @@ ThreadManager.prototype.toggleProcess = function (block) {
 };
 
 ThreadManager.prototype.startProcess = function (block, isThreadSafe) {
+    console.log(block);
     var active = this.findProcess(block),
         top = block.topBlock(),
         newProc;
@@ -146,6 +147,7 @@ ThreadManager.prototype.startProcess = function (block, isThreadSafe) {
     top.addHighlight();
     newProc = new Process(block.topBlock());
     this.processes.push(newProc);
+    console.log(newProc);
     return newProc;
 };
 
@@ -423,6 +425,7 @@ Process.prototype.pauseStep = function () {
 
 Process.prototype.evaluateContext = function () {
     var exp = this.context.expression;
+    console.log('eval: ' + exp);
 
     this.frameCount += 1;
     if (exp instanceof Array) {
@@ -455,6 +458,9 @@ Process.prototype.evaluateBlock = function (block, argCount) {
     // first evaluate all inputs, then apply the primitive
     var rcvr = this.context.receiver || this.topBlock.receiver(),
         inputs = this.context.inputs;
+
+    console.log(rcvr);
+    console.log(inputs);
 
     if (argCount > inputs.length) {
         this.evaluateNextInput(block);
@@ -2162,7 +2168,7 @@ Process.prototype.createClone = function (name) {
 
     if (!name) {return; }
     if (thisObj) {
-        if (this.inputOption(name) === 'myself') {
+        if (this.inputOption(name) === 'self') {
             thisObj.createClone();
         } else {
             thatObj = this.getOtherObject(name, thisObj);
@@ -2188,7 +2194,7 @@ Process.prototype.objectTouchingObject = function (thisObj, name) {
     // helper function for reportTouchingObject()
     // also check for temparary clones, as in Scratch 2.0,
     // and for any parts (subsprites)
-    var myself = this,
+    var self = this,
         those,
         stage,
         mouse;
@@ -2220,7 +2226,7 @@ Process.prototype.objectTouchingObject = function (thisObj, name) {
     }
     return thisObj.parts.some(
         function (any) {
-            return myself.objectTouchingObject(any, name);
+            return self.objectTouchingObject(any, name);
         }
     );
 };

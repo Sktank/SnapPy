@@ -109,9 +109,9 @@ PaintEditorMorph.prototype.init = function () {
 };
 
 PaintEditorMorph.prototype.buildContents = function () {
-    var myself = this;
+    var self = this;
 
-    this.paper = new PaintCanvasMorph(function () {return myself.shift; });
+    this.paper = new PaintCanvasMorph(function () {return self.shift; });
     this.paper.setExtent(new Point(480, 360));
 
     this.addBody(new AlignmentMorph('row', this.padding));
@@ -179,7 +179,7 @@ PaintEditorMorph.prototype.buildToolbox = function () {
             pipette:
                 "Pipette tool\n(pick a color anywhere)"
         },
-        myself = this,
+        self = this,
         left = this.toolbox.left(),
         top = this.toolbox.top(),
         padding = 2,
@@ -188,7 +188,7 @@ PaintEditorMorph.prototype.buildToolbox = function () {
         y = 0;
 
     Object.keys(tools).forEach(function (tool) {
-        var btn = myself.toolButton(tool, tools[tool]);
+        var btn = self.toolButton(tool, tools[tool]);
         btn.setPosition(new Point(
             left + x,
             top + y
@@ -197,10 +197,10 @@ PaintEditorMorph.prototype.buildToolbox = function () {
         if (tool === "crosshairs") {
             x = 0;
             y += btn.height() + padding;
-            myself.paper.drawcrosshair();
+            self.paper.drawcrosshair();
         }
-        myself.toolbox[tool] = btn;
-        myself.toolbox.add(btn);
+        self.toolbox[tool] = btn;
+        self.toolbox.add(btn);
     });
 
     this.toolbox.bounds = this.toolbox.fullBounds().expandBy(inset * 2);
@@ -295,7 +295,7 @@ PaintEditorMorph.prototype.cancel = function () {
 
 PaintEditorMorph.prototype.populatePropertiesMenu = function () {
     var c = this.controls,
-        myself = this,
+        self = this,
         pc = this.propertiesControls,
         alpen = new AlignmentMorph("row", this.padding);
 
@@ -309,7 +309,7 @@ PaintEditorMorph.prototype.populatePropertiesMenu = function () {
                 ctx = ni.getContext("2d"),
                 i,
                 j;
-            myself.paper.settings.primarycolor = color;
+            self.paper.settings.primarycolor = color;
             if (color === "transparent") {
                 for (i = 0; i < 180; i += 5) {
                     for (j = 0; j < 15; j += 5) {
@@ -326,7 +326,7 @@ PaintEditorMorph.prototype.populatePropertiesMenu = function () {
                 ctx.fillRect(0, 0, 180, 15);
             }
             ctx.strokeStyle = "black";
-            ctx.lineWidth = Math.min(myself.paper.settings.linewidth, 20);
+            ctx.lineWidth = Math.min(self.paper.settings.linewidth, 20);
             ctx.beginPath();
             ctx.lineCap = "round";
             ctx.moveTo(20, 30);
@@ -346,8 +346,8 @@ PaintEditorMorph.prototype.populatePropertiesMenu = function () {
         if (pc.penSizeField) {
             pc.penSizeField.setContents(num);
         }
-        myself.paper.settings.linewidth = num;
-        pc.colorpicker.action(myself.paper.settings.primarycolor);
+        self.paper.settings.linewidth = num;
+        pc.colorpicker.action(self.paper.settings.primarycolor);
     };
     pc.penSizeField = new InputFieldMorph("5", true, null, false);
     pc.penSizeField.contents().minWidth = 20;
@@ -358,21 +358,21 @@ PaintEditorMorph.prototype.populatePropertiesMenu = function () {
         pc.penSizeSlider.drawNew();
         pc.penSizeSlider.updateValue();
         this.setContents(val);
-        myself.paper.settings.linewidth = val;
-        this.world().keyboardReceiver = myself;
-        pc.colorpicker.action(myself.paper.settings.primarycolor);
+        self.paper.settings.linewidth = val;
+        this.world().keyboardReceiver = self;
+        pc.colorpicker.action(self.paper.settings.primarycolor);
     };
     alpen.add(pc.penSizeSlider);
     alpen.add(pc.penSizeField);
-    alpen.color = myself.color;
+    alpen.color = self.color;
     alpen.fixLayout();
     pc.penSizeField.drawNew();
     pc.constrain = new ToggleMorph(
         "checkbox",
         this,
-        function () {myself.shift = !myself.shift; },
+        function () {self.shift = !self.shift; },
         "Constrain proportions of shapes?\n(you can also hold shift)",
-        function () {return myself.shift; }
+        function () {return self.shift; }
     );
     c.add(pc.colorpicker);
     //c.add(pc.primaryColorButton);
@@ -383,21 +383,21 @@ PaintEditorMorph.prototype.populatePropertiesMenu = function () {
 };
 
 PaintEditorMorph.prototype.toolButton = function (icon, hint) {
-    var button, myself = this;
+    var button, self = this;
 
     button = new ToggleButtonMorph(
         null,
         this,
         function () { // action
-            myself.paper.currentTool = icon;
-            myself.paper.toolChanged(icon);
-            myself.refreshToolButtons();
+            self.paper.currentTool = icon;
+            self.paper.toolChanged(icon);
+            self.refreshToolButtons();
             if (icon === 'pipette') {
-                myself.getUserColor();
+                self.getUserColor();
             }
         },
         new SymbolMorph(icon, 18),
-        function () {return myself.paper.currentTool === icon; }
+        function () {return self.paper.currentTool === icon; }
     );
 
     button.hint = hint;
@@ -417,7 +417,7 @@ PaintEditorMorph.prototype.pushButton = function (title, action, hint) {
 };
 
 PaintEditorMorph.prototype.getUserColor = function () {
-    var myself = this,
+    var self = this,
         world = this.world(),
         hand = world.hand,
         posInDocument = getDocumentPositionOf(world.worldCanvas),
@@ -433,15 +433,15 @@ PaintEditorMorph.prototype.getUserColor = function () {
         ));
         color = world.getGlobalPixelColor(hand.position());
         color.a = 255;
-        myself.propertiesControls.colorpicker.action(color);
+        self.propertiesControls.colorpicker.action(color);
     };
 
     hand.processMouseDown = nop;
 
     hand.processMouseUp = function () {
-        myself.paper.currentTool = 'brush';
-        myself.paper.toolChanged('brush');
-        myself.refreshToolButtons();
+        self.paper.currentTool = 'brush';
+        self.paper.toolChanged('brush');
+        self.refreshToolButtons();
         hand.processMouseMove = mouseMoveBak;
         hand.processMouseDown = mouseDownBak;
         hand.processMouseUp = mouseUpBak;

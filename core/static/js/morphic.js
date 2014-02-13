@@ -2060,7 +2060,7 @@ Node.prototype.depth = function () {
 };
 
 Node.prototype.allChildren = function () {
-    // includes myself
+    // includes self
     var result = [this];
     this.children.forEach(function (child) {
         result = result.concat(child.allChildren());
@@ -2088,7 +2088,7 @@ Node.prototype.allLeafs = function () {
 };
 
 Node.prototype.allParents = function () {
-    // includes myself
+    // includes self
     var result = [this];
     if (this.parent !== null) {
         result = result.concat(this.parent.allParents());
@@ -2097,17 +2097,17 @@ Node.prototype.allParents = function () {
 };
 
 Node.prototype.siblings = function () {
-    var myself = this;
+    var self = this;
     if (this.parent === null) {
         return [];
     }
     return this.parent.children.filter(function (child) {
-        return child !== myself;
+        return child !== self;
     });
 };
 
 Node.prototype.parentThatIsA = function (constructor) {
-    // including myself
+    // including self
     if (this instanceof constructor) {
         return this;
     }
@@ -2118,11 +2118,11 @@ Node.prototype.parentThatIsA = function (constructor) {
 };
 
 Node.prototype.parentThatIsAnyOf = function (constructors) {
-    // including myself
+    // including self
     var yup = false,
-        myself = this;
+        self = this;
     constructors.forEach(function (each) {
-        if (myself.constructor === each) {
+        if (self.constructor === each) {
             yup = true;
             return;
         }
@@ -2269,11 +2269,11 @@ Morph.prototype.stepFrame = function () {
 Morph.prototype.nextSteps = function (arrayOfFunctions) {
     var lst = arrayOfFunctions || [],
         nxt = lst.shift(),
-        myself = this;
+        self = this;
     if (nxt) {
         this.onNextStep = function () {
-            nxt.call(myself);
-            myself.nextSteps(lst);
+            nxt.call(self);
+            self.nextSteps(lst);
         };
     }
 };
@@ -2573,10 +2573,10 @@ Morph.prototype.drawNew = function () {
 };
 
 Morph.prototype.drawTexture = function (url) {
-    var myself = this;
+    var self = this;
     this.cachedTexture = new Image();
     this.cachedTexture.onload = function () {
-        myself.drawCachedTexture();
+        self.drawCachedTexture();
     };
     this.cachedTexture.src = this.texture = url; // make absolute
 };
@@ -2963,7 +2963,7 @@ Morph.prototype.overlappedMorphs = function () {
     //exclude the World
     var world = this.world(),
         fb = this.fullBounds(),
-        myself = this,
+        self = this,
         allParents = this.allParents(),
         allChildren = this.allChildren(),
         morphs;
@@ -2971,7 +2971,7 @@ Morph.prototype.overlappedMorphs = function () {
     morphs = world.allChildren();
     return morphs.filter(function (m) {
         return m.isVisible &&
-            m !== myself &&
+            m !== self &&
             m !== world &&
             !contains(allParents, m) &&
             !contains(allChildren, m) &&
@@ -3135,21 +3135,21 @@ Morph.prototype.slideBackTo = function (situation, inSteps) {
         stepCount = 0,
         oldStep = this.step,
         oldFps = this.fps,
-        myself = this;
+        self = this;
 
     this.fps = 0;
     this.step = function () {
-        myself.fullChanged();
-        myself.silentMoveBy(new Point(xStep, yStep));
-        myself.fullChanged();
+        self.fullChanged();
+        self.silentMoveBy(new Point(xStep, yStep));
+        self.fullChanged();
         stepCount += 1;
         if (stepCount === steps) {
-            situation.origin.add(myself);
+            situation.origin.add(self);
             if (situation.origin.reactToDropOf) {
-                situation.origin.reactToDropOf(myself);
+                situation.origin.reactToDropOf(self);
             }
-            myself.step = oldStep;
-            myself.fps = oldFps;
+            self.step = oldStep;
+            self.fps = oldFps;
         }
     };
 };
@@ -3496,12 +3496,12 @@ Morph.prototype.setAlphaScaled = function (alpha) {
 Morph.prototype.attach = function () {
     var choices = this.overlappedMorphs(),
         menu = new MenuMorph(this, 'choose new parent:'),
-        myself = this;
+        self = this;
 
     choices.forEach(function (each) {
         menu.addItem(each.toString().slice(0, 50), function () {
-            each.add(myself);
-            myself.isDraggable = false;
+            each.add(self);
+            self.isDraggable = false;
         });
     });
     if (choices.length > 0) {
@@ -3851,7 +3851,7 @@ HandleMorph.prototype.step = null;
 HandleMorph.prototype.mouseDownLeft = function (pos) {
     var world = this.root(),
         offset = pos.subtract(this.bounds.origin),
-        myself = this;
+        self = this;
 
     if (!this.target) {
         return null;
@@ -3862,18 +3862,18 @@ HandleMorph.prototype.mouseDownLeft = function (pos) {
             newPos = world.hand.bounds.origin.copy().subtract(offset);
             if (this.type === 'resize') {
                 newExt = newPos.add(
-                    myself.extent().add(myself.inset)
-                ).subtract(myself.target.bounds.origin);
-                newExt = newExt.max(myself.minExtent);
-                myself.target.setExtent(newExt);
+                    self.extent().add(self.inset)
+                ).subtract(self.target.bounds.origin);
+                newExt = newExt.max(self.minExtent);
+                self.target.setExtent(newExt);
 
-                myself.setPosition(
-                    myself.target.bottomRight().subtract(
-                        myself.extent().add(myself.inset)
+                self.setPosition(
+                    self.target.bottomRight().subtract(
+                        self.extent().add(self.inset)
                     )
                 );
             } else { // type === 'move'
-                myself.target.setPosition(
+                self.target.setPosition(
                     newPos.subtract(this.target.extent())
                         .add(this.extent())
                 );
@@ -3926,14 +3926,14 @@ HandleMorph.prototype.copyRecordingReferences = function (dict) {
 HandleMorph.prototype.attach = function () {
     var choices = this.overlappedMorphs(),
         menu = new MenuMorph(this, 'choose target:'),
-        myself = this;
+        self = this;
 
     choices.forEach(function (each) {
         menu.addItem(each.toString().slice(0, 50), function () {
-            myself.isDraggable = false;
-            myself.target = each;
-            myself.drawNew();
-            myself.noticesTransparentClick = true;
+            self.isDraggable = false;
+            self.target = each;
+            self.drawNew();
+            self.noticesTransparentClick = true;
         });
     });
     if (choices.length > 0) {
@@ -4268,13 +4268,13 @@ ColorPaletteMorph.prototype.developersMenu = function () {
 ColorPaletteMorph.prototype.setTarget = function () {
     var choices = this.overlappedMorphs(),
         menu = new MenuMorph(this, 'choose target:'),
-        myself = this;
+        self = this;
 
     choices.push(this.world());
     choices.forEach(function (each) {
         menu.addItem(each.toString().slice(0, 50), function () {
-            myself.target = each;
-            myself.setTargetSetter();
+            self.target = each;
+            self.setTargetSetter();
         });
     });
     if (choices.length === 1) {
@@ -4288,11 +4288,11 @@ ColorPaletteMorph.prototype.setTarget = function () {
 ColorPaletteMorph.prototype.setTargetSetter = function () {
     var choices = this.target.colorSetters(),
         menu = new MenuMorph(this, 'choose target property:'),
-        myself = this;
+        self = this;
 
     choices.forEach(function (each) {
         menu.addItem(each, function () {
-            myself.targetSetter = each;
+            self.targetSetter = each;
         });
     });
     if (choices.length === 1) {
@@ -5376,7 +5376,7 @@ CircleBoxMorph.prototype.autoOrientation = function () {
 CircleBoxMorph.prototype.drawNew = function () {
     var radius, center1, center2, rect, points, x, y,
         context, ext,
-        myself = this;
+        self = this;
 
     if (this.autoOrient) {
         this.autoOrientation();
@@ -5404,7 +5404,7 @@ CircleBoxMorph.prototype.drawNew = function () {
     points = [ center1.subtract(this.bounds.origin),
         center2.subtract(this.bounds.origin)];
     points.forEach(function (center) {
-        context.fillStyle = myself.color.toString();
+        context.fillStyle = self.color.toString();
         context.beginPath();
         context.arc(
             center.x,
@@ -5957,13 +5957,13 @@ SliderMorph.prototype.setSize = function (num) {
 SliderMorph.prototype.setTarget = function () {
     var choices = this.overlappedMorphs(),
         menu = new MenuMorph(this, 'choose target:'),
-        myself = this;
+        self = this;
 
     choices.push(this.world());
     choices.forEach(function (each) {
         menu.addItem(each.toString().slice(0, 50), function () {
-            myself.target = each;
-            myself.setTargetSetter();
+            self.target = each;
+            self.setTargetSetter();
         });
     });
     if (choices.length === 1) {
@@ -5977,11 +5977,11 @@ SliderMorph.prototype.setTarget = function () {
 SliderMorph.prototype.setTargetSetter = function () {
     var choices = this.target.numericalSetters(),
         menu = new MenuMorph(this, 'choose target property:'),
-        myself = this;
+        self = this;
 
     choices.forEach(function (each) {
         menu.addItem(each, function () {
-            myself.action = each;
+            self.action = each;
         });
     });
     if (choices.length === 1) {
@@ -6003,7 +6003,7 @@ SliderMorph.prototype.numericalSetters = function () {
 SliderMorph.prototype.step = null;
 
 SliderMorph.prototype.mouseDownLeft = function (pos) {
-    var world, myself = this;
+    var world, self = this;
 
     if (!this.button.bounds.containsPoint(pos)) {
         this.offset = new Point(); // return null;
@@ -6015,27 +6015,27 @@ SliderMorph.prototype.mouseDownLeft = function (pos) {
         var mousePos, newX, newY;
         if (world.hand.mouseButton) {
             mousePos = world.hand.bounds.origin;
-            if (myself.orientation === 'vertical') {
-                newX = myself.button.bounds.origin.x;
+            if (self.orientation === 'vertical') {
+                newX = self.button.bounds.origin.x;
                 newY = Math.max(
                     Math.min(
-                        mousePos.y - myself.offset.y,
-                        myself.bottom() - myself.button.height()
+                        mousePos.y - self.offset.y,
+                        self.bottom() - self.button.height()
                     ),
-                    myself.top()
+                    self.top()
                 );
             } else {
-                newY = myself.button.bounds.origin.y;
+                newY = self.button.bounds.origin.y;
                 newX = Math.max(
                     Math.min(
-                        mousePos.x - myself.offset.x,
-                        myself.right() - myself.button.width()
+                        mousePos.x - self.offset.x,
+                        self.right() - self.button.width()
                     ),
-                    myself.left()
+                    self.left()
                 );
             }
-            myself.button.setPosition(new Point(newX, newY));
-            myself.updateValue();
+            self.button.setPosition(new Point(newX, newY));
+            self.updateValue();
         } else {
             this.step = null;
         }
@@ -6074,27 +6074,27 @@ MouseSensorMorph.prototype.init = function (edge, border, borderColor) {
 };
 
 MouseSensorMorph.prototype.touch = function () {
-    var myself = this;
+    var self = this;
     if (!this.isTouched) {
         this.isTouched = true;
         this.alpha = 0.6;
 
         this.step = function () {
-            if (myself.isTouched) {
-                if (myself.alpha < 1) {
-                    myself.alpha = myself.alpha + myself.upStep;
+            if (self.isTouched) {
+                if (self.alpha < 1) {
+                    self.alpha = self.alpha + self.upStep;
                 }
-            } else if (myself.alpha > (myself.downStep)) {
-                myself.alpha = myself.alpha - myself.downStep;
+            } else if (self.alpha > (self.downStep)) {
+                self.alpha = self.alpha - self.downStep;
             } else {
-                myself.alpha = 0;
-                myself.step = null;
-//                myself.upStep = 0.05;
-                myself.downStep = 0.02;
+                self.alpha = 0;
+                self.step = null;
+//                self.upStep = 0.05;
+                self.downStep = 0.02;
                 this.color = new Color(255,255,255);
                 this.drawNew();
             }
-            myself.changed();
+            self.changed();
         };
     }
 };
@@ -6199,7 +6199,7 @@ InspectorMorph.prototype.setTarget = function (target) {
 };
 
 InspectorMorph.prototype.buildPanes = function () {
-    var attribs = [], property, myself = this, ctrl, ev, doubleClickAction;
+    var attribs = [], property, self = this, ctrl, ev, doubleClickAction;
 
     // remove existing panes
     this.children.forEach(function (m) {
@@ -6225,20 +6225,20 @@ InspectorMorph.prototype.buildPanes = function () {
     }
     if (this.showing === 'attributes') {
         attribs = attribs.filter(function (prop) {
-            return typeof myself.target[prop] !== 'function';
+            return typeof self.target[prop] !== 'function';
         });
     } else if (this.showing === 'methods') {
         attribs = attribs.filter(function (prop) {
-            return typeof myself.target[prop] === 'function';
+            return typeof self.target[prop] === 'function';
         });
     } // otherwise show all properties
 
     doubleClickAction = function () {
         var world, inspector;
-        if (!isObject(myself.currentProperty)) {return; }
-        world = myself.world();
+        if (!isObject(self.currentProperty)) {return; }
+        world = self.world();
         inspector = new InspectorMorph(
-            myself.currentProperty
+            self.currentProperty
         );
         inspector.setPosition(world.hand.position());
         inspector.keepWithin(world);
@@ -6255,7 +6255,7 @@ InspectorMorph.prototype.buildPanes = function () {
                     new Color(0, 0, 180),
                     function (element) {
                         return Object.prototype.hasOwnProperty.call(
-                            myself.target,
+                            self.target,
                             element
                         );
                     }
@@ -6268,8 +6268,8 @@ InspectorMorph.prototype.buildPanes = function () {
     this.list.action = function (selected) {
         var val, txt, cnts;
         if (selected === undefined) {return; }
-        val = myself.target[selected];
-        myself.currentProperty = val;
+        val = self.target[selected];
+        self.currentProperty = val;
         if (val === null) {
             txt = 'NULL';
         } else if (isString(val)) {
@@ -6280,8 +6280,8 @@ InspectorMorph.prototype.buildPanes = function () {
         cnts = new TextMorph(txt);
         cnts.isEditable = true;
         cnts.enableSelecting();
-        cnts.setReceiver(myself.target);
-        myself.detail.setContents(cnts);
+        cnts.setReceiver(self.target);
+        self.detail.setContents(cnts);
     };
 
     this.list.hBar.alpha = 0.6;
@@ -6331,35 +6331,35 @@ InspectorMorph.prototype.buildPanes = function () {
         menu.addItem(
             'attributes',
             function () {
-                myself.showing = 'attributes';
-                myself.buildPanes();
+                self.showing = 'attributes';
+                self.buildPanes();
             }
         );
         menu.addItem(
             'methods',
             function () {
-                myself.showing = 'methods';
-                myself.buildPanes();
+                self.showing = 'methods';
+                self.buildPanes();
             }
         );
         menu.addItem(
             'all',
             function () {
-                myself.showing = 'all';
-                myself.buildPanes();
+                self.showing = 'all';
+                self.buildPanes();
             }
         );
         menu.addLine();
         menu.addItem(
-            (myself.markOwnProperties ?
+            (self.markOwnProperties ?
                 'un-mark own' : 'mark own'),
             function () {
-                myself.markOwnProperties = !myself.markOwnProperties;
-                myself.buildPanes();
+                self.markOwnProperties = !self.markOwnProperties;
+                self.buildPanes();
             },
             'highlight\n\'own\' properties'
         );
-        menu.popUpAtHand(myself.world());
+        menu.popUpAtHand(self.world());
     };
     this.add(this.buttonSubset);
 
@@ -6368,14 +6368,14 @@ InspectorMorph.prototype.buildPanes = function () {
     this.buttonInspect.labelString = 'inspect...';
     this.buttonInspect.action = function () {
         var menu, world, inspector;
-        if (isObject(myself.currentProperty)) {
+        if (isObject(self.currentProperty)) {
             menu = new MenuMorph();
             menu.addItem(
                 'in new inspector...',
                 function () {
-                    world = myself.world();
+                    world = self.world();
                     inspector = new InspectorMorph(
-                        myself.currentProperty
+                        self.currentProperty
                     );
                     inspector.setPosition(world.hand.position());
                     inspector.keepWithin(world);
@@ -6386,14 +6386,14 @@ InspectorMorph.prototype.buildPanes = function () {
             menu.addItem(
                 'here...',
                 function () {
-                    myself.setTarget(myself.currentProperty);
+                    self.setTarget(self.currentProperty);
                 }
             );
-            menu.popUpAtHand(myself.world());
+            menu.popUpAtHand(self.world());
         } else {
-            myself.inform(
-                (myself.currentProperty === null ?
-                    'null' : typeof myself.currentProperty) +
+            self.inform(
+                (self.currentProperty === null ?
+                    'null' : typeof self.currentProperty) +
                     '\nis not inspectable'
             );
         }
@@ -6406,13 +6406,13 @@ InspectorMorph.prototype.buildPanes = function () {
     this.buttonEdit.labelString = 'edit...';
     this.buttonEdit.action = function () {
         var menu;
-        menu = new MenuMorph(myself);
+        menu = new MenuMorph(self);
         menu.addItem("save", 'save', 'accept changes');
         menu.addLine();
         menu.addItem("add property...", 'addProperty');
         menu.addItem("rename...", 'renameProperty');
         menu.addItem("remove...", 'removeProperty');
-        menu.popUpAtHand(myself.world());
+        menu.popUpAtHand(self.world());
     };
     this.add(this.buttonEdit);
 
@@ -6420,7 +6420,7 @@ InspectorMorph.prototype.buildPanes = function () {
     this.buttonClose = new TriggerMorph();
     this.buttonClose.labelString = 'close';
     this.buttonClose.action = function () {
-        myself.destroy();
+        self.destroy();
     };
     this.add(this.buttonClose);
 
@@ -6540,17 +6540,17 @@ InspectorMorph.prototype.save = function () {
 };
 
 InspectorMorph.prototype.addProperty = function () {
-    var myself = this;
+    var self = this;
     this.prompt(
         'new property name:',
         function (prop) {
             if (prop) {
-                myself.target[prop] = null;
-                myself.buildPanes();
-                if (myself.target.drawNew) {
-                    myself.target.changed();
-                    myself.target.drawNew();
-                    myself.target.changed();
+                self.target[prop] = null;
+                self.buildPanes();
+                if (self.target.drawNew) {
+                    self.target.changed();
+                    self.target.drawNew();
+                    self.target.changed();
                 }
             }
         },
@@ -6560,22 +6560,22 @@ InspectorMorph.prototype.addProperty = function () {
 };
 
 InspectorMorph.prototype.renameProperty = function () {
-    var myself = this,
+    var self = this,
         propertyName = this.list.selected;
     this.prompt(
         'property name:',
         function (prop) {
             try {
-                delete (myself.target[propertyName]);
-                myself.target[prop] = myself.currentProperty;
+                delete (self.target[propertyName]);
+                self.target[prop] = self.currentProperty;
             } catch (err) {
-                myself.inform(err);
+                self.inform(err);
             }
-            myself.buildPanes();
-            if (myself.target.drawNew) {
-                myself.target.changed();
-                myself.target.drawNew();
-                myself.target.changed();
+            self.buildPanes();
+            if (self.target.drawNew) {
+                self.target.changed();
+                self.target.drawNew();
+                self.target.changed();
             }
         },
         this,
@@ -6720,7 +6720,7 @@ MenuMorph.prototype.createLabel = function () {
 };
 
 MenuMorph.prototype.drawNew = function () {
-    var myself = this,
+    var self = this,
         item,
         fb,
         x,
@@ -6761,16 +6761,16 @@ MenuMorph.prototype.drawNew = function () {
         } else if (tuple[0] === 0) {
             isLine = true;
             item = new Morph();
-            item.color = myself.borderColor;
+            item.color = self.borderColor;
             item.setHeight(tuple[1]);
         } else {
             item = new MenuItemMorph(
-                myself.target,
+                self.target,
                 tuple[1],
                 tuple[0],
-                myself.fontSize || MorphicPreferences.menuFontSize,
+                self.fontSize || MorphicPreferences.menuFontSize,
                 MorphicPreferences.menuFontName,
-                myself.environment,
+                self.environment,
                 tuple[2], // bubble help hint
                 tuple[3], // color
                 tuple[4], // bold
@@ -6782,7 +6782,7 @@ MenuMorph.prototype.drawNew = function () {
             y += 1;
         }
         item.setPosition(new Point(x, y));
-        myself.add(item);
+        self.add(item);
         y = y + item.height();
         if (isLine) {
             y += 1;
@@ -6822,7 +6822,7 @@ MenuMorph.prototype.maxWidth = function () {
 MenuMorph.prototype.adjustWidths = function () {
     var w = this.maxWidth(),
         isSelected,
-        myself = this;
+        self = this;
     this.children.forEach(function (item) {
         item.silentSetWidth(w);
         if (item instanceof MenuItemMorph) {
@@ -6833,7 +6833,7 @@ MenuMorph.prototype.adjustWidths = function () {
             }
         } else {
             item.drawNew();
-            if (item === myself.label) {
+            if (item === self.label) {
                 item.text.setPosition(
                     item.center().subtract(
                         item.text.extent().floorDivideBy(2)
@@ -7519,7 +7519,7 @@ TextMorph.prototype.toString = function () {
 TextMorph.prototype.font = StringMorph.prototype.font;
 
 TextMorph.prototype.parse = function () {
-    var myself = this,
+    var self = this,
         paragraphs = this.text.split('\n'),
         canvas = newCanvas(),
         context = canvas.getContext('2d'),
@@ -7535,28 +7535,28 @@ TextMorph.prototype.parse = function () {
     this.words = [];
 
     paragraphs.forEach(function (p) {
-        myself.words = myself.words.concat(p.split(' '));
-        myself.words.push('\n');
+        self.words = self.words.concat(p.split(' '));
+        self.words.push('\n');
     });
 
     this.words.forEach(function (word) {
         if (word === '\n') {
-            myself.lines.push(oldline);
-            myself.lineSlots.push(slot);
-            myself.maxLineWidth = Math.max(
-                myself.maxLineWidth,
+            self.lines.push(oldline);
+            self.lineSlots.push(slot);
+            self.maxLineWidth = Math.max(
+                self.maxLineWidth,
                 context.measureText(oldline).width
             );
             oldline = '';
         } else {
-            if (myself.maxWidth > 0) {
+            if (self.maxWidth > 0) {
                 newline = oldline + word + ' ';
                 w = context.measureText(newline).width;
-                if (w > myself.maxWidth) {
-                    myself.lines.push(oldline);
-                    myself.lineSlots.push(slot);
-                    myself.maxLineWidth = Math.max(
-                        myself.maxLineWidth,
+                if (w > self.maxWidth) {
+                    self.lines.push(oldline);
+                    self.lineSlots.push(slot);
+                    self.maxLineWidth = Math.max(
+                        self.maxLineWidth,
                         context.measureText(oldline).width
                     );
                     oldline = word + ' ';
@@ -8105,7 +8105,7 @@ TriggerMorph.prototype.trigger = function () {
      Note: if action is also a function, instead of becoming
      the argument itself it will be called to answer the argument.
      for selections, Yes/No Choices etc. As second argument pass
-     myself, so I can be modified to reflect status changes, e.g.
+     self, so I can be modified to reflect status changes, e.g.
      inside a list box:
 
      else (if target is not a function):
@@ -8196,14 +8196,14 @@ TriggerMorph.prototype.rootForGrab = function () {
 // TriggerMorph bubble help:
 
 TriggerMorph.prototype.bubbleHelp = function (contents) {
-    var myself = this;
+    var self = this;
     this.fps = 2;
     this.step = function () {
         if (this.bounds.containsPoint(this.world().hand.position())) {
-            myself.popUpbubbleHelp(contents);
+            self.popUpbubbleHelp(contents);
         }
-        myself.fps = 0;
-        delete myself.step;
+        self.fps = 0;
+        delete self.step;
     };
 };
 
@@ -8494,7 +8494,7 @@ FrameMorph.prototype.keepInScrollFrame = function () {
 FrameMorph.prototype.adjustBounds = function () {
     var subBounds,
         newBounds,
-        myself = this;
+        self = this;
 
     if (this.scrollFrame === null) {
         return null;
@@ -8518,9 +8518,9 @@ FrameMorph.prototype.adjustBounds = function () {
     if (this.scrollFrame.isTextLineWrapping) {
         this.children.forEach(function (morph) {
             if (morph instanceof TextMorph) {
-                morph.setWidth(myself.width());
-                myself.setHeight(
-                    Math.max(morph.height(), myself.scrollFrame.height())
+                morph.setWidth(self.width());
+                self.setHeight(
+                    Math.max(morph.height(), self.scrollFrame.height())
                 );
             }
         });
@@ -8569,9 +8569,9 @@ FrameMorph.prototype.developersMenu = function () {
 };
 
 FrameMorph.prototype.keepAllSubmorphsWithin = function () {
-    var myself = this;
+    var self = this;
     this.children.forEach(function (m) {
-        m.keepWithin(myself);
+        m.keepWithin(self);
     });
 };
 
@@ -8586,7 +8586,7 @@ function ScrollFrameMorph(scroller, size, sliderColor) {
 }
 
 ScrollFrameMorph.prototype.init = function (scroller, size, sliderColor) {
-    var myself = this;
+    var self = this;
     ScrollFrameMorph.uber.init.call(this);
     this.scrollBarSize = size || MorphicPreferences.scrollBarSize;
     this.autoScrollTrigger = null;
@@ -8607,10 +8607,10 @@ ScrollFrameMorph.prototype.init = function (scroller, size, sliderColor) {
     );
     this.hBar.setHeight(this.scrollBarSize);
     this.hBar.action = function (num) {
-        myself.contents.setPosition(
+        self.contents.setPosition(
             new Point(
-                myself.left() - num,
-                myself.contents.position().y
+                self.left() - num,
+                self.contents.position().y
             )
         );
     };
@@ -8626,10 +8626,10 @@ ScrollFrameMorph.prototype.init = function (scroller, size, sliderColor) {
     );
     this.vBar.setWidth(this.scrollBarSize);
     this.vBar.action = function (num) {
-        myself.contents.setPosition(
+        self.contents.setPosition(
             new Point(
-                myself.contents.position().x,
-                myself.top() - num
+                self.contents.position().x,
+                self.top() - num
             )
         );
     };
@@ -8765,7 +8765,7 @@ ScrollFrameMorph.prototype.mouseDownLeft = function (pos) {
     }
     var world = this.root(),
         oldPos = pos,
-        myself = this,
+        self = this,
         deltaX = 0,
         deltaY = 0,
         friction = 0.8;
@@ -8774,33 +8774,33 @@ ScrollFrameMorph.prototype.mouseDownLeft = function (pos) {
         var newPos;
         if (world.hand.mouseButton &&
             (world.hand.children.length === 0) &&
-            (myself.bounds.containsPoint(world.hand.position()))) {
+            (self.bounds.containsPoint(world.hand.position()))) {
             newPos = world.hand.bounds.origin;
             deltaX = newPos.x - oldPos.x;
             if (deltaX !== 0) {
-                myself.scrollX(deltaX);
+                self.scrollX(deltaX);
             }
             deltaY = newPos.y - oldPos.y;
             if (deltaY !== 0) {
-                myself.scrollY(deltaY);
+                self.scrollY(deltaY);
             }
             oldPos = newPos;
         } else {
-            if (!myself.hasVelocity) {
-                myself.step = function () {
+            if (!self.hasVelocity) {
+                self.step = function () {
                     nop();
                 };
             } else {
                 if ((Math.abs(deltaX) < 0.5) &&
                     (Math.abs(deltaY) < 0.5)) {
-                    myself.step = function () {
+                    self.step = function () {
                         nop();
                     };
                 } else {
                     deltaX = deltaX * friction;
-                    myself.scrollX(Math.round(deltaX));
+                    self.scrollX(Math.round(deltaX));
                     deltaY = deltaY * friction;
-                    myself.scrollY(Math.round(deltaY));
+                    self.scrollY(Math.round(deltaY));
                 }
             }
         }
@@ -8809,7 +8809,7 @@ ScrollFrameMorph.prototype.mouseDownLeft = function (pos) {
 };
 
 ScrollFrameMorph.prototype.startAutoScrolling = function () {
-    var myself = this,
+    var self = this,
         inset = MorphicPreferences.scrollBarSize * 3,
         world = this.world(),
         hand,
@@ -8825,16 +8825,16 @@ ScrollFrameMorph.prototype.startAutoScrolling = function () {
     }
     this.step = function () {
         pos = hand.bounds.origin;
-        inner = myself.bounds.insetBy(inset);
-        if ((myself.bounds.containsPoint(pos)) &&
+        inner = self.bounds.insetBy(inset);
+        if ((self.bounds.containsPoint(pos)) &&
             (!(inner.containsPoint(pos))) &&
             (hand.children.length > 0)) {
-            myself.autoScroll(pos);
+            self.autoScroll(pos);
         } else {
-            myself.step = function () {
+            self.step = function () {
                 nop();
             };
-            myself.autoScrollTrigger = null;
+            self.autoScrollTrigger = null;
         }
     };
 };
@@ -9021,7 +9021,7 @@ ListMorph.prototype.init = function (
 };
 
 ListMorph.prototype.buildListContents = function () {
-    var myself = this;
+    var self = this;
     if (this.listContents) {
         this.listContents.destroy();
     }
@@ -9038,7 +9038,7 @@ ListMorph.prototype.buildListContents = function () {
             bold = false,
             italic = false;
 
-        myself.format.forEach(function (pair) {
+        self.format.forEach(function (pair) {
             if (pair[1].call(null, element)) {
                 if (pair[0] === 'bold') {
                     bold = true;
@@ -9049,14 +9049,14 @@ ListMorph.prototype.buildListContents = function () {
                 }
             }
         });
-        myself.listContents.addItem(
-            myself.labelGetter(element), // label string
+        self.listContents.addItem(
+            self.labelGetter(element), // label string
             element, // action
             null, // hint
             color,
             bold,
             italic,
-            myself.doubleClickAction
+            self.doubleClickAction
         );
     });
     this.listContents.setPosition(this.contents.position());
@@ -9335,15 +9335,15 @@ HandMorph.prototype.changed = function () {
 
 HandMorph.prototype.morphAtPointer = function () {
     var morphs = this.world.allChildren().slice(0).reverse(),
-        myself = this,
+        self = this,
         result = null;
 
     morphs.forEach(function (m) {
-        if (m.visibleBounds().containsPoint(myself.bounds.origin) &&
+        if (m.visibleBounds().containsPoint(self.bounds.origin) &&
             result === null &&
             m.isVisible &&
             (m.noticesTransparentClick ||
-                (!m.isTransparentAt(myself.bounds.origin))) &&
+                (!m.isTransparentAt(self.bounds.origin))) &&
             (!(m instanceof ShadowMorph))) {
             result = m;
         }
@@ -9360,12 +9360,12 @@ HandMorph.prototype.morphAtPointer = function () {
  Has some issues, commented out for now
 
  HandMorph.prototype.morphAtPointer = function () {
- var myself = this;
+ var self = this;
  return this.world.topMorphSuchThat(function (m) {
- return m.visibleBounds().containsPoint(myself.bounds.origin) &&
+ return m.visibleBounds().containsPoint(self.bounds.origin) &&
  m.isVisible &&
  (m.noticesTransparentClick ||
- (! m.isTransparentAt(myself.bounds.origin))) &&
+ (! m.isTransparentAt(self.bounds.origin))) &&
  (! (m instanceof ShadowMorph));
  });
  };
@@ -9373,10 +9373,10 @@ HandMorph.prototype.morphAtPointer = function () {
 
 HandMorph.prototype.allMorphsAtPointer = function () {
     var morphs = this.world.allChildren(),
-        myself = this;
+        self = this;
     return morphs.filter(function (m) {
         return m.isVisible &&
-            m.visibleBounds().containsPoint(myself.bounds.origin);
+            m.visibleBounds().containsPoint(self.bounds.origin);
     });
 };
 
@@ -9515,16 +9515,16 @@ HandMorph.prototype.processMouseDown = function (event) {
 };
 
 HandMorph.prototype.processTouchStart = function (event) {
-    var myself = this;
+    var self = this;
     MorphicPreferences.isTouchDevice = true;
     clearInterval(this.touchHoldTimeout);
     if (event.touches.length === 1) {
         this.touchHoldTimeout = setInterval( // simulate mouseRightClick
             function () {
-                myself.processMouseDown({button: 2});
-                myself.processMouseUp({button: 2});
+                self.processMouseDown({button: 2});
+                self.processMouseUp({button: 2});
                 event.preventDefault();
-                clearInterval(myself.touchHoldTimeout);
+                clearInterval(self.touchHoldTimeout);
             },
             400
         );
@@ -9606,7 +9606,7 @@ HandMorph.prototype.processMouseMove = function (event) {
     var pos,
         posInDocument = getDocumentPositionOf(this.world.worldCanvas),
         mouseOverNew,
-        myself = this,
+        self = this,
         morph,
         topMorph,
         fb;
@@ -9676,27 +9676,27 @@ HandMorph.prototype.processMouseMove = function (event) {
             if (old.mouseLeave) {
                 old.mouseLeave();
             }
-            if (old.mouseLeaveDragging && myself.mouseButton) {
+            if (old.mouseLeaveDragging && self.mouseButton) {
                 old.mouseLeaveDragging();
             }
         }
     });
     mouseOverNew.forEach(function (newMorph) {
-        if (!contains(myself.mouseOverList, newMorph)) {
+        if (!contains(self.mouseOverList, newMorph)) {
             if (newMorph.mouseEnter) {
                 newMorph.mouseEnter();
             }
-            if (newMorph.mouseEnterDragging && myself.mouseButton) {
+            if (newMorph.mouseEnterDragging && self.mouseButton) {
                 newMorph.mouseEnterDragging();
             }
         }
 
         // autoScrolling support:
-        if (myself.children.length > 0) {
+        if (self.children.length > 0) {
             if (newMorph instanceof ScrollFrameMorph) {
                 if (!newMorph.bounds.insetBy(
                     MorphicPreferences.scrollBarSize * 3
-                ).containsPoint(myself.bounds.origin)) {
+                ).containsPoint(self.bounds.origin)) {
                     newMorph.startAutoScrolling();
                 }
             }
@@ -9903,12 +9903,12 @@ HandMorph.prototype.destroyTemporaries = function () {
      that it needs to remove them. The primary purpose of temporaries is
      to display tools tips of speech bubble help.
      */
-    var myself = this;
+    var self = this;
     this.temporaries.forEach(function (morph) {
         if (!(morph.isClickable
-            && morph.bounds.containsPoint(myself.position()))) {
+            && morph.bounds.containsPoint(self.position()))) {
             morph.destroy();
-            myself.temporaries.splice(myself.temporaries.indexOf(morph), 1);
+            self.temporaries.splice(self.temporaries.indexOf(morph), 1);
         }
     });
 };
@@ -9990,10 +9990,10 @@ WorldMorph.prototype.fullDrawOn = function (aCanvas, aRect) {
 };
 
 WorldMorph.prototype.updateBroken = function () {
-    var myself = this;
+    var self = this;
     this.broken.forEach(function (rect) {
         if (rect.extent().gt(new Point(0, 0))) {
-            myself.fullDrawOn(myself.worldCanvas, rect);
+            self.fullDrawOn(self.worldCanvas, rect);
         }
     });
     this.broken = [];
@@ -10008,7 +10008,7 @@ WorldMorph.prototype.fillPage = function () {
     var pos = getDocumentPositionOf(this.worldCanvas),
         clientHeight = window.innerHeight,
         clientWidth = window.innerWidth,
-        myself = this;
+        self = this;
 
 
     if (pos.x > 0) {
@@ -10038,7 +10038,7 @@ WorldMorph.prototype.fillPage = function () {
     }
     this.children.forEach(function (child) {
         if (child.reactToWorldResize) {
-            child.reactToWorldResize(myself.bounds.copy());
+            child.reactToWorldResize(self.bounds.copy());
         }
     });
 };
@@ -10081,7 +10081,7 @@ WorldMorph.prototype.getGlobalPixelColor = function (point) {
 // WorldMorph events:
 
 WorldMorph.prototype.initVirtualKeyboard = function () {
-    var myself = this;
+    var self = this;
 
     if (this.virtualKeyboard) {
         document.body.removeChild(this.virtualKeyboard);
@@ -10109,9 +10109,9 @@ WorldMorph.prototype.initVirtualKeyboard = function () {
         "keydown",
         function (event) {
             // remember the keyCode in the world's currentKey property
-            myself.currentKey = event.keyCode;
-            if (myself.keyboardReceiver) {
-                myself.keyboardReceiver.processKeyDown(event);
+            self.currentKey = event.keyCode;
+            if (self.keyboardReceiver) {
+                self.keyboardReceiver.processKeyDown(event);
             }
             // supress backspace override
             if (event.keyIdentifier === 'U+0008' ||
@@ -10122,8 +10122,8 @@ WorldMorph.prototype.initVirtualKeyboard = function () {
             // received by all browsers
             if (event.keyIdentifier === 'U+0009' ||
                 event.keyIdentifier === 'Tab') {
-                if (myself.keyboardReceiver) {
-                    myself.keyboardReceiver.processKeyPress(event);
+                if (self.keyboardReceiver) {
+                    self.keyboardReceiver.processKeyPress(event);
                 }
                 event.preventDefault();
             }
@@ -10135,11 +10135,11 @@ WorldMorph.prototype.initVirtualKeyboard = function () {
         "keyup",
         function (event) {
             // flush the world's currentKey property
-            myself.currentKey = null;
+            self.currentKey = null;
             // dispatch to keyboard receiver
-            if (myself.keyboardReceiver) {
-                if (myself.keyboardReceiver.processKeyUp) {
-                    myself.keyboardReceiver.processKeyUp(event);
+            if (self.keyboardReceiver) {
+                if (self.keyboardReceiver.processKeyUp) {
+                    self.keyboardReceiver.processKeyUp(event);
                 }
             }
             event.preventDefault();
@@ -10150,8 +10150,8 @@ WorldMorph.prototype.initVirtualKeyboard = function () {
     this.virtualKeyboard.addEventListener(
         "keypress",
         function (event) {
-            if (myself.keyboardReceiver) {
-                myself.keyboardReceiver.processKeyPress(event);
+            if (self.keyboardReceiver) {
+                self.keyboardReceiver.processKeyPress(event);
             }
             event.preventDefault();
         },
@@ -10160,10 +10160,10 @@ WorldMorph.prototype.initVirtualKeyboard = function () {
 };
 
 WorldMorph.prototype.initEventListeners = function () {
-    var canvas = this.worldCanvas, myself = this;
+    var canvas = this.worldCanvas, self = this;
 
-    if (myself.useFillPage) {
-        myself.fillPage();
+    if (self.useFillPage) {
+        self.fillPage();
     } else {
         this.changed();
     }
@@ -10173,7 +10173,7 @@ WorldMorph.prototype.initEventListeners = function () {
         function (event) {
             event.preventDefault();
             canvas.focus();
-            myself.hand.processMouseDown(event);
+            self.hand.processMouseDown(event);
         },
         false
     );
@@ -10181,7 +10181,7 @@ WorldMorph.prototype.initEventListeners = function () {
     canvas.addEventListener(
         "touchstart",
         function (event) {
-            myself.hand.processTouchStart(event);
+            self.hand.processTouchStart(event);
         },
         false
     );
@@ -10190,7 +10190,7 @@ WorldMorph.prototype.initEventListeners = function () {
         "mouseup",
         function (event) {
             event.preventDefault();
-            myself.hand.processMouseUp(event);
+            self.hand.processMouseUp(event);
         },
         false
     );
@@ -10199,7 +10199,7 @@ WorldMorph.prototype.initEventListeners = function () {
         "dblclick",
         function (event) {
             event.preventDefault();
-            myself.hand.processDoubleClick(event);
+            self.hand.processDoubleClick(event);
         },
         false
     );
@@ -10207,7 +10207,7 @@ WorldMorph.prototype.initEventListeners = function () {
     canvas.addEventListener(
         "touchend",
         function (event) {
-            myself.hand.processTouchEnd(event);
+            self.hand.processTouchEnd(event);
         },
         false
     );
@@ -10215,7 +10215,7 @@ WorldMorph.prototype.initEventListeners = function () {
     canvas.addEventListener(
         "mousemove",
         function (event) {
-            myself.hand.processMouseMove(event);
+            self.hand.processMouseMove(event);
         },
         false
     );
@@ -10223,7 +10223,7 @@ WorldMorph.prototype.initEventListeners = function () {
     canvas.addEventListener(
         "touchmove",
         function (event) {
-            myself.hand.processTouchMove(event);
+            self.hand.processTouchMove(event);
         },
         false
     );
@@ -10241,9 +10241,9 @@ WorldMorph.prototype.initEventListeners = function () {
         "keydown",
         function (event) {
             // remember the keyCode in the world's currentKey property
-            myself.currentKey = event.keyCode;
-            if (myself.keyboardReceiver) {
-                myself.keyboardReceiver.processKeyDown(event);
+            self.currentKey = event.keyCode;
+            if (self.keyboardReceiver) {
+                self.keyboardReceiver.processKeyDown(event);
             }
             // supress backspace override
             if (event.keyIdentifier === 'U+0008' ||
@@ -10254,8 +10254,8 @@ WorldMorph.prototype.initEventListeners = function () {
             // received by all browsers
             if (event.keyIdentifier === 'U+0009' ||
                 event.keyIdentifier === 'Tab') {
-                if (myself.keyboardReceiver) {
-                    myself.keyboardReceiver.processKeyPress(event);
+                if (self.keyboardReceiver) {
+                    self.keyboardReceiver.processKeyPress(event);
                 }
                 event.preventDefault();
             }
@@ -10267,11 +10267,11 @@ WorldMorph.prototype.initEventListeners = function () {
         "keyup",
         function (event) {
             // flush the world's currentKey property
-            myself.currentKey = null;
+            self.currentKey = null;
             // dispatch to keyboard receiver
-            if (myself.keyboardReceiver) {
-                if (myself.keyboardReceiver.processKeyUp) {
-                    myself.keyboardReceiver.processKeyUp(event);
+            if (self.keyboardReceiver) {
+                if (self.keyboardReceiver.processKeyUp) {
+                    self.keyboardReceiver.processKeyUp(event);
                 }
             }
             event.preventDefault();
@@ -10282,8 +10282,8 @@ WorldMorph.prototype.initEventListeners = function () {
     canvas.addEventListener(
         "keypress",
         function (event) {
-            if (myself.keyboardReceiver) {
-                myself.keyboardReceiver.processKeyPress(event);
+            if (self.keyboardReceiver) {
+                self.keyboardReceiver.processKeyPress(event);
             }
             event.preventDefault();
         },
@@ -10293,7 +10293,7 @@ WorldMorph.prototype.initEventListeners = function () {
     canvas.addEventListener( // Safari, Chrome
         "mousewheel",
         function (event) {
-            myself.hand.processMouseScroll(event);
+            self.hand.processMouseScroll(event);
             event.preventDefault();
         },
         false
@@ -10301,7 +10301,7 @@ WorldMorph.prototype.initEventListeners = function () {
     canvas.addEventListener( // Firefox
         "DOMMouseScroll",
         function (event) {
-            myself.hand.processMouseScroll(event);
+            self.hand.processMouseScroll(event);
             event.preventDefault();
         },
         false
@@ -10311,8 +10311,8 @@ WorldMorph.prototype.initEventListeners = function () {
         "paste",
         function (event) {
             var txt = event.clipboardData.getData("Text");
-            if (txt && myself.cursor) {
-                myself.cursor.insert(txt);
+            if (txt && self.cursor) {
+                self.cursor.insert(txt);
             }
         },
         false
@@ -10328,7 +10328,7 @@ WorldMorph.prototype.initEventListeners = function () {
     window.addEventListener(
         "drop",
         function (event) {
-            myself.hand.processDrop(event);
+            self.hand.processDrop(event);
             event.preventDefault();
         },
         false
@@ -10337,8 +10337,8 @@ WorldMorph.prototype.initEventListeners = function () {
     window.addEventListener(
         "resize",
         function () {
-            if (myself.useFillPage) {
-                myself.fillPage();
+            if (self.useFillPage) {
+                self.fillPage();
             }
         },
         false
@@ -10496,11 +10496,11 @@ WorldMorph.prototype.contextMenu = function () {
 };
 
 WorldMorph.prototype.userCreateMorph = function () {
-    var myself = this, menu, newMorph;
+    var self = this, menu, newMorph;
 
     function create(aMorph) {
         aMorph.isDraggable = true;
-        aMorph.pickUp(myself);
+        aMorph.pickUp(self);
     }
 
     menu = new MenuMorph(this, 'make a morph');
@@ -10638,9 +10638,9 @@ WorldMorph.prototype.userCreateMorph = function () {
     menu.addItem('pen', function () {
         create(new PenMorph());
     });
-    if (myself.customMorphs) {
+    if (self.customMorphs) {
         menu.addLine();
-        myself.customMorphs().forEach(function (morph) {
+        self.customMorphs().forEach(function (morph) {
             menu.addItem(morph.toString(), function () {
                 create(morph);
             });

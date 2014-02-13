@@ -80,7 +80,7 @@ Cloud.prototype.signup = function (
     ) {
     // both callBack and errorCall are two-argument functions
     var request = new XMLHttpRequest(),
-        myself = this;
+        self = this;
     try {
         request.open(
             "GET",
@@ -116,7 +116,7 @@ Cloud.prototype.signup = function (
                 } else {
                     errorCall.call(
                         null,
-                        myself.url + 'SignUp',
+                        self.url + 'SignUp',
                         'could not connect to:'
                     );
                 }
@@ -138,7 +138,7 @@ Cloud.prototype.getPublicProject = function (
     // callBack is a single argument function, errorCall take two args
     var request = new XMLHttpRequest(),
         responseList,
-        myself = this;
+        self = this;
     try {
         request.open(
             "GET",
@@ -162,7 +162,7 @@ Cloud.prototype.getPublicProject = function (
                             request.responseText
                         );
                     } else {
-                        responseList = myself.parseResponse(
+                        responseList = self.parseResponse(
                             request.responseText
                         );
                         callBack.call(
@@ -173,7 +173,7 @@ Cloud.prototype.getPublicProject = function (
                 } else {
                     errorCall.call(
                         null,
-                        myself.url + 'Public',
+                        self.url + 'Public',
                         'could not connect to:'
                     );
                 }
@@ -192,7 +192,7 @@ Cloud.prototype.resetPassword = function (
     ) {
     // both callBack and errorCall are two-argument functions
     var request = new XMLHttpRequest(),
-        myself = this;
+        self = this;
     try {
         request.open(
             "GET",
@@ -226,7 +226,7 @@ Cloud.prototype.resetPassword = function (
                 } else {
                     errorCall.call(
                         null,
-                        myself.url + 'ResetPW',
+                        self.url + 'ResetPW',
                         'could not connect to:'
                     );
                 }
@@ -244,7 +244,7 @@ Cloud.prototype.connect = function (
     ) {
     // both callBack and errorCall are two-argument functions
     var request = new XMLHttpRequest(),
-        myself = this;
+        self = this;
     try {
         request.open(
             "GET",
@@ -259,11 +259,11 @@ Cloud.prototype.connect = function (
         request.onreadystatechange = function () {
             if (request.readyState === 4) {
                 if (request.responseText) {
-                    myself.api = myself.parseAPI(request.responseText);
-                    myself.session = request.getResponseHeader('MioCracker')
+                    self.api = self.parseAPI(request.responseText);
+                    self.session = request.getResponseHeader('MioCracker')
                         .split(';')[0];
-                    if (myself.api.login) {
-                        callBack.call(null, myself.api, 'Snap!Cloud');
+                    if (self.api.login) {
+                        callBack.call(null, self.api, 'Snap!Cloud');
                     } else {
                         errorCall.call(
                             null,
@@ -273,7 +273,7 @@ Cloud.prototype.connect = function (
                 } else {
                     errorCall.call(
                         null,
-                        myself.url,
+                        self.url,
                         'could not connect to:'
                     );
                 }
@@ -292,11 +292,11 @@ Cloud.prototype.login = function (
     callBack,
     errorCall
     ) {
-    var myself = this;
+    var self = this;
     this.connect(
         function () {
-            myself.rawLogin(username, password, callBack, errorCall);
-            myself.disconnect();
+            self.rawLogin(username, password, callBack, errorCall);
+            self.disconnect();
         },
         errorCall
     );
@@ -309,7 +309,7 @@ Cloud.prototype.rawLogin = function (
     errorCall
     ) {
     // both callBack and errorCall are two-argument functions
-    var myself = this,
+    var self = this,
         pwHash = hex_sha512("miosoft%20miocon,"
             + this.session.split('=')[1] + ","
             + encodeURIComponent(username.toLowerCase()) + ","
@@ -318,9 +318,9 @@ Cloud.prototype.rawLogin = function (
     this.callService(
         'login',
         function (response, url) {
-            if (myself.api.logout) {
-                myself.username = username;
-                myself.password = password;
+            if (self.api.logout) {
+                self.username = username;
+                self.password = password;
                 callBack.call(null, response, url);
             } else {
                 errorCall.call(
@@ -352,7 +352,7 @@ Cloud.prototype.reconnect = function (
 };
 
 Cloud.prototype.saveProject = function (ide, callBack, errorCall) {
-    var myself = this,
+    var self = this,
         pdata,
         media;
 
@@ -363,13 +363,13 @@ Cloud.prototype.saveProject = function (ide, callBack, errorCall) {
     ide.serializer.isCollectingMedia = false;
     ide.serializer.flushMedia();
 
-    myself.reconnect(
+    self.reconnect(
         function () {
-            myself.callService(
+            self.callService(
                 'saveProject',
                 function (response, url) {
                     callBack.call(null, response, url);
-                    myself.disconnect();
+                    self.disconnect();
                     ide.hasChangedMedia = false;
                 },
                 errorCall,
@@ -381,14 +381,14 @@ Cloud.prototype.saveProject = function (ide, callBack, errorCall) {
 };
 
 Cloud.prototype.getProjectList = function (callBack, errorCall) {
-    var myself = this;
+    var self = this;
     this.reconnect(
         function () {
-            myself.callService(
+            self.callService(
                 'getProjectList',
                 function (response, url) {
                     callBack.call(null, response, url);
-                    myself.disconnect();
+                    self.disconnect();
                 },
                 errorCall
             );
@@ -403,14 +403,14 @@ Cloud.prototype.changePassword = function (
     callBack,
     errorCall
     ) {
-    var myself = this;
+    var self = this;
     this.reconnect(
         function () {
-            myself.callService(
+            self.callService(
                 'changePassword',
                 function (response, url) {
                     callBack.call(null, response, url);
-                    myself.disconnect();
+                    self.disconnect();
                 },
                 errorCall,
                 [oldPW, newPW]
@@ -442,7 +442,7 @@ Cloud.prototype.disconnect = function () {
 Cloud.prototype.callURL = function (url, callBack, errorCall) {
     // both callBack and errorCall are optional two-argument functions
     var request = new XMLHttpRequest(),
-        myself = this;
+        self = this;
     try {
         request.open('GET', url, true);
         request.withCredentials = true;
@@ -454,7 +454,7 @@ Cloud.prototype.callURL = function (url, callBack, errorCall) {
         request.onreadystatechange = function () {
             if (request.readyState === 4) {
                 if (request.responseText) {
-                    var responseList = myself.parseResponse(
+                    var responseList = self.parseResponse(
                         request.responseText
                     );
                     callBack.call(null, responseList, url);
@@ -482,7 +482,7 @@ Cloud.prototype.callService = function (
     // both callBack and errorCall are optional two-argument functions
     var request = new XMLHttpRequest(),
         service = this.api[serviceName],
-        myself = this,
+        self = this,
         postDict;
 
     if (!this.session) {
@@ -524,9 +524,9 @@ Cloud.prototype.callService = function (
                     return;
                 }
                 if (serviceName === 'login') {
-                    myself.api = myself.parseAPI(request.responseText);
+                    self.api = self.parseAPI(request.responseText);
                 }
-                responseList = myself.parseResponse(
+                responseList = self.parseResponse(
                     request.responseText
                 );
                 callBack.call(null, responseList, service.url);
