@@ -33,12 +33,12 @@ class CourseSerializer(serializers.ModelSerializer):
 class LessonSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
          model = Lesson
-         fields = ('url', 'id', 'name', 'description', 'difficulty', 'user')
+         fields = ('url', 'id', 'name', 'description', 'difficulty', 'user', 'guide')
 
 class CourseLessonSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
          model = Lesson
-         fields = ('url', 'id', 'name', 'description', 'difficulty', 'course')
+         fields = ('url', 'id', 'name', 'description', 'difficulty', 'course', 'guide')
 
 class SnapSerializer(serializers.HyperlinkedModelSerializer):
     lesson = serializers.HyperlinkedRelatedField(many=True, read_only=True,view_name='lesson-detail')

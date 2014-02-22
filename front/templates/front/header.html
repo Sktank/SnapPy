@@ -1,7 +1,7 @@
 {% extends 'front/base.html' %}
 
 {% block navbar %}
-    <ul class="nav nav-tabs nav-justified">
+    <ul class="nav nav-tabs nav-justified" id="front-nav-bar">
         <li id="nav-home" {% if index %} class="active" {% endif %}><a href="{% url 'index' %}">Home</a></li>
         <li id="nav-about" {% if about %} class="active" {% endif %}><a href="{% url 'about' %}">About</a></li>
         <li id="nav-register" {% if register %} class="active" {% endif %}><a href="{% url 'register' %}">Register</a></li>

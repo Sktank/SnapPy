@@ -87,6 +87,18 @@ window.TeacherCourseRegisterView = Backbone.View.extend({
 
     render:function (eventName) {
         $(this.el).html(this.template());
+        $( document ).on( "click", "#create-new-lesson-tab", function() {
+            $("#teacher_additions_navs").children().removeClass("active");
+            $(this).parent().addClass("active");
+            $("#create-class").css("display", "none");
+            $("#create-lesson").css("display", "inline");
+        });
+        $( document ).on( "click", "#create-new-class-tab", function() {
+            $("#teacher_additions_navs").children().removeClass("active");
+            $(this).parent().addClass("active");
+            $("#create-lesson").css("display", "none");
+            $("#create-class").css("display", "inline");
+        });
         return this;
     }
 
