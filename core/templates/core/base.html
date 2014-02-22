@@ -27,6 +27,10 @@
     editorContainer.style.display = "none";
     document.body.appendChild(editorContainer);
     window.onload = function () {
+//        var worldCanvas = document.getElementById('world');
+//        worldCanvas.width = 800;
+//        worldCanvas.height = 400;
+
         window.world = new WorldMorph(document.getElementById('world'));
         window.ide = new IDE_Morph();
         ide.codemirror = editorContainer;

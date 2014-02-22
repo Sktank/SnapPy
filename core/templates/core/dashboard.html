@@ -1,24 +1,312 @@
 {% extends 'front/base.html' %}
 
-{% block body %}
-
-
-<div class="btn-group" style="float: right;">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-        {{ username }} <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" role="menu">
-        <li><a href="{% url 'logout' %}">Logout</a></li>
-    </ul>
+{% block navbar %}
+<div id="snappy-navbar" xmlns="http://www.w3.org/1999/html">
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h4 id="current-lesson"></h4>
+    </div>
+    <div class="col-md-2">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                {{ username }} <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+    </div>
 </div>
+{% endblock %}
+
+{% block content %}
+    <style type="text/css">
+
+        body {
+            background-image:url('/static/img/blue_background.jpg');
+            color: #f5f5f5;
+        }
+
+        .lesson-details {
+            /*border: 3px solid #add8e6;*/
+            /*height: 100px;*/
+        }
+
+        #dash-main {
+            background-color: #ffffff;
+            color: #428bca;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .dash-section-title {
+            position: relative;
+            margin-top: 5px;
+            margin-left: 10px;
+        }
+
+        .dash-list-item-container {
+            /*background-color: #fafad2;*/
+            border: 1px solid #d3d3d3;
+            min-height: 100px;
+            margin-bottom: -1px;
+            padding: 10px;
+        }
+
+        .active-container {
+            background-color: rgba(0, 172, 226, 0.2)
+        }
+
+        .container-focus {
+            background-color: rgba(86, 199, 252, 0.1);
+        }
+
+        .recommend {
+            border: 1px solid #d3d3d3;
+            margin-bottom: -1px;
+        }
+
+        .recommend-header {
+            margin-left: 5%;
+            margin-top: 5px;
+            margin-bottom: 2px;
+            color: purple;
+        }
+
+        .list-container-btn {
+            margin-left: 70%;
+            margin-bottom: 10px;
+        }
+
+        #update-form-message {
+            margin-left: 15px;
+            color: green;
+        }
+
+        #course-name-error {
+            color: red;
+            /*font-size: 8px;*/
+        }
+
+
+        #world {
+            z-index:-2;
+            height:800px;
+            width: 1100px;
+            border: 1px solid grey;
+            border-radius: 5px;
+
+        }
+
+        #codeEditor {
+            position: relative;
+            z-index: 0;
+            margin-top: -798px;
+            margin-left: 2px;
+        }
+        #snap-container{
+            margin-top: 5px;
+            position: absolute;
+            left: 0;
+            width: 1300px;
+
+        }
+
+        #lesson-guide {
+            height: 800px;
+            padding-right: 0px;
+            padding-left: 25px;
+            width: 20%;
+            min-width: 290px;
+            overflow: auto;
+            border: 1px solid grey;
+            background-color: #ffffff;
+            color: #428bca;
+            border-radius: 5px;
+        }
+
+        #snap-row {
+            min-width: 1300px;
+        }
+
+        .class-search-item {
+            border: 1px solid grey;
+            color: #ffffff;
+            margin-bottom: 5px;
+            border-radius: 10px;
+            padding-left: 5px;
+        }
+
+        .queue_btn {
+            margin-top: 20px;
+            width: 40%;
+        }
+
+        .enroll-btn {
+            margin-left: 10%;
+        }
+
+        .unenrolled_class {
+            background-color: #00B8C0;
+            cursor: pointer;
+        }
+
+        .queued_class {
+            background-color: #C07706;
+            cursor: default;
+        }
+
+        .enrolled_class {
+            background-color: rgb(211, 211, 211);
+
+        }
+    </style>
+
+
+    <div id="content">
+    <div class="col-md-12">
+    <h2>Hello {{ username }}!</h2>
+    <hr>
+    </div>
+
+    <div class="row">
+    <div class="col-md-2" id="dash-sidebar">
+        <h4>Dash Sidebar</h4>
+        <div class="list-group">
+            <a href="#teacher" class="list-group-item main-tab" id="teacher-list-tab">
+                <i class="fa fa-leaf"></i> Teacher
+            </a>
+            <a href="#student" class="list-group-item main-tab" id="student-list-tab">
+                <i class="fa fa-compass"></i> Student
+            </a>
+            <a href="#lessons" class="list-group-item main-tab" id="lesson-list-tab">
+                <i class="fa fa-list"></i> Individual
+            </a>
+
+
+        </div>
+
+        <div id="dash-sidebar-lower">
+
+        </div>
+    </div>
+    <div class="col-md-8">
+    <div id="dash-main">
+        <h3>Lessons</h3>
+        <div class="recommend">
+            <p class="recommend-header"><b>Recommended</b></p>
+        </div>
+        <div id="lesson-list">
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <script type="text/template" id="lesson-list-item">
+        <div id='dash-list-item-container-<%= id %>' class="dash-list-item-container">
+        <h3 id='title-<%= id %>' class="dash-section-title"><%= name %></h3>
+        </div>
+    </script>
+
+    <script type="text/template" id="lesson-details">
+        <h5> <%= description %></h5>
+        <p>
+            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+        </p>
+        <a href="#lessons/<%= id %>/snap"><div class="btn btn-primary btn-lg list-container-btn" id='lesson-btn-<%= id %>'>Begin Lesson</div></a>
+    </script>
+
+    <script type="text/template" id="snap-template">
+
+        <div id="snap-container">
+            <div class="row" id="snap-row">
+            <div class="col-md-3" id="lesson-guide">
+                <h4>Welcome!</h4>
+                <p>
+                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+                </p>
+                <p>
+                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+                </p>
+            </div>
+                <div class="col-md-9" id="snap-app">
+                    <canvas id="world" tabindex="1"/>
+
+                </div>
+            </div>
+        </div>
+
+        <link rel="stylesheet" type="text/css" href="/static/codemirror/lib/codemirror.css">
+    </script>
+
+    <script type="text/template" id="teacher-list-item">
+        <div id='dash-list-item-container-<%= id %>' class="dash-list-item-container">
+            <h3 id='course-<%= id %>' class="dash-section-title"><%= name %></h3>
+        </div>
+    </script>
+
+
+    <script type="text/template" id="teacher-course-register">
+        <hr>
+        <h4>Register A New Class</h4>
+        <form role="form" action="#teacher">{% csrf_token %}
+            <div class="form-group" id="course-name-group">
+                <label for="course-name">Course Name</label>
+                <input type="name" class="form-control" id="course-name" placeholder="Enter Name">
+                <ul class="errorlist" id="course-name-error"></ul>
+            </div>
+            <div class="btn btn-default" id="teacher-register-class-btn">Submit</div> <span id="update-form-message"></span>
+        </form>
+    </script>
+
+    <script type="text/template" id="teacher-course-details">
+        <p>
+            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+        </p>
+    </script>
+
+    <script type="text/template" id="student-list-item">
+        <div id='dash-list-item-container-<%= id %>' class="dash-list-item-container">
+            <h3 id='course-<%= id %>' class="dash-section-title"><%= name %></h3>
+        </div>
+    </script>
+
+    <script type="text/template" id="student-course-details">
+
+    </script>
+
+    <script type="text/template" id="student-class-search">
+        <hr>
+        <h4>Search For Your Class</h4>
+    </script>
+
+    <script type="text/template" id="student-class-search-item">
+            <b><%= name %></b>
+    </script>
+
+    <script type="text/template" id="student-class-enrollment-queue">
+        <div class="row"></div>
+        <hr>
+        <h4>Class Queue</h4>
+    </script>
+
+    <script type="text/template" id="student-class-enrollment-queue-item">
+       - <%= name %>
+    </script>
+
 {% endblock %}
 
 
 {% block jsinline %}
     <script type="text/javascript" src="/static/js/underscore.js"></script>
     <script type="text/javascript" src="/static/js/backbone.js"></script>
-
-    <script>
-
-    </script>
+    <script type="text/javascript" src="/static/js/ajax-csrf.js"></script>
+    <script type="text/javascript" src="/static/js/dash/lessons.js"></script>
+    <script type="text/javascript" src="/static/js/dash/teacher.js"></script>
+    <script type="text/javascript" src="/static/js/dash/student.js"></script>
+    <script type="text/javascript" src="/static/js/dash/dash-utils.js"></script>
+    <script type="text/javascript" src="/static/js/dash/dashboard.js"></script>
 {% endblock %}

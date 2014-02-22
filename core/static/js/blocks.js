@@ -1781,8 +1781,8 @@ BlockMorph.prototype.init = function () {
 BlockMorph.prototype.receiver = function () {
     // answer the object to which I apply (whose method I represent)
     var up = this.parent;
-    console.log('up');
-    console.log(up);
+//    console.log('up');
+//    console.log(up);
     while (!!up) {
         if (up.owner) {
             return up.owner;
@@ -3850,7 +3850,7 @@ ReporterBlockMorph.uber = BlockMorph.prototype;
 // ReporterBlockMorph instance creation:
 
 function ReporterBlockMorph(isPredicate) {
-    console.log('reporter in play');
+//    console.log('reporter in play');
     this.init(isPredicate);
 }
 
@@ -4532,7 +4532,7 @@ ScriptsMorph.prototype.init = function (owner) {
     this.lastNextBlock = null;
 
     ScriptsMorph.uber.init.call(this);
-    console.log('owner = ' + this.owner);
+//    console.log('owner = ' + this.owner);
     this.setColor(new Color(70, 70, 70));
 };
 

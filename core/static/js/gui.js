@@ -493,9 +493,11 @@ IDE_Morph.prototype.createControlBar = function () {
     this.controlBar = new Morph();
     this.controlBar.color = this.frameColor;
     this.controlBar.setHeight(this.logo.height()); // height is fixed
-    this.controlBar.mouseClickLeft = function () {
-        this.world().fillPage();
-    };
+    if (window.world.useFillPage) {
+        this.controlBar.mouseClickLeft = function () {
+            this.world().fillPage();
+        };
+    }
     this.add(this.controlBar);
 
     //smallStageButton
@@ -1192,7 +1194,12 @@ IDE_Morph.prototype.createSpriteBar = function () {
         // sprite buttons should stay in same place when moving between code tab and other tabs
         if (situation === 'tabEditor') {
             if (this.parent.currentTab === 'code') {
-                paddingLeft = 200;
+                if (this.parent.lastTab === 'code') {
+                    paddingLeft = 0;
+                }
+                else {
+                    paddingLeft = 200;
+                }
             }
             else if (this.parent.lastTab === 'code') {
                 paddingLeft = -200;
@@ -1684,6 +1691,7 @@ IDE_Morph.prototype.setExtent = function (point) {
             new Point(725, 370) : new Point(965, 490);
     }
     ext = point.max(minExt);
+//    ext = new Point(1100, 800);
     console.log(ext.x);
     console.log(ext.y);
     IDE_Morph.uber.setExtent.call(this, ext);

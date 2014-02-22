@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
+from core.models import WebUser, Lesson
 from front.forms import RegistrationForm, LoginForm
 from django.contrib.auth.models import User
 
@@ -34,10 +35,24 @@ def front_register(request, template="front/register.html"):
             password = form.cleaned_data['password1']
             user = User.objects.create_user(username, email, password)
             new_user = authenticate(username=username, password=password)
+
+            # create a web user
+            webUser = WebUser()
+            webUser.userId = user.id
+            webUser.username = user.username
+            webUser.save()
+
+            # create a bunch of lessons for web user
+            createLessons(webUser)
+
             login(request, new_user)
+
             #send a confirmation message
             messages.success(request, "Account Created!")
             return HttpResponseRedirect(reverse("dashboard"))
+
+
+
     else:
         form = RegistrationForm()
 
@@ -65,6 +80,24 @@ def front_login(request, template="front/login.html"):
     }
     c = RequestContext(request, values)
     return render_to_response(template, c)
+
+
+def createLessons(webUser):
+    names = ['Lesson 1', 'Lesson 2', 'Lesson 3', 'Lesson 4', 'Lesson 5', 'Lesson 6' ]
+    descriptions = ['Movement', 'Variables', 'Conditionals', 'Loops', 'Circle', 'Spiral']
+    difficulties = [1,1,2,2,3,3]
+    num = len(names)
+
+    for i in range(0, num):
+        lesson = Lesson()
+        lesson.name = names[i]
+        lesson.description = descriptions[i]
+        lesson.difficulty = difficulties[i]
+        lesson.user = webUser
+        lesson.isCompleted = False
+        lesson.isStarted = False
+        lesson.save()
+
 
 
 
