@@ -10,9 +10,9 @@ var AppRouter = Backbone.Router.extend({
 
     routes:{
         "":"lessonsList",
-        "lessons":"lessonsList",
-        "lessons/:id":"lessonDetails",
-        "lessons/:id/snap":"snap",
+        "solo":"lessonsList",
+        "solo/:id":"lessonDetails",
+        "solo/:id/snap":"snap",
         "teacher":"teacherList",
         "teacher/:id":"teacherCourseDetails",
         "teacher/:id/lesson/:lid":"teacherLessonDetails",
@@ -41,9 +41,11 @@ var AppRouter = Backbone.Router.extend({
                 $('#dash-main').html(self.lessonListView.render().el);
                 if (self.lessonRequestedId) {
                     self.lessonDetails(self.lessonRequestedId);
+                    delete self.lessonRequestedId;
                 }
                 else if (self.snapRequestedId) {
                     self.snap(self.snapRequestedId);
+                    delete self.snapRequestedId;
                 }
             }
         });
@@ -133,7 +135,7 @@ var AppRouter = Backbone.Router.extend({
             success: function(collection){
                 console.log("teacher lesson details" + id + "," + lid);
                 self.teacherLesson = self.teacherLessonList.get(lid);
-                self.teacherLessonView = new TeacherLessonView({model:self.teacherLesson});
+                self.teacherLessonView = new TeacherLessonView({model:self.teacherLesson, course_id:id});
                 $('#dash-main').html(self.teacherLessonView.render().el);
 
                 if (self.teacherStudentWorkRequestId) {
@@ -154,6 +156,9 @@ var AppRouter = Backbone.Router.extend({
             console.log("now I have a lesson");
             $(".student-tab").removeClass("active");
             $("#student-tab-" + sid).addClass("active");
+
+            this.studentWork = new TeacherLessonStudentWork({model:this.teacherLesson, student_id:sid});
+            $("#dash-main").html(self.studentWork.render().el);
         }
         else {
             console.log("no lesson");
@@ -183,6 +188,9 @@ var AppRouter = Backbone.Router.extend({
     studentCourseDetails: function(id) {
         var self = this;
         if (this.studentClassList) {
+            if (this.studentCourseRequestedId) {
+                delete this.studentCourseRequestedId;
+            }
             this.studentCourse = this.studentClassList.get(id);
             this.studentCourseView = new StudentCourseView({model:this.studentCourse});
             $('.container-details').remove();
@@ -206,6 +214,7 @@ var AppRouter = Backbone.Router.extend({
             success: function(collection){
                 console.log("student lesson details" + id + "," + lid);
                 self.studentLesson = self.studentLessonList.get(lid);
+                console.log(self.studentLessonList);
                 self.studentLessonView = new StudentLessonView({model:self.studentLesson, course:id});
                 $('#content').fadeOut(500).promise().done(function() {
                     $('#content').html(self.studentLessonView.render().el);//                startSnap();

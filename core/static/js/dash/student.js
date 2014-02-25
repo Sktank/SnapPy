@@ -176,7 +176,7 @@ window.StudentCourseView = Backbone.View.extend({
         $(self.el).append('<h5>Lessons</h5>');
 //            .html(self.template(json));
         promise.success(function (data) {
-            var lessons = $.parseJSON(data);
+            var lessons = $.parseJSON(data)[0];
             console.log(data);
             _.each(lessons, function (lesson) {
                 $(self.el).append('<a id="course-' + json.id + '-lesson-' + lesson['pk'] + '" href="#student/' + json.id + '/lesson/' + lesson['pk'] + '">' + lesson['fields']['name'] + '</a><br>');
@@ -201,19 +201,14 @@ window.StudentLessonView = Backbone.View.extend({
         var json = this.model.toJSON();
         console.log(this);
         var course_id = this.options.course;
-        var promise = getSnaps(json.id);
         var self = this;
         $(self.el).append('<h5>Lessons</h5>');
 //            .html(self.template(json));
-        promise.success(function (data) {
-            var snaps = $.parseJSON(data);
-            console.log(snaps);
-            console.log(course_id);
-            $('#current-lesson').text("Course: " + course_id + ", Lesson: " + json.name);
-            $(self.el).html(self.template(json));
-            $('#content').show();
-            loadSnap();
-        });
+        console.log(course_id);
+        $('#current-lesson').text("Course: " + course_id + ", Lesson: " + json.name);
+        $(self.el).html(self.template(json));
+        $('#content').show();
+        loadSnap(json.id);
         return this;
     }
 });

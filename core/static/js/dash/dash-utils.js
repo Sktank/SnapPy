@@ -13,9 +13,9 @@ var updateCourseForm = function(data) {
     $('#course-name-error').empty();
     $('#update-form-message').empty();
     console.log("here6");
-    if (data == "Course Created!") {
+    if (data == "Enrollment Successful!") {
         console.log("here7");
-        $('#update-form-message').text(data)
+        $('#update-form-message').text(data);
         $('#course-name').val("");
     }
     else {
@@ -23,6 +23,35 @@ var updateCourseForm = function(data) {
         $('#course-name-group').addClass('has-error');
         $('#course-name-error').append('<li>' + data + '</li>');
     }
+};
+
+var updateLessonForm = function(data) {
+    $('#lesson-name-group').removeClass('has-error');
+    $('#lesson-guide-group').removeClass('has-error');
+    $('#lesson-name-error').empty();
+    $('#lesson-guide-error').empty();
+    $('#lesson-success-message').empty();
+    console.log(data);
+    if ($.isEmptyObject(data)) {
+        console.log("created");
+        $('#lesson-name').val("");
+        $('#create-lesson-guide').val("");
+        $('#lesson-description').val("");
+        $('#lesson-guide-preview-text').empty();
+        $('#lesson-difficulty-group').find("input").prop("checked", false);
+        $('#lesson-success-message').text("Lesson Created!");
+    }
+    if (data['name']) {
+        console.log(data['name']);
+        $('#lesson-name-group').addClass('has-error');
+        $('#lesson-name-error').text(data['name']);
+    }
+    if (data['guide']) {
+        console.log(data['guide']);
+        $('#lesson-guide-group').addClass('has-error');
+        $('#lesson-guide-error').text(data['guide']);
+    }
+
 };
 
 var submitCourse = function() {
@@ -44,23 +73,81 @@ var submitCourse = function() {
         });
 };
 
-var startSnap = function() {
-    var editorContainer = document.createElement("iframe");
-    editorContainer.id = "codeEditor";
-    editorContainer.src = "vis";
-    editorContainer.style.display = "none";
-    $('#snap-app')[0].appendChild(editorContainer);
-    var worldCanvas = document.getElementById('world');
-    worldCanvas.width = snapWidth;
-    worldCanvas.height = snapHeight;
-    window.world = new WorldMorph(document.getElementById('world'), false);
-    window.ide = new IDE_Morph();
-    ide.codemirror = editorContainer;
-    ide.openIn(world);
-    setInterval(loop, 1);
+var submitLesson = function() {
+    var self = this;
+    if ($(this).prop("disabled"))
+        return false;
+    $(this).prop("disabled", true);
+    $.ajax({
+        crossDomain: false,
+        type: "POST",
+        data: {
+            name: $('#lesson-name').val(),
+            description: $('#lesson-description').val(),
+            difficulty: $('input[name=lesson-difficulty]:checked', '#create-lesson-form').val(),
+            guide: $('#create-lesson-guide').val()
+        },
+        url: "create_lesson"
+    }).success(function(data) {
+            var data = $.parseJSON(data);
+            updateLessonForm(data);
+            generateTeacherList();
+            $(self).removeProp("disabled");
+        });
 };
 
-var loadSnap = function() {
+
+var saveSnap = function(name, snapSerial, lessonId) {
+    $.ajax({
+        crossDomain: false,
+        type: "POST",
+        data: {
+            name: name,
+            lesson_id: lessonId,
+            serial: snapSerial
+        },
+        url: "save_snap"
+    }).success(function(data) {
+        console.log(data);
+        window.ide.showMessage('Saved!', 1);
+        });
+};
+
+var startSnap = function(lesson_id, student_id) {
+    var snaps_promise = getSnaps(lesson_id, student_id);
+    snaps_promise.success(function() {
+        console.log(snaps_promise);
+        var editorContainer = document.createElement("iframe");
+        editorContainer.id = "codeEditor";
+        editorContainer.src = "vis";
+        editorContainer.style.display = "none";
+        $('#snap-app')[0].appendChild(editorContainer);
+        var worldCanvas = document.getElementById('world');
+        worldCanvas.width = snapWidth;
+        worldCanvas.height = snapHeight;
+        window.world = new WorldMorph(document.getElementById('world'), false);
+        window.ide = new IDE_Morph();
+        window.lessonId = lesson_id;
+        ide.codemirror = editorContainer;
+        ide.openIn(world);
+        setInterval(loop, 1);
+
+        //load if we have previous snaps
+        console.log(snaps_promise.responseText);
+        if (snaps_promise.responseText != "0")
+        {
+            var resp = $.parseJSON(snaps_promise.responseText);
+            var str = resp[0]['fields']['serial'];
+            console.log("loading...");
+            ide.openProjectString(str);
+        }
+        else {
+            console.log("done");
+        }
+    });
+};
+
+var loadSnap = function(lesson_id, student_id) {
     $.getScript('static/js/morphic.js').done(function() {
         $.getScript('static/js/widgets.js').done(function () {
             $.getScript('static/js/blocks.js').done(function() {
@@ -78,7 +165,7 @@ var loadSnap = function() {
                                                             $.getScript('static/js/codemirror1.js').done(function() {
                                                                 $.getScript('static/js/codemirror2.js').done(function() {
                                                                     $.getScript('static/js/executeVisualizer.js').done(function() {
-                                                                        startSnap();
+                                                                        startSnap(lesson_id, student_id);
                                                                     });
                                                                 });
                                                             });
@@ -159,9 +246,15 @@ var generateTeacherList = function() {
                 console.log("new class");
                 submitCourse();
             });
+            $("#create-lesson-btn").click(function() {
+                console.log("new lesson");
+                submitLesson();
+            });
+
             if (self.teacherCourseRequestedId) {
                 console.log("back to detail");
-                self.teacherCourseDetails(self.teacherCourseRequestedId)
+                self.teacherCourseDetails(self.teacherCourseRequestedId);
+                delete self.teacherCourseRequestedId;
             }
         }
     });
@@ -186,7 +279,8 @@ var generateStudentList = function() {
                 submitCourse();
             });
             if (self.studentCourseRequestedId) {
-                self.studentCourseDetails(self.studentCourseRequestedId)
+                self.studentCourseDetails(self.studentCourseRequestedId);
+                delete self.studentCourseRequestedId;
             }
         }
     });
@@ -233,18 +327,49 @@ var getCourseAndStudents = function(id) {
     return $.ajax({
         crossDomain: false,
         type: "POST",
-        data: {lesson_id: id},
+        data: {course_id: id},
         url: "lesson_get_course_and_students"
     });
 };
 
-var getSnaps = function(id) {
+var getSnaps = function(id, student_id) {
+    console.log(id);
     return $.ajax({
         crossDomain: false,
         type: "POST",
-        data: {lesson_id: id},
+        data: {
+            lesson_id: id,
+            student_id:student_id
+        },
         url: "lesson_get_snaps"
     });
+};
+
+updateLessonsForCourse = function(course_id, remove_ids, add_ids) {
+    console.log(course_id);
+    console.log(remove_ids);
+    console.log(add_ids);
+    console.log("updating lessons");
+    var self = this;
+    $.ajax({
+        crossDomain: false,
+        type: "POST",
+        data: {
+            course_id: course_id,
+            remove_ids: remove_ids,
+            add_ids: add_ids
+        },
+        url: "manage_course_lessons"
+    }).success(function(data) {
+            $("#save-lesson-updates-" + course_id).removeProp("disabled");
+            $("#lessonManagerModal-" + course_id).modal('hide');
+            $("#lessonManagerModal-" + course_id).on("hidden.bs.modal", function(){
+                window.app.teacherCourseRequestedId = course_id;
+                generateTeacherList()
+            });
+        });
+
+    return 0;
 };
 
 

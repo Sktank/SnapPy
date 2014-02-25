@@ -32,7 +32,9 @@ urlpatterns = patterns('',
     url(r'^get_lessons', views.get_lessons, name="get_lessons"),
     url(r'^lesson_get_course_and_students', views.lesson_get_course_and_students, name="lesson_get_course_and_students"),
     url(r'^lesson_get_snaps', views.lesson_get_snaps, name="lesson_get_snaps"),
-
+    url(r'^create_lesson', views.create_lesson, name="create_lesson"),
+    url(r'^manage_course_lessons', views.manage_course_lessons, name="manage_course_lessons"),
+    url(r'^save_snap', views.save_snap, name="save_snap"),
 
     url(r'^web_exec_py2.py$', views.web_exec_py2, name='web_exec_py2.py'),
     url(r'^api/', include(router.urls)),

@@ -150,19 +150,30 @@ def get_lessons(request):
         if current_user not in course.teachers.all() and current_user not in course.students.all():
             return HttpResponse('error')
 
-        lessons = Lesson.objects.filter(course=course)
-        data = serializers.serialize("json", lessons)
-        return HttpResponse(data)
+        #get lessons currently part of class
+        lessons = Lesson.objects.filter(courses__id=course_id)
+        lessonSet = set()
+        for lesson in lessons:
+            lessonSet.add(lesson.id)
+
+        #get lessons not part of class
+        allLessons = Lesson.objects.filter(user=current_user)
+        allLessons = allLessons.exclude(id__in = lessonSet)
+
+        currentLessonData = serializers.serialize("json", lessons)
+        separateLessonDate = serializers.serialize("json", allLessons)
+        return HttpResponse('[' + currentLessonData + ',' + separateLessonDate + ']')
 
 @login_required()
 def lesson_get_course_and_students(request):
     if request.is_ajax():
 #        import pdb
 #        pdb.set_trace()
-        lesson_id = request.POST.get('lesson_id', False)
-        lesson = Lesson.objects.filter(id=lesson_id)[0]
-        course_set = Course.objects.filter(id=lesson.course.id)
+        course_id = request.POST.get('course_id', False)
+
+        course_set = Course.objects.filter(id=course_id)
         course =course_set[0]
+
         students = serializers.serialize("json", course.students.all())
         course_serial = serializers.serialize("json", course_set)
 
@@ -176,18 +187,137 @@ def lesson_get_course_and_students(request):
 @login_required()
 def lesson_get_snaps(request):
     if request.is_ajax():
+        student_id = request.POST.get('student_id', False)
         lesson_id = request.POST.get('lesson_id', False)
-        lesson = Lesson.objects.filter(id=lesson_id)[0]
-        current_user = WebUser.objects.filter(userId = request.user.id)[0]
+        print lesson_id
+        lesson = Lesson.objects.filter(id=int(lesson_id))[0]
+        print lesson
+
+        if student_id:
+            current_user = WebUser.objects.filter(userId = student_id)[0]
+        else:
+            current_user = WebUser.objects.filter(userId = request.user.id)[0]
 
         #get all the snaps with these fields
         snaps = Snap.objects.filter(lesson=lesson, user=current_user)
-        snap_serial = serializers.serialize("json", snaps)
+
+        if not snaps:
+            snap_serial = 0
+        else:
+            snap_serial = serializers.serialize("json", snaps)
 
         return HttpResponse(snap_serial)
 
 
-    #===========================================================================================
+lesson_no_name_message = "Lesson name is required"
+lesson_name_too_short_message = "Lesson name must be at least 5 characters"
+
+lesson_no_guide_message = "Lesson guide is required"
+lesson_guide_too_short_message = "Lesson guide must be at least 10 characters"
+@login_required()
+def create_lesson(request):
+#    import pdb
+#    pdb.set_trace()
+    if request.is_ajax():
+        name = request.POST.get('name', False)
+        description = request.POST.get('description', False)
+        difficulty = request.POST.get('difficulty', False)
+        guide = request.POST.get('guide', False)
+        current_user = WebUser.objects.filter(userId = request.user.id)[0]
+
+        errors = {}
+
+        if not name:
+            errors['name'] = lesson_no_name_message
+        elif len(name.strip()) < 5:
+            errors['name'] = lesson_name_too_short_message
+        else:
+            lessons = Course.objects.filter(name=name)
+            if len(lessons) > 0:
+                errors['name'] = name_taken_message
+
+        if not guide:
+            errors['guide'] = lesson_no_guide_message
+        elif len(guide.strip()) < 10:
+            errors['guide'] = lesson_guide_too_short_message
+
+        if not errors:
+            lesson = Lesson()
+            lesson.name = name.strip()
+            if description:
+                lesson.description = description.strip()
+            if difficulty:
+                lesson.difficulty = int(difficulty)
+            lesson.guide = guide.strip()
+            lesson.user = current_user
+            lesson.save()
+
+        return HttpResponse(json.dumps(errors))
+
+@login_required()
+def manage_course_lessons(request):
+#    import pdb
+#    pdb.set_trace()
+    if request.is_ajax():
+        course_id = request.POST.get('course_id', False)
+        add_ids = request.POST.getlist('add_ids[]', False)
+        remove_ids = request.POST.getlist('remove_ids[]', False)
+
+        if course_id:
+            course = Course.objects.filter(id = course_id)[0]
+
+            if add_ids:
+                for id in add_ids:
+                    lesson = Lesson.objects.filter(id=id)[0]
+                    lesson.courses.add(course)
+                    lesson.save()
+
+            if remove_ids:
+                for id in remove_ids:
+                    lesson = Lesson.objects.filter(id=id)[0]
+                    lesson.courses.remove(course)
+                    lesson.save()
+
+        return HttpResponse(0)
+
+
+@login_required()
+def save_snap(request):
+    if request.is_ajax():
+        name = request.POST.get('name', False)
+        lesson_id = request.POST.get('lesson_id', False)
+        serial = request.POST.get('serial', False)
+
+        lesson = Lesson.objects.filter(id=int(lesson_id))[0]
+        current_user = WebUser.objects.filter(userId = request.user.id)[0]
+
+        #get all the snaps with these fields
+        snap = Snap.objects.filter(lesson=lesson, user=current_user, name=name)
+
+        if not snap:
+            response = createNewSnap(name, serial, lesson, current_user)
+        elif len(snap) == 1:
+            response = updateSnap(snap[0], name, serial)
+        else:
+            response = "shit there are duplicate snaps"
+
+        return HttpResponse(response)
+
+
+def createNewSnap(name, serial, lesson, current_user):
+    snap = Snap()
+    snap.name = name
+    snap.serial = serial
+    snap.lesson = lesson
+    snap.user = current_user
+    snap.save()
+    return 0
+
+def updateSnap(snap, name, serial):
+    snap.serial = serial
+    snap.save()
+    return 0
+#===========================================================================================
 #                                      API serialization views
 #===========================================================================================
 
@@ -259,6 +389,7 @@ class LessonViewSet(viewsets.ModelViewSet):
         lessons = Lesson.objects.filter(user=webUser)
         return lessons
 
+#This is now for students
 class CourseLessonViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
@@ -269,11 +400,16 @@ class CourseLessonViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user1 = self.request.user
         #find all your courses
-        courses = Course.objects.filter(teachers__userId = user1.id)
+        courses = Course.objects.filter(students__userId = user1.id)
         wantedLessons = set()
-        for lesson in Lesson.objects.all():
-            if lesson.course in courses:
-                wantedLessons.add(lesson.id)
+
+        allLessons = Lesson.objects.all()
+
+        for course in courses:
+            for lesson in allLessons:
+                wanted_courses = lesson.courses.filter(id = course.id)
+                if wanted_courses:
+                    wantedLessons.add(lesson.id)
 
         return Lesson.objects.filter(id__in = wantedLessons)
 

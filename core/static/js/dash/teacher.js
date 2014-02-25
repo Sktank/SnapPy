@@ -87,6 +87,7 @@ window.TeacherCourseRegisterView = Backbone.View.extend({
 
     render:function (eventName) {
         $(this.el).html(this.template());
+        $("#dash-sidebar-right").append("<h4 id='lesson-guide-preview-header'>Lesson Guide Preview</h4><div id='lesson-guide-preview'><h4>Welcome!</h4><p id='lesson-guide-preview-text'></p></div>");
         $( document ).on( "click", "#create-new-lesson-tab", function() {
             $("#teacher_additions_navs").children().removeClass("active");
             $(this).parent().addClass("active");
@@ -99,6 +100,23 @@ window.TeacherCourseRegisterView = Backbone.View.extend({
             $("#create-lesson").css("display", "none");
             $("#create-class").css("display", "inline");
         });
+
+        $( document ).on( "focus", "#create-lesson-guide", function() {
+            $("#lesson-guide-preview-header").css("display", "block");
+            $("#lesson-guide-preview-header").css("margin-top", $("#create-lesson-guide").position()['top'] - 200 + "px");
+            $("#lesson-guide-preview").css("display", "block");
+        });
+
+        $( document ).on( "focusout", "#create-lesson-guide", function() {
+            $("#lesson-guide-preview-header").css("display", "none");
+            $("#lesson-guide-preview").css("display", "none");
+
+        });
+
+        $( document ).on( "keyup", "#create-lesson-guide", function() {
+            $("#lesson-guide-preview-text").text($('#create-lesson-guide').val());
+        });
+
         return this;
     }
 
@@ -113,16 +131,91 @@ window.TeacherCourseView = Backbone.View.extend({
         var json = this.model.toJSON();
         var promise = getLessons(json.id);
         var self = this;
+        var addLessonQueue = [];
+        var removeLessonQueue = [];
         $(self.el).addClass("container-details");
-        $(self.el).append('<h5>Lessons</h5>')
-//            .html(self.template(json));
+//        $(self.el).append('<h5>Lessons</h5>');
+        $(self.el).append(self.template(json));
         promise.success(function (data) {
             var lessons = $.parseJSON(data);
-            console.log(data);
-            _.each(lessons, function (lesson) {
-                $(self.el).append('<a id="course-' + json.id + '-lesson-' + lesson['pk'] + '" href="#teacher/' + json.id + '/lesson/' + lesson['pk'] + '">' + lesson['fields']['name'] + '</a><br>');
+            var currentLessons = lessons[0];
+            var separateLessons = lessons[1];
+            console.log(lessons);
 
-            }, this);
+
+            //TODO: Current Lessons and Separate Lessons should really call the same function because so much duplicate code!
+            //TODO: Shit looks gross right now.
+
+            if (currentLessons.length > 0) {
+                _.each(currentLessons, function (lesson) {
+                    $(self.el).append('<a id="course-' + json.id + '-lesson-' + lesson['pk'] + '" href="#teacher/' + json.id + '/lesson/' + lesson['pk'] + '">' + lesson['fields']['name'] + '</a><br>');
+
+                    // This is for the lesson manager modal
+                    $('#course-current-lessons').append('<a class="list-group-item clicker lessonListItem" id="current-lesson-' + json.id + "-" + lesson['pk'] + '"><p>' + lesson['fields']['name'] + '</p></a>');
+                    $('#lessonManagerModal-' + json.id).on("click", '#current-lesson-' + json.id + "-" + lesson['pk'], function() {
+                        console.log(lesson['pk']);
+                        if ($('#current-lesson-' + json.id + "-" + lesson['pk']).hasClass('active')) {
+                            var i = removeLessonQueue.indexOf(lesson['pk']);
+                            if(i != -1) {
+                                removeLessonQueue.splice(i, 1);
+                            }
+                            $('#current-lesson-' + json.id + "-" + lesson['pk']).removeClass('active');
+                        }
+                        else {
+                            removeLessonQueue.push(lesson['pk']);
+                            $('#current-lesson-' + json.id + "-" + lesson['pk']).addClass('active');
+                        }
+                    });
+                }, this);
+            }
+            else {
+                $(self.el).append('<p>Empty</p>');
+                $('#course-current-lessons').append('<p>Empty</p>');
+            }
+
+            if (separateLessons.length > 0) {
+                _.each(separateLessons, function (lesson) {
+                    $('#course-separate-lessons').append('<a class="list-group-item clicker lessonListItem" id="seperate-lesson-' + json.id + "-" + lesson['pk'] + '"><p>' + lesson['fields']['name'] + '</p></a>');
+                    $('#lessonManagerModal-' + json.id).on("click", '#seperate-lesson-' + json.id + "-" + lesson['pk'], function() {
+                        console.log(lesson['pk']);
+                        if ($('#seperate-lesson-' + json.id + "-" + lesson['pk']).hasClass('active')) {
+                            var i = addLessonQueue.indexOf(lesson['pk']);
+                            if(i != -1) {
+                                addLessonQueue.splice(i, 1);
+                            }
+                            $('#seperate-lesson-' + json.id + "-" + lesson['pk']).removeClass('active');
+                        }
+                        else {
+                            addLessonQueue.push(lesson['pk']);
+                            $('#seperate-lesson-' + json.id + "-" + lesson['pk']).addClass('active');
+                        }
+                    });
+                }, this);
+
+            }
+            else {
+                $('#course-separate-lessons').append("<p>Empty</p>")
+            }
+
+
+
+            $('#lessonManagerModal-' + json.id).on("click", "#save-lesson-updates-" + json.id, function() {
+                if ($("#save-lesson-updates-" + json.id).prop("disabled"))
+                    return false;
+                $("#save-lesson-updates-" + json.id).prop("disabled", true);
+                updateLessonsForCourse(json.id, removeLessonQueue, addLessonQueue);
+                removeLessonQueue = [];
+                addLessonQueue = [];
+                $('#lessonManagerModal-' + json.id).find(".active").removeClass("active");
+            });
+
+            $("#lessonManagerModal-" + json.id).on("hide.bs.modal", function() {
+                removeLessonQueue = [];
+                addLessonQueue = [];
+                $('#lessonManagerModal-' + json.id).find(".active").removeClass("active");
+            });
+
+
         });
         return this;
     }
@@ -131,9 +224,11 @@ window.TeacherCourseView = Backbone.View.extend({
 
 window.TeacherLessonView = Backbone.View.extend({
 
-    initialize:function () {
+    initialize:function (options) {
         this.model.bind("reset", this.render, this);
+        this.options = options || {};
     },
+
 
 //    template:_.template($('#teacher-lesson-details').html()),
 
@@ -143,10 +238,11 @@ window.TeacherLessonView = Backbone.View.extend({
         var json = this.model.toJSON();
         var self = this;
         var router = window.app;
+        var course_id = self.options.course_id;
         console.log(json);
 
         console.log(this.model);
-        var promise = getCourseAndStudents(json.id);
+        var promise = getCourseAndStudents(course_id);
 
         promise.success(function (data) {
             var resp = $.parseJSON(data);
@@ -180,4 +276,26 @@ window.TeacherLessonView = Backbone.View.extend({
         return this;
     }
 
+});
+
+
+
+window.TeacherLessonStudentWork = Backbone.View.extend({
+
+    initialize:function (options) {
+        this.model.bind("reset", this.render, this);
+        this.options = options || {};
+    },
+
+    template:_.template($('#teacher-student-lesson-template').html()),
+
+    render:function (eventName) {
+        var json = this.model.toJSON();
+        var student_id = this.options.student_id
+        $('#current-lesson').text(json.name);
+        $(this.el).html(this.template(json));
+        $('#dash-main').show();
+        loadSnap(json.id, student_id);
+        return this;
+    }
 });

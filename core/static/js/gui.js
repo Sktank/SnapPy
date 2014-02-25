@@ -2844,10 +2844,12 @@ IDE_Morph.prototype.rawSaveProject = function (name) {
         this.setProjectName(name);
         if (Process.prototype.isCatchingErrors) {
             try {
-                localStorage['-snap-project-' + name]
-                    = str = this.serializer.serialize(this.stage);
-                location.hash = '#open:' + str;
-                this.showMessage('Saved!', 1);
+                str = this.serializer.serialize(this.stage);
+//                localStorage['-snap-project-' + name] = str;
+                console.log(str);
+                saveSnap(name, str, window.lessonId);
+//                location.hash = '#open:' + str;
+//                this.showMessage('Saved!', 1);
             } catch (err) {
                 this.showMessage('Save failed: ' + err);
             }

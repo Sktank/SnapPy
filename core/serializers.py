@@ -30,15 +30,15 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
 
-class LessonSerializer(serializers.HyperlinkedModelSerializer):
+class LessonSerializer(serializers.ModelSerializer):
+    courses = serializers.PrimaryKeyRelatedField(many=True)
     class Meta:
          model = Lesson
-         fields = ('url', 'id', 'name', 'description', 'difficulty', 'user', 'guide')
 
-class CourseLessonSerializer(serializers.HyperlinkedModelSerializer):
+class CourseLessonSerializer(serializers.ModelSerializer):
+    courses = serializers.PrimaryKeyRelatedField(many=True)
     class Meta:
          model = Lesson
-         fields = ('url', 'id', 'name', 'description', 'difficulty', 'course', 'guide')
 
 class SnapSerializer(serializers.HyperlinkedModelSerializer):
     lesson = serializers.HyperlinkedRelatedField(many=True, read_only=True,view_name='lesson-detail')

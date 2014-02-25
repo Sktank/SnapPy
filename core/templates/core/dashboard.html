@@ -44,8 +44,8 @@
 
         .dash-section-title {
             position: relative;
-            margin-top: 5px;
-            margin-left: 10px;
+            margin-top: 0px;
+            /*margin-left: 10px;*/
         }
 
         .dash-list-item-container {
@@ -53,7 +53,7 @@
             border: 1px solid #d3d3d3;
             min-height: 100px;
             margin-bottom: -1px;
-            padding: 10px;
+            padding: 20px;
         }
 
         .active-container {
@@ -81,14 +81,13 @@
             margin-bottom: 10px;
         }
 
-        #update-form-message {
+        .form-success-message {
             margin-left: 15px;
             color: green;
         }
 
-        #course-name-error {
+        .errorlist{
             color: red;
-            /*font-size: 8px;*/
         }
 
 
@@ -126,6 +125,26 @@
             background-color: #ffffff;
             color: #428bca;
             border-radius: 5px;
+        }
+
+        #lesson-guide-preview {
+            height: 600px;
+            padding-right: 0px;
+            padding-left: 25px;
+            /*width: 20%;*/
+            width: 290px;
+            overflow: auto;
+            border: 1px solid grey;
+            background-color: #ffffff;
+            color: #428bca;
+            border-radius: 5px;
+            display: none;
+        }
+
+        #lesson-guide-preview-header{
+            display: none;
+            width: 200px;
+            /*margin-left: -80px;*/
         }
 
         #snap-row {
@@ -182,6 +201,30 @@
         .teacher-register-btn {
             width: 20%;
         }
+
+        .course-lesson-header {
+            margin-top: 3px;
+            /*margin-left: 10px;*/
+        }
+    
+        .clicker {
+            cursor: pointer;
+        }
+
+        .lessonListItem {
+            border-radius: 5px;
+            margin-bottom: 3px;
+        }
+
+        #snap-container-teacher {
+            position: absolute;
+            left: 0;
+            width: 1300px;
+            margin-top: -18px;
+            margin-bottom: 50px;
+        }
+
+
     </style>
 
 
@@ -201,7 +244,7 @@
             <a href="#student" class="list-group-item main-tab" id="student-list-tab">
                 <i class="fa fa-compass"></i> Student
             </a>
-            <a href="#lessons" class="list-group-item main-tab" id="lesson-list-tab">
+            <a href="#solo" class="list-group-item main-tab" id="lesson-list-tab">
                 <i class="fa fa-list"></i> Individual
             </a>
 
@@ -222,6 +265,12 @@
         </div>
     </div>
     </div>
+
+    <div class="col-md-2">
+        <div id="dash-sidebar-right">
+
+        </div>
+    </div>
     </div>
     </div>
 
@@ -236,7 +285,7 @@
         <p>
             "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
         </p>
-        <a href="#lessons/<%= id %>/snap"><div class="btn btn-primary btn-lg list-container-btn" id='lesson-btn-<%= id %>'>Begin Lesson</div></a>
+        <a href="#solo/<%= id %>/snap"><div class="btn btn-primary btn-lg list-container-btn" id='lesson-btn-<%= id %>'>Begin Lesson</div></a>
     </script>
 
     <script type="text/template" id="snap-template">
@@ -256,6 +305,17 @@
             </div>
         </div>
 
+        <link rel="stylesheet" type="text/css" href="/static/codemirror/lib/codemirror.css">
+    </script>
+
+    <script type="text/template" id="teacher-student-lesson-template">
+        <div id="snap-container-teacher">
+            <div class="row" id="snap-row">
+                <div class="col-md-9" id="snap-app">
+                    <canvas id="world" tabindex="1"/>
+                </div>
+            </div>
+        </div>
         <link rel="stylesheet" type="text/css" href="/static/codemirror/lib/codemirror.css">
     </script>
 
@@ -281,14 +341,14 @@
                 <input type="name" class="form-control" id="course-name" placeholder="Enter Name">
                 <ul class="errorlist" id="course-name-error"></ul>
             </div>
-            <div class="btn btn-primary teacher-register-btn">Submit</div> <span id="update-form-message"></span>
+            <div class="btn btn-primary teacher-register-btn" id="teacher-register-class-btn">Submit</div> <span class="form-success-message" id="update-form-message"></span>
         </form>
         </div>
 
         <div id="create-lesson" style="display:none">
-            <form role="form" action="">{% csrf_token %}
-                <div class="form-group" id="course-name-group">
-                    <label for="lesson-name">Lesson Name</label>
+            <form role="form" id="create-lesson-form" action="">{% csrf_token %}
+                <div class="form-group" id="lesson-name-group">
+                    <label for="lesson-name">Lesson Name*</label>
                     <input type="name" class="form-control" id="lesson-name" placeholder="Enter Name">
                     <ul class="errorlist" id="lesson-name-error"></ul>
                 </div>
@@ -303,39 +363,78 @@
                     <label>Lesson Difficulty</label>
                     <br>
                     <label class="radio-inline">
-                        <input type="radio" name="lesson-difficulty" id="lesson-difficulty-1" value="option1"> Beginner
+                        <input type="radio" name="lesson-difficulty" id="lesson-difficulty-1" value="1"> Beginner
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="lesson-difficulty" id="lesson-difficulty-2" value="option2"> Intermediate
+                        <input type="radio" name="lesson-difficulty" id="lesson-difficulty-2" value="2"> Intermediate
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="lesson-difficulty" id="lesson-difficulty-3" value="option3"> Skilled
+                        <input type="radio" name="lesson-difficulty" id="lesson-difficulty-3" value="3"> Skilled
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="lesson-difficulty" id="lesson-difficulty-4" value="option4"> Advanced
+                        <input type="radio" name="lesson-difficulty" id="lesson-difficulty-4" value="4"> Advanced
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="lesson-difficulty" id="lesson-difficulty-5" value="option5"> Expert
+                        <input type="radio" name="lesson-difficulty" id="lesson-difficulty-5" value="5"> Expert
                     </label>
 
                     <ul class="errorlist" id="lesson-difficulty-error"></ul>
                 </div>
 
                 <div class="form-group" id="lesson-guide-group">
-                    <label for="create-lesson-guide">Lesson Guide</label>
+                    <label for="create-lesson-guide">Lesson Guide*</label>
                     <textarea class="form-control" rows="5" id="create-lesson-guide" placeholder="Enter Description"></textarea>
                     <ul class="errorlist" id="lesson-guide-error"></ul>
                 </div>
 
-                <div class="btn btn-primary teacher-register-btn" id="create-lesson-class-btn">Submit</div> <span id="update-form-message"></span>
+                <div class="btn btn-primary teacher-register-btn" id="create-lesson-btn">Submit</div> <span class="form-success-message" id="lesson-success-message"></span>
             </form>
         </div>
     </script>
 
     <script type="text/template" id="teacher-course-details">
-        <p>
-            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-        </p>
+        <div class="row">
+            <div class="col-md-2">
+                <h4 class="course-lesson-header">Lessons</h4>
+            </div>
+            <div class="col-md-1">
+                <div class="btn btn-primary btn-xs" id="add-lessons-to-course-btn" data-toggle="modal" data-target="#lessonManagerModal-<%= id %>"><i class="fa fa-gears"></i>  Manage Lessons</div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="lessonManagerModal-<%= id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><%= name %> Lesson Manager</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Click on a Lesson to add or remove it from your course.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Current Lessons In This Course</h4>
+                                <div class="list-group" id="course-current-lessons">
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Your Lessons Not In This Course</h4>
+                                <div class="list-group" id="course-separate-lessons">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" id="cancel-lesson-updates-<%= id %>" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="save-lesson-updates-<%= id %>">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </script>
 
     <script type="text/template" id="student-list-item">
@@ -374,7 +473,7 @@
     <script type="text/javascript" src="/static/js/underscore.js"></script>
     <script type="text/javascript" src="/static/js/backbone.js"></script>
     <script type="text/javascript" src="/static/js/ajax-csrf.js"></script>
-    <script type="text/javascript" src="/static/js/dash/lessons.js"></script>
+    <script type="text/javascript" src="/static/js/dash/individual.js"></script>
     <script type="text/javascript" src="/static/js/dash/teacher.js"></script>
     <script type="text/javascript" src="/static/js/dash/student.js"></script>
     <script type="text/javascript" src="/static/js/dash/dash-utils.js"></script>
