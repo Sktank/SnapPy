@@ -24,6 +24,7 @@ var AppRouter = Backbone.Router.extend({
 
 
     lessonsList:function () {
+        checkDash();
         if (this.teachingList) {
             delete this.teachingList;
         }
@@ -52,8 +53,9 @@ var AppRouter = Backbone.Router.extend({
     },
 
     lessonDetails:function (id) {
+        var remake = checkDash();
         var self = this;
-        if (this.lessonList) {
+        if (this.lessonList && !remake) {
             this.lesson = this.lessonList.get(id);
             this.lessonView = new LessonView({model:this.lesson});
             $('.container-details').remove();
@@ -74,8 +76,6 @@ var AppRouter = Backbone.Router.extend({
             this.snapView = new SnapView({model:this.lesson});
             $('#content').fadeOut(500).promise().done(function() {
                 $('#content').html(self.snapView.render().el);
-//                startSnap();
-//                loadSnap();
             });
         }
         else {
@@ -86,6 +86,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     teacherList: function () {
+        checkDash();
         if (this.lessonList) {
             delete this.lessonList;
         }
@@ -102,20 +103,18 @@ var AppRouter = Backbone.Router.extend({
     },
 
     teacherCourseDetails: function(id) {
+        var remake = checkCourseList(id);
         var self = this;
         console.log("YO");
-        if (this.teachingList) {
+        if (this.teachingList && !remake) {
             console.log("has the teaching list");
             this.teacherCourse = this.teachingList.get(id);
+            console.log(this.teacherCourse);
             this.teacherCourseView = new TeacherCourseView({model:this.teacherCourse});
             $('.container-details').remove();
             $('.active-container').removeClass("active-container");
             $('#dash-list-item-container-' + id).addClass('active-container').append(self.teacherCourseView.render().el);
 
-//            if (this.teacherCourseLesson) {
-//
-//                this.teacherLessonDetails(id, this.teacherCourseLesson);
-//            }
         }
         else {
             console.log("does not have the teaching list");
@@ -125,6 +124,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     teacherLessonDetails: function(id, lid) {
+        checkDash();
         var self = this;
         this.teacherLessonList = new CourseLessonCollection();
 
@@ -168,6 +168,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     studentList: function () {
+        checkDash();
         if (this.teachingList) {
             delete this.teachingList;
         }
@@ -181,13 +182,13 @@ var AppRouter = Backbone.Router.extend({
         $('#dash-main').append('<div id="student-class-search-container"></div>');
         $('#dash-main').append('<div id="student-class-enrollment-container"></div>');
         generateStudentList();
-//        self.generateStudentClassSearch();
         generateStudentEnrollmentQueue();
     },
 
     studentCourseDetails: function(id) {
+        var remake = checkDash();
         var self = this;
-        if (this.studentClassList) {
+        if (this.studentClassList && !remake) {
             if (this.studentCourseRequestedId) {
                 delete this.studentCourseRequestedId;
             }
@@ -217,8 +218,7 @@ var AppRouter = Backbone.Router.extend({
                 console.log(self.studentLessonList);
                 self.studentLessonView = new StudentLessonView({model:self.studentLesson, course:id});
                 $('#content').fadeOut(500).promise().done(function() {
-                    $('#content').html(self.studentLessonView.render().el);//                startSnap();
-//                    loadSnap();
+                    $('#content').html(self.studentLessonView.render().el);
                 });
 
             }

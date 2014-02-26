@@ -11,52 +11,10 @@ Include all scripts and stylings here
 {#    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css"/>#}
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <style type="text/css">
-        body {
-            background-image: url('/static/img/blue_cubes_background.jpg');
-        }
+    <link href="/static/css/front.css" rel="stylesheet">
 
-        #front-content{
-            background-color: white;
-            border-radius: 5px;
-            padding: 10px;
-        }
-
-        #home-header {
-            background-color: #f5f5f5;
-            border-radius: 5px;
-            padding: 10px;
-            border: 2px solid black;
-            text-align: center;
-        }
-
-        #front-nav-bar{
-            background-color: white;
-            margin-top: 20px;
-            border-radius: 5px;
-        }
-
-        #front-nav-bar > li > a {
-            border-radius: 5px;
-        }
-
-        #front-nav-bar .active > a {
-            background-color: #428bca;
-            color: #ffffff;
-            border-radius: 5px;
-        }
-
-        #snappy-screen-shot {
-            border-radius: 5px;
-            width: 100%;
-            margin-top: -1px;
-            z-index: -100;
-            position: relative;
-            border: 1px solid black;
-        }
-
-
-    </style>
+    {% block styleinline %}
+    {% endblock %}
     <title></title>
 </head>
 <body>

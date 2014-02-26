@@ -9936,13 +9936,13 @@ WorldMorph.uber = FrameMorph.prototype;
 
 // WorldMorph instance creation:
 
-function WorldMorph(aCanvas, fillPage) {
-    this.init(aCanvas, fillPage);
+function WorldMorph(aCanvas, fillPage, isTeacher) {
+    this.init(aCanvas, fillPage, isTeacher);
 }
 
 // WorldMorph initialization:
 
-WorldMorph.prototype.init = function (aCanvas, fillPage) {
+WorldMorph.prototype.init = function (aCanvas, fillPage, isTeacher) {
     console.log(aCanvas);
 //    console.log($('#world').css('height'));
     this.canvasH = $('#' + aCanvas.id).css('height');
@@ -9959,6 +9959,8 @@ WorldMorph.prototype.init = function (aCanvas, fillPage) {
 //    else {
 //        this.bounds = new Rectangle(0, 0, this.canvasW, this.canvasH);
 //    }
+    this.isTeacher = isTeacher;
+
     this.drawNew();
     this.isVisible = true;
     this.isDraggable = false;

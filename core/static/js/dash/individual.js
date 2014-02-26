@@ -33,7 +33,8 @@ window.LessonListView = Backbone.View.extend({
         // render the lesson view headers
         $(".list-group-item").removeClass("active");
         $("#lesson-list-tab").addClass("active");
-        $(this.el).append("<h3>Lessons</h3><div class='recommend'><p class='recommend-header'><b>Recommended</b></p></div><div id='lesson-list'></div>");
+        $(this.el).append("<h3>Lessons</h3><div class='recommend'><p class='recommend-header'><b>Recommended</b></p>\<" +
+            "/div><div id='lesson-list'></div>");
         _.each(this.model.models, function (lesson) {
             $(this.el).append(new LessonListItemView({model:lesson}).render().el);
         }, this);

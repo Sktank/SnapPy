@@ -18,6 +18,7 @@ from rest_framework import viewsets
 from django.contrib.auth.models import User, Group
 from core.serializers import UserSerializer, GroupSerializer, CourseSerializer, LessonSerializer, SnapSerializer, WebUserSerializer, CourseLessonSerializer
 from core.models import Course, Lesson, Snap, WebUser
+from itertools import chain
 
 path_to_core = '/Users/spencertank/School/Thesis/imcode/core/'
 
@@ -399,13 +400,18 @@ class CourseLessonViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user1 = self.request.user
+
         #find all your courses
-        courses = Course.objects.filter(students__userId = user1.id)
+        student_courses = Course.objects.filter(students__userId = user1.id)
+        teacher_courses = Course.objects.filter(teachers__userId = user1.id)
+
+        all_courses = list(chain(student_courses, teacher_courses))
+
         wantedLessons = set()
 
         allLessons = Lesson.objects.all()
 
-        for course in courses:
+        for course in all_courses:
             for lesson in allLessons:
                 wanted_courses = lesson.courses.filter(id = course.id)
                 if wanted_courses:

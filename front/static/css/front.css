@@ -1,0 +1,42 @@
+body {
+    background-image: url('/static/img/blue_cubes_background.jpg');
+}
+
+#front-content{
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+#home-header {
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    padding: 10px;
+    border: 2px solid black;
+    text-align: center;
+}
+
+#front-nav-bar{
+    background-color: white;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+#front-nav-bar > li > a {
+    border-radius: 5px;
+}
+
+#front-nav-bar .active > a {
+    background-color: #428bca;
+    color: #ffffff;
+    border-radius: 5px;
+}
+
+#snappy-screen-shot {
+    border-radius: 5px;
+    width: 100%;
+    margin-top: -1px;
+    z-index: -100;
+    position: relative;
+    border: 1px solid black;
+}

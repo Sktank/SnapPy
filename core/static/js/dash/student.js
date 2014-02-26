@@ -138,7 +138,8 @@ window.StudentClassEnrollmentQueueView = Backbone.View.extend({
             $( document ).on( "click", ".class-clear-btn", function() {
                 clearEnrollmentQueue();
             });
-            $(this.el).append('<div class="btn btn-success btn-lg enroll-btn class-enroll-btn queue_btn">Enroll</div> <span id="class-enroll-message"></span>');
+            $(this.el).append('<div class="btn btn-success btn-lg enroll-btn class-enroll-btn queue_btn">Enroll\<' +
+                '/div> <span id="class-enroll-message"></span>');
 
             $( document ).on( "click", ".class-enroll-btn", function() {
                 enrollCourses()
@@ -179,7 +180,8 @@ window.StudentCourseView = Backbone.View.extend({
             var lessons = $.parseJSON(data)[0];
             console.log(data);
             _.each(lessons, function (lesson) {
-                $(self.el).append('<a id="course-' + json.id + '-lesson-' + lesson['pk'] + '" href="#student/' + json.id + '/lesson/' + lesson['pk'] + '">' + lesson['fields']['name'] + '</a><br>');
+                $(self.el).append('<a id="course-' + json.id + '-lesson-' + lesson['pk'] + '" href="#student/' +
+                    json.id + '/lesson/' + lesson['pk'] + '">' + lesson['fields']['name'] + '</a><br>');
 
             }, this);
         });

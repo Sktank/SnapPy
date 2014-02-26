@@ -87,7 +87,8 @@ window.TeacherCourseRegisterView = Backbone.View.extend({
 
     render:function (eventName) {
         $(this.el).html(this.template());
-        $("#dash-sidebar-right").append("<h4 id='lesson-guide-preview-header'>Lesson Guide Preview</h4><div id='lesson-guide-preview'><h4>Welcome!</h4><p id='lesson-guide-preview-text'></p></div>");
+        $("#dash-sidebar-right").append("<h4 id='lesson-guide-preview-header'>Lesson Guide Preview</h4><div \i" +
+            "d='lesson-guide-preview'><h4>Welcome!</h4><p id='lesson-guide-preview-text'></p></div>");
         $( document ).on( "click", "#create-new-lesson-tab", function() {
             $("#teacher_additions_navs").children().removeClass("active");
             $(this).parent().addClass("active");
@@ -103,7 +104,8 @@ window.TeacherCourseRegisterView = Backbone.View.extend({
 
         $( document ).on( "focus", "#create-lesson-guide", function() {
             $("#lesson-guide-preview-header").css("display", "block");
-            $("#lesson-guide-preview-header").css("margin-top", $("#create-lesson-guide").position()['top'] - 200 + "px");
+            $("#lesson-guide-preview-header").css("margin-top", $("#create-lesson-guide").position()['top'] -
+                200 + "px");
             $("#lesson-guide-preview").css("display", "block");
         });
 
@@ -143,16 +145,20 @@ window.TeacherCourseView = Backbone.View.extend({
             console.log(lessons);
 
 
-            //TODO: Current Lessons and Separate Lessons should really call the same function because so much duplicate code!
-            //TODO: Shit looks gross right now.
+    //TODO: Current Lessons and Separate Lessons should really call the same function because so much duplicate code!
+    //TODO: Shit looks gross right now.
 
             if (currentLessons.length > 0) {
                 _.each(currentLessons, function (lesson) {
-                    $(self.el).append('<a id="course-' + json.id + '-lesson-' + lesson['pk'] + '" href="#teacher/' + json.id + '/lesson/' + lesson['pk'] + '">' + lesson['fields']['name'] + '</a><br>');
+                    $(self.el).append('<a id="course-' + json.id + '-lesson-' + lesson['pk'] + '" href="#teacher/'
+                        + json.id + '/lesson/' + lesson['pk'] + '">' + lesson['fields']['name'] + '</a><br>');
 
                     // This is for the lesson manager modal
-                    $('#course-current-lessons').append('<a class="list-group-item clicker lessonListItem" id="current-lesson-' + json.id + "-" + lesson['pk'] + '"><p>' + lesson['fields']['name'] + '</p></a>');
-                    $('#lessonManagerModal-' + json.id).on("click", '#current-lesson-' + json.id + "-" + lesson['pk'], function() {
+                    $('#course-current-lessons').append('<a class="list-group-item clicker lessonListItem" \i' +
+                        'd="current-lesson-' + json.id + "-" + lesson['pk'] + '"><p>' + lesson['fields']['name'] +
+                        '</p></a>');
+                    $('#lessonManagerModal-' + json.id).on("click", '#current-lesson-' + json.id + "-" + lesson['pk'],
+                        function() {
                         console.log(lesson['pk']);
                         if ($('#current-lesson-' + json.id + "-" + lesson['pk']).hasClass('active')) {
                             var i = removeLessonQueue.indexOf(lesson['pk']);
@@ -175,8 +181,11 @@ window.TeacherCourseView = Backbone.View.extend({
 
             if (separateLessons.length > 0) {
                 _.each(separateLessons, function (lesson) {
-                    $('#course-separate-lessons').append('<a class="list-group-item clicker lessonListItem" id="seperate-lesson-' + json.id + "-" + lesson['pk'] + '"><p>' + lesson['fields']['name'] + '</p></a>');
-                    $('#lessonManagerModal-' + json.id).on("click", '#seperate-lesson-' + json.id + "-" + lesson['pk'], function() {
+                    $('#course-separate-lessons').append('<a class="list-group-item clicker lessonListItem" \i' +
+                        'd="seperate-lesson-' + json.id + "-" + lesson['pk'] + '"><p>' + lesson['fields']['name'] +
+                        '</p></a>');
+                    $('#lessonManagerModal-' + json.id).on("click", '#seperate-lesson-' + json.id + "-" + lesson['pk'],
+                        function() {
                         console.log(lesson['pk']);
                         if ($('#seperate-lesson-' + json.id + "-" + lesson['pk']).hasClass('active')) {
                             var i = addLessonQueue.indexOf(lesson['pk']);
@@ -257,13 +266,21 @@ window.TeacherLessonView = Backbone.View.extend({
             $(self.el).append('<div><h3>Course: ' + courseName + '</h3></div>');
             $(self.el).append('<div><h4>Lesson: ' + json.name + '</h4></div>');
 
-            var append_promise = $('#dash-sidebar-lower').prepend('<div><h4>Students</h4></div><div class="list-group" id="students-for-lesson"></div>');
+            var append_promise = $('#dash-sidebar-lower').prepend('<div><h4>Students</h4></div><div \c' +
+                'lass="list-group"\ id="students-for-lesson"></div>');
             _.each(students, function (student) {
-                if (router.teacherStudentWorkRequestId && router.teacherStudentWorkRequestId == parseInt(student['fields']['userId'])) {
-                    $('#students-for-lesson').append('<a href="#teacher/' + courseId + '/lesson/' + json.id + '/student/' + student['fields']['userId'] + '" class="list-group-item active student-tab" id="student-tab-' + student['fields']['userId'] + '"></i>' + student['fields']['username'] + '</a>');
+                if (router.teacherStudentWorkRequestId && router.teacherStudentWorkRequestId ==
+                    parseInt(student['fields']['userId'])) {
+                    $('#students-for-lesson').append('<a href="#teacher/' + courseId + '/lesson/' + json.id +
+                        '/student/' + student['fields']['userId'] +
+                        '" class="list-group-item active student-tab" id="student-tab-' +
+                        student['fields']['userId'] + '"></i>' + student['fields']['username'] + '</a>');
                 }
                 else {
-                    $('#students-for-lesson').append('<a href="#teacher/' + courseId + '/lesson/' + json.id + '/student/' + student['fields']['userId'] + '" class="list-group-item student-tab" id="student-tab-' + student['fields']['userId'] + '"></i>' + student['fields']['username'] + '</a>');
+                    $('#students-for-lesson').append('<a href="#teacher/' + courseId + '/lesson/' + json.id +
+                        '/student/' + student['fields']['userId'] +
+                        '" class="list-group-item student-tab" id="student-tab-' + student['fields']['userId'] +
+                        '"></i>' + student['fields']['username'] + '</a>');
                 }
             }, this);
 

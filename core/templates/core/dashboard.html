@@ -1,5 +1,10 @@
 {% extends 'front/base.html' %}
 
+
+{% block styleinline %}
+    <link href="/static/css/dash.css" rel="stylesheet">
+{% endblock %}
+
 {% block navbar %}
 <div id="snappy-navbar" xmlns="http://www.w3.org/1999/html">
 <div class="row">
@@ -22,212 +27,6 @@
 {% endblock %}
 
 {% block content %}
-    <style type="text/css">
-
-        body {
-            background-image:url('/static/img/blue_background.jpg');
-            color: #f5f5f5;
-        }
-
-        .lesson-details {
-            /*border: 3px solid #add8e6;*/
-            /*height: 100px;*/
-        }
-
-        #dash-main {
-            background-color: #ffffff;
-            color: #428bca;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 100px;
-        }
-
-        .dash-section-title {
-            position: relative;
-            margin-top: 0px;
-            /*margin-left: 10px;*/
-        }
-
-        .dash-list-item-container {
-            /*background-color: #fafad2;*/
-            border: 1px solid #d3d3d3;
-            min-height: 100px;
-            margin-bottom: -1px;
-            padding: 20px;
-        }
-
-        .active-container {
-            background-color: rgba(0, 172, 226, 0.2)
-        }
-
-        .container-focus {
-            background-color: rgba(86, 199, 252, 0.1);
-        }
-
-        .recommend {
-            border: 1px solid #d3d3d3;
-            margin-bottom: -1px;
-        }
-
-        .recommend-header {
-            margin-left: 5%;
-            margin-top: 5px;
-            margin-bottom: 2px;
-            color: purple;
-        }
-
-        .list-container-btn {
-            margin-left: 70%;
-            margin-bottom: 10px;
-        }
-
-        .form-success-message {
-            margin-left: 15px;
-            color: green;
-        }
-
-        .errorlist{
-            color: red;
-        }
-
-
-        #world {
-            z-index:-2;
-            height:800px;
-            width: 1100px;
-            border: 1px solid grey;
-            border-radius: 5px;
-
-        }
-
-        #codeEditor {
-            position: relative;
-            z-index: 0;
-            margin-top: -798px;
-            margin-left: 2px;
-        }
-        #snap-container{
-            margin-top: 5px;
-            position: absolute;
-            left: 0;
-            width: 1300px;
-
-        }
-
-        #lesson-guide {
-            height: 800px;
-            padding-right: 0px;
-            padding-left: 25px;
-            width: 20%;
-            min-width: 290px;
-            overflow: auto;
-            border: 1px solid grey;
-            background-color: #ffffff;
-            color: #428bca;
-            border-radius: 5px;
-        }
-
-        #lesson-guide-preview {
-            height: 600px;
-            padding-right: 0px;
-            padding-left: 25px;
-            /*width: 20%;*/
-            width: 290px;
-            overflow: auto;
-            border: 1px solid grey;
-            background-color: #ffffff;
-            color: #428bca;
-            border-radius: 5px;
-            display: none;
-        }
-
-        #lesson-guide-preview-header{
-            display: none;
-            width: 200px;
-            /*margin-left: -80px;*/
-        }
-
-        #snap-row {
-            min-width: 1300px;
-        }
-
-        .class-search-item {
-            border: 1px solid grey;
-            color: #ffffff;
-            margin-bottom: 5px;
-            border-radius: 10px;
-            padding-left: 5px;
-        }
-
-        .queue_btn {
-            margin-top: 20px;
-            width: 40%;
-        }
-
-        .enroll-btn {
-            margin-left: 10%;
-        }
-
-        .unenrolled_class {
-            background-color: #00B8C0;
-            cursor: pointer;
-        }
-
-        .queued_class {
-            background-color: #C07706;
-            cursor: default;
-        }
-
-        .enrolled_class {
-            background-color: rgb(211, 211, 211);
-
-        }
-
-        #teacher_additions_navs {
-            margin-bottom: 20px;
-            /*margin-top: 30px;*/
-        }
-
-        #teacher_additions_navs .active > a {
-            background-color: #428bca;
-            color: #f5f5f5;
-            cursor: default;
-        }
-
-        #teacher_additions_navs > li> a {
-            cursor: pointer;
-        }
-
-        .teacher-register-btn {
-            width: 20%;
-        }
-
-        .course-lesson-header {
-            margin-top: 3px;
-            /*margin-left: 10px;*/
-        }
-    
-        .clicker {
-            cursor: pointer;
-        }
-
-        .lessonListItem {
-            border-radius: 5px;
-            margin-bottom: 3px;
-        }
-
-        #snap-container-teacher {
-            position: absolute;
-            left: 0;
-            width: 1300px;
-            margin-top: -18px;
-            margin-bottom: 50px;
-        }
-
-
-    </style>
-
-
     <div id="content">
     <div class="col-md-12">
     <h2>Hello {{ username }}!</h2>
@@ -274,6 +73,10 @@
     </div>
     </div>
 
+    <script>
+        var username = '{{ username }}';
+    </script>
+
     <script type="text/template" id="lesson-list-item">
         <div id='dash-list-item-container-<%= id %>' class="dash-list-item-container">
         <h3 id='title-<%= id %>' class="dash-section-title"><%= name %></h3>
@@ -283,9 +86,20 @@
     <script type="text/template" id="lesson-details">
         <h5> <%= description %></h5>
         <p>
-            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
+            architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
+            sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
+            voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit
+            amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut
+            labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis
+            nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
+            consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse
+            quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
         </p>
-        <a href="#solo/<%= id %>/snap"><div class="btn btn-primary btn-lg list-container-btn" id='lesson-btn-<%= id %>'>Begin Lesson</div></a>
+        <a href="#solo/<%= id %>/snap">
+            <div class="btn btn-primary btn-lg list-container-btn" id='lesson-btn-<%= id %>'>Begin Lesson</div>
+        </a>
     </script>
 
     <script type="text/template" id="snap-template">
@@ -341,7 +155,8 @@
                 <input type="name" class="form-control" id="course-name" placeholder="Enter Name">
                 <ul class="errorlist" id="course-name-error"></ul>
             </div>
-            <div class="btn btn-primary teacher-register-btn" id="teacher-register-class-btn">Submit</div> <span class="form-success-message" id="update-form-message"></span>
+            <div class="btn btn-primary teacher-register-btn" id="teacher-register-class-btn">Submit</div>
+            <span class="form-success-message" id="update-form-message"></span>
         </form>
         </div>
 
@@ -387,7 +202,8 @@
                     <ul class="errorlist" id="lesson-guide-error"></ul>
                 </div>
 
-                <div class="btn btn-primary teacher-register-btn" id="create-lesson-btn">Submit</div> <span class="form-success-message" id="lesson-success-message"></span>
+                <div class="btn btn-primary teacher-register-btn" id="create-lesson-btn">Submit</div>
+                <span class="form-success-message" id="lesson-success-message"></span>
             </form>
         </div>
     </script>
@@ -398,11 +214,13 @@
                 <h4 class="course-lesson-header">Lessons</h4>
             </div>
             <div class="col-md-1">
-                <div class="btn btn-primary btn-xs" id="add-lessons-to-course-btn" data-toggle="modal" data-target="#lessonManagerModal-<%= id %>"><i class="fa fa-gears"></i>  Manage Lessons</div>
+                <div class="btn btn-primary btn-xs" id="add-lessons-to-course-btn" data-toggle="modal"
+                     data-target="#lessonManagerModal-<%= id %>"><i class="fa fa-gears"></i>  Manage Lessons</div>
             </div>
         </div>
 
-        <div class="modal fade" id="lessonManagerModal-<%= id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="lessonManagerModal-<%= id %>" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -429,7 +247,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" id="cancel-lesson-updates-<%= id %>" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" id="cancel-lesson-updates-<%= id %>"
+                                data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" id="save-lesson-updates-<%= id %>">Save changes</button>
                     </div>
                 </div>
