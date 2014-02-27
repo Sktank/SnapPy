@@ -135,7 +135,7 @@ def enroll_courses(request):
 def get_lessons(request):
     if request.is_ajax():
         current_user = WebUser.objects.filter(userId = request.user.id)[0]
-        course_id = request.POST.get('course_id', False)
+        course_id = request.GET.get('course_id', False)
         course = Course.objects.filter(id = course_id)[0]
 
         #security check
@@ -159,7 +159,7 @@ def get_lessons(request):
 @login_required()
 def lesson_get_course_and_students(request):
     if request.is_ajax():
-        course_id = request.POST.get('course_id', False)
+        course_id = request.GET.get('course_id', False)
 
         course_set = Course.objects.filter(id=course_id)
         course =course_set[0]
@@ -177,8 +177,8 @@ def lesson_get_course_and_students(request):
 @login_required()
 def lesson_get_snaps(request):
     if request.is_ajax():
-        student_id = request.POST.get('student_id', False)
-        lesson_id = request.POST.get('lesson_id', False)
+        student_id = request.GET.get('student_id', False)
+        lesson_id = request.GET.get('lesson_id', False)
         print lesson_id
         lesson = Lesson.objects.filter(id=int(lesson_id))[0]
         print lesson
