@@ -1,9 +1,8 @@
 {% extends 'front/base.html' %}
 
-
-{% block styleinline %}
-    <link href="/static/css/dash.css" rel="stylesheet">
-{% endblock %}
+<!--===========================================================================================-->
+<!--                                      Dashboard Navbar                                        -->
+<!--===========================================================================================-->
 
 {% block navbar %}
 <div id="snappy-navbar" xmlns="http://www.w3.org/1999/html">
@@ -25,6 +24,10 @@
     </div>
 </div>
 {% endblock %}
+
+<!--===========================================================================================-->
+<!--                                Dashboard Content On Load                                  -->
+<!--===========================================================================================-->
 
 {% block content %}
     <div id="content">
@@ -74,12 +77,19 @@
     </div>
 
     <script>
-        var username = '{{ username }}';
+        window.username = '{{ username }}';
     </script>
 
+{% endblock %}
+
+<!--===========================================================================================-->
+<!--                                      Dashboard Templates                                  -->
+<!--===========================================================================================-->
+
+{% block dashTemplates %}
     <script type="text/template" id="lesson-list-item">
         <div id='dash-list-item-container-<%= id %>' class="dash-list-item-container">
-        <h3 id='title-<%= id %>' class="dash-section-title"><%= name %></h3>
+            <h3 id='title-<%= id %>' class="dash-section-title"><%= name %></h3>
         </div>
     </script>
 
@@ -106,12 +116,12 @@
 
         <div id="snap-container">
             <div class="row" id="snap-row">
-            <div class="col-md-3" id="lesson-guide">
-                <h4>Welcome!</h4>
-                <p>
-                    <%= guide %>
-                </p>
-            </div>
+                <div class="col-md-3" id="lesson-guide">
+                    <h4>Welcome!</h4>
+                    <p>
+                        <%= guide %>
+                    </p>
+                </div>
                 <div class="col-md-9" id="snap-app">
                     <canvas id="world" tabindex="1"/>
 
@@ -149,15 +159,15 @@
         </ul>
 
         <div id="create-class">
-        <form role="form" action="#teacher">{% csrf_token %}
-            <div class="form-group" id="course-name-group">
-                <label for="course-name">Course Name</label>
-                <input type="name" class="form-control" id="course-name" placeholder="Enter Name">
-                <ul class="errorlist" id="course-name-error"></ul>
-            </div>
-            <div class="btn btn-primary teacher-register-btn" id="teacher-register-class-btn">Submit</div>
-            <span class="form-success-message" id="update-form-message"></span>
-        </form>
+            <form role="form" action="#teacher">{% csrf_token %}
+                <div class="form-group" id="course-name-group">
+                    <label for="course-name">Course Name</label>
+                    <input type="name" class="form-control" id="course-name" placeholder="Enter Name">
+                    <ul class="errorlist" id="course-name-error"></ul>
+                </div>
+                <div class="btn btn-primary teacher-register-btn" id="teacher-register-class-btn">Submit</div>
+                <span class="form-success-message" id="update-form-message"></span>
+            </form>
         </div>
 
         <div id="create-lesson" style="display:none">
@@ -272,7 +282,7 @@
     </script>
 
     <script type="text/template" id="student-class-search-item">
-            <b><%= name %></b>
+        <b><%= name %></b>
     </script>
 
     <script type="text/template" id="student-class-enrollment-queue">
@@ -282,19 +292,29 @@
     </script>
 
     <script type="text/template" id="student-class-enrollment-queue-item">
-       - <%= name %>
+        - <%= name %>
     </script>
-
 {% endblock %}
 
+<!--===========================================================================================-->
+<!--                                      Dashboard Javascript                                 -->
+<!--===========================================================================================-->
 
 {% block jsinline %}
-    <script type="text/javascript" src="/static/js/underscore.js"></script>
-    <script type="text/javascript" src="/static/js/backbone.js"></script>
-    <script type="text/javascript" src="/static/js/ajax-csrf.js"></script>
+    <script type="text/javascript" src="/static/js/lib/underscore.js"></script>
+    <script type="text/javascript" src="/static/js/lib/backbone.js"></script>
+    <script type="text/javascript" src="/static/js/lib/ajax-csrf.js"></script>
+    <script type="text/javascript" src="/static/js/dash/dash-utils.js"></script>
     <script type="text/javascript" src="/static/js/dash/individual.js"></script>
     <script type="text/javascript" src="/static/js/dash/teacher.js"></script>
     <script type="text/javascript" src="/static/js/dash/student.js"></script>
-    <script type="text/javascript" src="/static/js/dash/dash-utils.js"></script>
     <script type="text/javascript" src="/static/js/dash/dashboard.js"></script>
+{% endblock %}
+
+<!--===========================================================================================-->
+<!--                                      Dashboard CSS                                        -->
+<!--===========================================================================================-->
+
+{% block styleinline %}
+    <link href="/static/css/dash.css" rel="stylesheet">
 {% endblock %}

@@ -8,21 +8,22 @@ Include all scripts and stylings here
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-{#    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css"/>#}
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href="/static/css/front.css" rel="stylesheet">
 
     {% block styleinline %}
     {% endblock %}
-    <title></title>
+    <title>SnapPy</title>
 </head>
 <body>
 <div class="container-fluid">
     {% block body %}
-
     {% endblock %}
 </div>
+{% block dashTemplates %}
+{% endblock %}
+
 {% block js %}
 <script type="text/javascript" src="/static/js/libraries/jquery.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>

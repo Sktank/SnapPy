@@ -1,5 +1,3 @@
-
-# Create your views here.
 from StdSuites.AppleScript_Suite import record
 from django.contrib.auth import logout
 import json
@@ -7,10 +5,8 @@ from django.core import serializers
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
-#from core.static.vis.v3.web_exec_py2 import web_exec
 import socket, os
 from subprocess import Popen, PIPE
-#from Websheet import record
 import subprocess
 from django.template.context import RequestContext
 from django.contrib.auth.decorators import login_required
@@ -20,8 +16,9 @@ from core.serializers import UserSerializer, GroupSerializer, CourseSerializer, 
 from core.models import Course, Lesson, Snap, WebUser
 from itertools import chain
 
-path_to_core = '/Users/spencertank/School/Thesis/imcode/core/'
-
+#===========================================================================================
+#                                      Snap Specific
+#===========================================================================================
 
 def base(request, template="core/base.html"):
     return render_to_response(template)
@@ -33,9 +30,7 @@ def web_exec_py2(request):
     print str(dict(request.GET.iterlists()))
     proc = subprocess.Popen(["python", "core/static/vis/v3/web_exec_py2.py", str(dict(request.GET.iterlists()))], stdout=PIPE)
     ret = proc.stdout.read()
-#    response = execute('web_exec', request)
     return HttpResponse(ret, content_type="text/plain")
-
 
 def execute(command, the_stdin):
     proc = Popen(command.split(" "), stdin=PIPE, stdout=PIPE, stderr=PIPE)
@@ -46,15 +41,12 @@ def execute(command, the_stdin):
 
 
 #===========================================================================================
-#                                      Dashboard
+#                                         Dashboard
 #===========================================================================================
 
 
 @login_required()
 def dashboard(request, template="core/dashboard.html"):
-
-    id = request.user.id
-
     values = {
         'username': request.user.username,
         'id': request.user.id
@@ -67,7 +59,7 @@ def user_logout(request):
     return HttpResponseRedirect(reverse('login'))
 
 #===========================================================================================
-#                                      Creating and Updating models
+#                                 Creating and Updating models
 #===========================================================================================
 
 def response(code, message):
@@ -139,7 +131,6 @@ def enroll_courses(request):
         return HttpResponse(json.dumps(response(0, success_message)))
 
 
-#this is unsafe
 @login_required()
 def get_lessons(request):
     if request.is_ajax():
@@ -168,8 +159,6 @@ def get_lessons(request):
 @login_required()
 def lesson_get_course_and_students(request):
     if request.is_ajax():
-#        import pdb
-#        pdb.set_trace()
         course_id = request.POST.get('course_id', False)
 
         course_set = Course.objects.filter(id=course_id)
@@ -217,8 +206,6 @@ lesson_no_guide_message = "Lesson guide is required"
 lesson_guide_too_short_message = "Lesson guide must be at least 10 characters"
 @login_required()
 def create_lesson(request):
-#    import pdb
-#    pdb.set_trace()
     if request.is_ajax():
         name = request.POST.get('name', False)
         description = request.POST.get('description', False)
@@ -257,8 +244,6 @@ def create_lesson(request):
 
 @login_required()
 def manage_course_lessons(request):
-#    import pdb
-#    pdb.set_trace()
     if request.is_ajax():
         course_id = request.POST.get('course_id', False)
         add_ids = request.POST.getlist('add_ids[]', False)
@@ -323,23 +308,14 @@ def updateSnap(snap, name, serial):
 #===========================================================================================
 
 class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
 class WebUserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
     serializer_class = WebUserSerializer
 
     def get_queryset(self):
@@ -349,42 +325,27 @@ class WebUserViewSet(viewsets.ModelViewSet):
 
 
 class TeacherCourseViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
     serializer_class = CourseSerializer
     def get_queryset(self):
         user = self.request.user
         return Course.objects.filter(teachers__userId = user.id)
 
 class StudentCourseViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
     serializer_class = CourseSerializer
     def get_queryset(self):
         user = self.request.user
         return Course.objects.filter(students__userId = user.id)
 
 class CourseViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
     serializer_class = CourseSerializer
     def get_queryset(self):
         return Course.objects.all()
 
 
 class LessonViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-#    queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
 
     def get_queryset(self):
-#        import pdb
-#        pdb.set_trace()
         user1 = self.request.user
         webUser = WebUser.objects.filter(userId=user1.id)
         lessons = Lesson.objects.filter(user=webUser)
@@ -430,90 +391,68 @@ class SnapViewSet(viewsets.ModelViewSet):
 #                               Static Snap Javascript Views
 #===========================================================================================
 
-def static_blocks(request):
-    abspath = open(path_to_core + 'static/js/blocks.js','r')
+pathToCore = '/Users/spencertank/School/Thesis/imcode/core/'
+coreToJs = 'static/js/'
+snapDir = 'snap/'
+codemirror1 = 'static/codemirror/lib/'
+codemirror2 = 'static/codemirror/mode/python/'
+snapPath = pathToCore + coreToJs + snapDir
+
+def HttpResponseForFile(path, filename):
+    abspath = open(path + filename,'r')
     response = HttpResponse(content=abspath.read())
     return response
+
+def static_blocks(request):
+    return HttpResponseForFile(snapPath, 'blocks.js')
 
 def static_byob(request):
-    abspath = open(path_to_core + 'static/js/byob.js','r')
-    response = HttpResponse(content=abspath.read())
-    return response
+    return HttpResponseForFile(snapPath, 'byob.js')
 
 def static_cloud(request):
-    abspath = open(path_to_core + 'static/js/cloud.js','r')
-    response = HttpResponse(content=abspath.read())
-    return response
+    return HttpResponseForFile(snapPath, 'cloud.js')
 
 def static_executeVisualizer(request):
-    abspath = open(path_to_core + 'static/js/executeVisualizer.js','r')
-    response = HttpResponse(content=abspath.read())
-    return response
+    return HttpResponseForFile(snapPath, 'executeVisualizer.js')
 
 def static_gui(request):
-    abspath = open(path_to_core + 'static/js/gui.js','r')
-    response = HttpResponse(content=abspath.read())
-    return response
+    return HttpResponseForFile(snapPath, 'gui.js')
 
 def static_lists(request):
-    abspath = open(path_to_core + 'static/js/lists.js','r')
-    response = HttpResponse(content=abspath.read())
-    return response
+    return HttpResponseForFile(snapPath, 'lists.js')
 
 def static_locale(request):
-    abspath = open(path_to_core + 'static/js/locale.js','r')
-    response = HttpResponse(content=abspath.read())
-    return response
+    return HttpResponseForFile(snapPath, 'locale.js')
 
 def static_morphic(request):
-    abspath = open(path_to_core + 'static/js/morphic.js','r')
-    response = HttpResponse(content=abspath.read())
-    return response
+    return HttpResponseForFile(snapPath, 'morphic.js')
 
 def static_objects(request):
-    abspath = open(path_to_core + 'static/js/objects.js','r')
-    response = HttpResponse(content=abspath.read())
-    return response
+    return HttpResponseForFile(snapPath, 'objects.js')
 
 def static_paint(request):
-    abspath = open(path_to_core + 'static/js/paint.js','r')
-    response = HttpResponse(content=abspath.read())
-    return response
+    return HttpResponseForFile(snapPath, 'paint.js')
 
 def static_sha512(request):
-    abspath = open(path_to_core + 'static/js/sha512.js','r')
-    response = HttpResponse(content=abspath.read())
-    return response
+    return HttpResponseForFile(snapPath, 'sha512.js')
 
 def static_store(request):
-    abspath = open(path_to_core + 'static/js/store.js','r')
-    response = HttpResponse(content=abspath.read())
-    return response
+    return HttpResponseForFile(snapPath, 'store.js')
 
 def static_threads(request):
-    abspath = open(path_to_core + 'static/js/threads.js','r')
-    response = HttpResponse(content=abspath.read())
-    return response
+    return HttpResponseForFile(snapPath, 'threads.js')
 
 def static_widgets(request):
-    abspath = open(path_to_core + 'static/js/widgets.js','r')
-    response = HttpResponse(content=abspath.read())
-    return response
+    return HttpResponseForFile(snapPath, 'widgets.js')
 
 def static_xml(request):
-    abspath = open(path_to_core + 'static/js/xml.js','r')
-    response = HttpResponse(content=abspath.read())
-    return response
+    return HttpResponseForFile(snapPath, 'xml.js')
 
 def static_codemirror1(request):
-    abspath = open(path_to_core + 'static/codemirror/lib/codemirror.js','r')
-    response = HttpResponse(content=abspath.read())
-    return response
+    return HttpResponseForFile(pathToCore + codemirror1, 'codemirror.js')
 
 def static_codemirror2(request):
-    abspath = open(path_to_core + 'static/codemirror/mode/python/python.js','r')
-    response = HttpResponse(content=abspath.read())
-    return response
+    return HttpResponseForFile(pathToCore + codemirror2, 'python.js')
 
 
 

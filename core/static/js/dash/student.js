@@ -53,7 +53,6 @@ window.StudentCourseListView = Backbone.View.extend({
         else {
             $(this.el).append("<h3>You Are Not Currently Enrolled In Any Classes</h3>");
         }
-        // Class Registration
         return this;
     }
 
@@ -114,7 +113,7 @@ window.StudentClassSearchItemView = Backbone.View.extend({
         else {
             $(this.el).addClass("unenrolled_class");
             $(this.el).click(function() {
-                addCourseToEnrollmentQueue(self.model);
+                dashUtils.addCourseToEnrollmentQueue(self.model);
                 $(self.el).addClass("queued_class");
             });
         }
@@ -136,13 +135,13 @@ window.StudentClassEnrollmentQueueView = Backbone.View.extend({
         if (this.model.models.length > 0) {
             $(this.el).append('<div class="btn btn-danger btn-lg class-clear-btn queue_btn">Clear</div>');
             $( document ).on( "click", ".class-clear-btn", function() {
-                clearEnrollmentQueue();
+                dashUtils.clearEnrollmentQueue();
             });
             $(this.el).append('<div class="btn btn-success btn-lg enroll-btn class-enroll-btn queue_btn">Enroll\<' +
                 '/div> <span id="class-enroll-message"></span>');
 
             $( document ).on( "click", ".class-enroll-btn", function() {
-                enrollCourses()
+                dashUtils.enrollCourses()
             });
         }
         else {
@@ -160,7 +159,6 @@ window.StudentClassEnrollmentQueueItemView = Backbone.View.extend({
     render:function (eventName) {
         var json = this.model.toJSON();
         $(this.el).html(this.template(json));
-
         return this;
     }
 });
@@ -171,11 +169,10 @@ window.StudentCourseView = Backbone.View.extend({
 
     render:function (eventName) {
         var json = this.model.toJSON();
-        var promise = getLessons(json.id);
+        var promise = dashUtils.getLessons(json.id);
         var self = this;
         $(self.el).addClass("container-details");
         $(self.el).append('<h5>Lessons</h5>');
-//            .html(self.template(json));
         promise.success(function (data) {
             var lessons = $.parseJSON(data)[0];
             console.log(data);
@@ -192,7 +189,6 @@ window.StudentCourseView = Backbone.View.extend({
 });
 
 window.StudentLessonView = Backbone.View.extend({
-
     initialize : function (options) {
         this.options = options || {};
     },
@@ -205,12 +201,11 @@ window.StudentLessonView = Backbone.View.extend({
         var course_id = this.options.course;
         var self = this;
         $(self.el).append('<h5>Lessons</h5>');
-//            .html(self.template(json));
         console.log(course_id);
         $('#current-lesson').text("Course: " + course_id + ", Lesson: " + json.name);
         $(self.el).html(self.template(json));
         $('#content').show();
-        loadSnap(json.id);
+        dashUtils.loadSnap(json.id);
         return this;
     }
 });

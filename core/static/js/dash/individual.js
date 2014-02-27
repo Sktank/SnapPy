@@ -86,7 +86,7 @@ window.SnapView = Backbone.View.extend({
         $('#current-lesson').text(json.name);
         $(this.el).html(this.template(json));
         $('#content').show();
-        loadSnap(json.id);
+        dashUtils.loadSnap(json.id);
         return this;
     }
 });

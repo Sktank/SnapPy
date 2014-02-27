@@ -131,7 +131,7 @@ window.TeacherCourseView = Backbone.View.extend({
     render:function (eventName) {
         console.log("course view");
         var json = this.model.toJSON();
-        var promise = getLessons(json.id);
+        var promise = dashUtils.getLessons(json.id);
         var self = this;
         var addLessonQueue = [];
         var removeLessonQueue = [];
@@ -212,7 +212,7 @@ window.TeacherCourseView = Backbone.View.extend({
                 if ($("#save-lesson-updates-" + json.id).prop("disabled"))
                     return false;
                 $("#save-lesson-updates-" + json.id).prop("disabled", true);
-                updateLessonsForCourse(json.id, removeLessonQueue, addLessonQueue);
+                dashUtils.updateLessonsForCourse(json.id, removeLessonQueue, addLessonQueue);
                 removeLessonQueue = [];
                 addLessonQueue = [];
                 $('#lessonManagerModal-' + json.id).find(".active").removeClass("active");
@@ -251,7 +251,7 @@ window.TeacherLessonView = Backbone.View.extend({
         console.log(json);
 
         console.log(this.model);
-        var promise = getCourseAndStudents(course_id);
+        var promise = dashUtils.getCourseAndStudents(course_id);
 
         promise.success(function (data) {
             var resp = $.parseJSON(data);
@@ -266,28 +266,26 @@ window.TeacherLessonView = Backbone.View.extend({
             $(self.el).append('<div><h3>Course: ' + courseName + '</h3></div>');
             $(self.el).append('<div><h4>Lesson: ' + json.name + '</h4></div>');
 
-            var append_promise = $('#dash-sidebar-lower').prepend('<div><h4>Students</h4></div><div \c' +
-                'lass="list-group"\ id="students-for-lesson"></div>');
-            _.each(students, function (student) {
-                if (router.teacherStudentWorkRequestId && router.teacherStudentWorkRequestId ==
-                    parseInt(student['fields']['userId'])) {
-                    $('#students-for-lesson').append('<a href="#teacher/' + courseId + '/lesson/' + json.id +
-                        '/student/' + student['fields']['userId'] +
-                        '" class="list-group-item active student-tab" id="student-tab-' +
-                        student['fields']['userId'] + '"></i>' + student['fields']['username'] + '</a>');
-                }
-                else {
-                    $('#students-for-lesson').append('<a href="#teacher/' + courseId + '/lesson/' + json.id +
-                        '/student/' + student['fields']['userId'] +
-                        '" class="list-group-item student-tab" id="student-tab-' + student['fields']['userId'] +
-                        '"></i>' + student['fields']['username'] + '</a>');
-                }
-            }, this);
-
-
-            // add lesson name to top
-
-            //create a list of students on the side
+            var remake = dashUtils.checkStudentList();
+            if (remake) {
+                var append_promise = $('#dash-sidebar-lower').prepend('<div><h4>Students</h4></div><div \c' +
+                    'lass="list-group"\ id="students-for-lesson"></div>');
+                _.each(students, function (student) {
+                    if (router.teacherStudentWorkRequestId && router.teacherStudentWorkRequestId ==
+                        parseInt(student['fields']['userId'])) {
+                        $('#students-for-lesson').append('<a href="#teacher/' + courseId + '/lesson/' + json.id +
+                            '/student/' + student['fields']['userId'] +
+                            '" class="list-group-item active student-tab" id="student-tab-' +
+                            student['fields']['userId'] + '"></i>' + student['fields']['username'] + '</a>');
+                    }
+                    else {
+                        $('#students-for-lesson').append('<a href="#teacher/' + courseId + '/lesson/' + json.id +
+                            '/student/' + student['fields']['userId'] +
+                            '" class="list-group-item student-tab" id="student-tab-' + student['fields']['userId'] +
+                            '"></i>' + student['fields']['username'] + '</a>');
+                    }
+                }, this);
+            }
         });
 
         return this;
@@ -308,11 +306,11 @@ window.TeacherLessonStudentWork = Backbone.View.extend({
 
     render:function (eventName) {
         var json = this.model.toJSON();
-        var student_id = this.options.student_id
+        var student_id = this.options.student_id;
         $('#current-lesson').text(json.name);
         $(this.el).html(this.template(json));
         $('#dash-main').show();
-        loadSnap(json.id, student_id);
+        dashUtils.loadSnap(json.id, student_id);
         return this;
     }
 });

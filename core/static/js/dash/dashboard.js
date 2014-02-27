@@ -23,8 +23,12 @@ var AppRouter = Backbone.Router.extend({
     },
 
 
+    //===========================================================================================
+    //                                         Lesson Tab
+    //===========================================================================================
+
     lessonsList:function () {
-        checkDash();
+        dashUtils.checkDash();
         if (this.teachingList) {
             delete this.teachingList;
         }
@@ -53,7 +57,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     lessonDetails:function (id) {
-        var remake = checkDash();
+        var remake = dashUtils.checkDash();
         var self = this;
         if (this.lessonList && !remake) {
             this.lesson = this.lessonList.get(id);
@@ -85,8 +89,12 @@ var AppRouter = Backbone.Router.extend({
 
     },
 
+    //===========================================================================================
+    //                                         Teacher Tab
+    //===========================================================================================
+
     teacherList: function () {
-        checkDash();
+        dashUtils.checkDash();
         if (this.lessonList) {
             delete this.lessonList;
         }
@@ -98,12 +106,12 @@ var AppRouter = Backbone.Router.extend({
         $('#dash-sidebar-lower').empty();
         $('#dash-main').append('<div id="teacher-class-list-container"></div>');
         $('#dash-main').append('<div id="teacher-register-form-container"></div>');
-        generateTeacherList();
-        generateTeacherCourseRegisterForm();
+        dashUtils.generateTeacherList();
+        dashUtils.generateTeacherCourseRegisterForm();
     },
 
     teacherCourseDetails: function(id) {
-        var remake = checkCourseList(id);
+        var remake = dashUtils.checkCourseList(id);
         var self = this;
         console.log("YO");
         if (this.teachingList && !remake) {
@@ -124,7 +132,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     teacherLessonDetails: function(id, lid) {
-        checkDash();
+        dashUtils.checkDash();
         var self = this;
         this.teacherLessonList = new CourseLessonCollection();
 
@@ -167,8 +175,12 @@ var AppRouter = Backbone.Router.extend({
         }
     },
 
+    //===========================================================================================
+    //                                         Student Tab
+    //===========================================================================================
+
     studentList: function () {
-        checkDash();
+        dashUtils.checkDash();
         if (this.teachingList) {
             delete this.teachingList;
         }
@@ -181,12 +193,12 @@ var AppRouter = Backbone.Router.extend({
         $('#dash-main').append('<div id="student-class-list-container"></div>');
         $('#dash-main').append('<div id="student-class-search-container"></div>');
         $('#dash-main').append('<div id="student-class-enrollment-container"></div>');
-        generateStudentList();
-        generateStudentEnrollmentQueue();
+        dashUtils.generateStudentList();
+        dashUtils.generateStudentEnrollmentQueue();
     },
 
     studentCourseDetails: function(id) {
-        var remake = checkDash();
+        var remake = dashUtils.checkDash();
         var self = this;
         if (this.studentClassList && !remake) {
             if (this.studentCourseRequestedId) {
