@@ -749,3 +749,11 @@ div.ExecutionVisualizer .pycrazy-highlight-prev-and-cur {
   text-decoration: none;
   border-bottom: 1px solid #999999;
 }
+
+div#executionSpeedSlider {
+}
+
+div#executionSpeedDiv {
+    font-size: 12px;
+    margin-left: 45%;
+}

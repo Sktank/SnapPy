@@ -64,6 +64,7 @@ function setCodeMirrorVal(dat) {
 
 $(document).ready(function() {
 
+  console.log("gegrgsrg");
   $("#embedLinkDiv").hide();
 
   pyInputCodeMirror = CodeMirror(document.getElementById('codeInputPane'), {
@@ -75,7 +76,7 @@ $(document).ready(function() {
     extraKeys: {Tab: function(cm) {cm.replaceSelection("    ", "end");}}
   });
 
-  pyInputCodeMirror.setSize(null, '200px');
+  pyInputCodeMirror.setSize(null, '250px');
 
 
 //  $(window).onmessage = function(e){

@@ -86,10 +86,53 @@ window.StudentClassSearchView = Backbone.View.extend({
     template:_.template($('#student-class-search').html()),
 
     render:function (eventName) {
-        $(this.el).html(this.template());
+        var self = this;
+        $(self.el).html(self.template());
+
+        $(self.el).on('click', '#search-by-teacher-tab', function() {
+            console.log("here");
+            dashUtils.clearStudentSearch();
+            dashUtils.refreshList('courses-by-teacher-list');
+            $(self.el).find('#search-by-teacher-tab').parent().addClass("active");
+            $("#courses-by-teacher").css('display', 'inline');
+
+        });
+        $(self.el).on('click', '#search-by-name-tab', function() {
+            console.log("here");
+            dashUtils.clearStudentSearch();
+            dashUtils.refreshList('courses-by-name-list');
+            $(self.el).find('#search-by-name-tab').parent().addClass("active");
+            $("#courses-by-name").css('display', 'inline');
+
+        });
+        $(self.el).on('click', '#browse-all-tab', function() {
+            console.log("here");
+            dashUtils.clearStudentSearch();
+            dashUtils.refreshList('all-courses');
+            $(self.el).find('#browse-all-tab').parent().addClass("active");
+            $("#all-courses").css('display', 'inline');
+        });
+
+        $(self.el).on('click', '#search-courses-btn', function() {
+            $('#courses-by-name-list').empty();
+            var promise = dashUtils.getCoursesByName($('#srch-term-course').val());
+            promise.success(function (data) {
+                dashUtils.updateSearchNameList(data);
+            });
+
+        });
+
+        $(self.el).on('click', '#search-teachers-btn', function() {
+            $('#courses-by-teacher-list').empty();
+            var promise = dashUtils.getCoursesByTeacher($('#srch-term-teacher').val());
+            promise.success(function (data) {
+                dashUtils.updateSearchTeacherList(data);
+            });
+        });
+
 
         _.each(this.model.models, function (course) {
-            $(this.el).append(new StudentClassSearchItemView({model:course}).render().el);
+            $(this.el).find("#all-courses").append(new StudentClassSearchItemView({model:course}).render().el);
         }, this);
 
         return this;
@@ -99,22 +142,42 @@ window.StudentClassSearchView = Backbone.View.extend({
 
 window.StudentClassSearchItemView = Backbone.View.extend({
 
+    initialize : function (options) {
+        this.options = options || {};
+    },
+
     template:_.template($('#student-class-search-item').html()),
 
     render:function (eventName) {
         var self = this;
-        var json = this.model.toJSON();
-        $(this.el).addClass("col-md-3").html(this.template(json));
-        console.log(window.app.studentClassList);
-        $(this.el).addClass('class-search-item');
-        if (window.app.studentClassList.findWhere({ id: json.id })) {
-            $(this.el).addClass("enrolled_class");
+        var json;
+        if (this.model.attributes) {
+            json = this.model.toJSON();
         }
         else {
-            $(this.el).addClass("unenrolled_class");
-            $(this.el).click(function() {
-                dashUtils.addCourseToEnrollmentQueue(self.model);
-                $(self.el).addClass("queued_class");
+            this.model.id = this.options.id;
+            json = _.clone(this.model)
+        }
+        console.log(json);
+        $(self.el).addClass("col-md-4").html(self.template(json));
+        $(self.el).find("#search-course-" + json.id).addClass('class-search-item');
+        if (window.app.studentClassList.findWhere({ id: json.id })) {
+            $(self.el).find("#search-course-" + json.id).addClass("enrolled_class");
+        }
+        else {
+            $(self.el).find("#search-course-" + json.id).addClass("unenrolled_class");
+            if (window.app.enrollmentQueueList.findWhere({id: json.id})) {
+                $(self.el).find("#search-course-" + json.id).addClass("queued_class");
+            }
+            $(self.el).on('click', "#search-course-" + json.id, function() {
+                if (!$(self.el).find("#search-course-" + json.id).hasClass("queued_class")) {
+                    dashUtils.addCourseToEnrollmentQueue(self.model);
+                    $(self.el).find("#search-course-" + json.id).addClass("queued_class");
+                }
+                else {
+                    dashUtils.removeCourseFromEnrollmentQueue(self.model);
+                    $(self.el).find("#search-course-" + json.id).removeClass("queued_class");
+                }
             });
         }
         return this;
@@ -200,6 +263,7 @@ window.StudentLessonView = Backbone.View.extend({
         console.log(this);
         var course_id = this.options.course;
         var self = this;
+        $('#home-btn').html('<a href="#student/' + course_id + '"><div class="btn btn-default">Class List</div></a>');
         $(self.el).append('<h5>Lessons</h5>');
         console.log(course_id);
         $('#current-lesson').text("Course: " + course_id + ", Lesson: " + json.name);

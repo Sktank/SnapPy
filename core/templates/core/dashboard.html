@@ -7,12 +7,15 @@
 {% block navbar %}
 <div id="snappy-navbar" xmlns="http://www.w3.org/1999/html">
 <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-        <h4 id="current-lesson"></h4>
+    <div class="col-md-2" id="home-btn"></div>
+    <div class="col-md-3" id="prev-btn"></div>
+    <div class="col-md-3">
+        <h4 id="current-lesson">SnapPy: A Graphical Python Tutorial</h4>
     </div>
-    <div class="col-md-2">
-        <div class="btn-group">
+    <div class="col-md-3" id="next-btn"></div>
+
+    <div class="col-md-1">
+        <div class="btn-group" id="user-btn">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                 {{ username }} <span class="caret"></span>
             </button>
@@ -32,8 +35,7 @@
 {% block content %}
     <div id="content">
     <div class="col-md-12">
-    <h2>Hello {{ username }}!</h2>
-    <hr>
+    <hr id="header-line">
     </div>
 
     <div class="row">
@@ -47,7 +49,7 @@
                 <i class="fa fa-compass"></i> Student
             </a>
             <a href="#solo" class="list-group-item main-tab" id="lesson-list-tab">
-                <i class="fa fa-list"></i> Individual
+                <i class="fa fa-user"></i> Individual
             </a>
 
 
@@ -278,11 +280,41 @@
 
     <script type="text/template" id="student-class-search">
         <hr>
-        <h4>Search For Your Class</h4>
+        <h3>Find More Courses</h3>
+        <ul class="nav nav-pills nav-justified" id="student_search_navs">
+            <li class="active"><a id="search-by-name-tab"><h4 class="student-search-tab"><i class="fa fa-search"></i> Search By Course Name</h4></a></li>
+            <li><a id="search-by-teacher-tab"><h4 class="student-search-tab"><i class="fa fa-search-plus"></i> Search By Teacher Name</h4></a></li>
+            <li><a id="browse-all-tab"><h4 class="student-search-tab"><i class="fa fa-th-list"></i> Browse All Courses</h4></a></li>
+        </ul>
+        <hr>
+
+        <div id="courses-by-name">
+        <form class="search-form form-inline">
+            <div class="form-group" class="course-search-box" id="search-box-course">
+                <input type="text" class="form-control" placeholder="Course Name" id="srch-term-course">
+            </div>
+            <div class="btn btn-default" id="search-courses-btn"><span class="glyphicon glyphicon-search glyph-search"></span></div>
+        </form>
+            <div id="courses-by-name-list"></div>
+        </div>
+
+        <div id="courses-by-teacher">
+        <form class="search-form form-inline">
+            <div class="form-group" class="course-search-box" id="search-box-teacher">
+                <input type="text" class="form-control" placeholder="Teacher Username" id="srch-term-teacher">
+            </div>
+            <div class="btn btn-default" id="search-teachers-btn"><span class="glyphicon glyphicon-search glyph-search"></span></div>
+        </form>
+            <div id="courses-by-teacher-list"></div>
+        </div>
+
+
+        <div id="all-courses"></div>
+
     </script>
 
     <script type="text/template" id="student-class-search-item">
-        <b><%= name %></b>
+        <div id="search-course-<%= id %>"><b><%= name %></b></div>
     </script>
 
     <script type="text/template" id="student-class-enrollment-queue">

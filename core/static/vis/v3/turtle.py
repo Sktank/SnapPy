@@ -3,6 +3,7 @@
 # used for snap commands with visualizer
 
 import math
+import turtle_commands
 
 # file to receive turtle commands and report them to visualizer
 f = open('turtle_commands', 'w')
@@ -17,9 +18,11 @@ penSize = 1
 
 # writes commands to file
 def report(command):
-    f.seek(0)
-    f.write(command + '\n')
-    f.flush()
+    turtle_commands.setTurtleCommand(command + '\n')
+
+#    f.seek(0)
+#    f.write(command + '\n')
+#    f.flush()
 
 
 # The following are stub overrides of the python turtle module to be

@@ -26,6 +26,10 @@ urlpatterns = patterns('',
     url(r'^logout', views.user_logout, name='logout'),
     url(r'^register_course', views.register_course, name="register_course"),
     url(r'^enroll_courses', views.enroll_courses, name="enroll_courses"),
+
+    url(r'^get_courses_by_name', views.get_courses_by_name, name="get_courses_by_name"),
+    url(r'^get_courses_by_teacher', views.get_courses_by_teacher, name="get_courses_by_teacher"),
+
     url(r'^get_lessons', views.get_lessons, name="get_lessons"),
     url(r'^lesson_get_course_and_students', views.lesson_get_course_and_students, name="lesson_get_course_and_students"),
     url(r'^lesson_get_snaps', views.lesson_get_snaps, name="lesson_get_snaps"),

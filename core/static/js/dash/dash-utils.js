@@ -18,12 +18,12 @@ var snapWidth = 1100;
         var dashMain = $("#dash-main");
         if (!dashMain.length) {
             console.log(dashMain.length);
-            $('#content').html('<div class="col-md-12"><h2>Hello '+ window.username +'!</h2><hr></div>\<' +
+            $('#content').html('<hr id="header-line"></div>\<' +
                 'div class="row"><div class="col-md-2" id="dash-sidebar"><h4>Dash Sidebar</h4><div \c' +
                 'lass="list-group"><a href="#teacher" class="list-group-item main-tab" id="teacher-list-tab">\<' +
                 'i class="fa fa-leaf"></i> Teacher</a><a href="#student" class="list-group-item main-tab"\ ' +
                 'id="student-list-tab"><i class="fa fa-compass"></i> Student</a><a href="#solo" \c' +
-                'lass="list-group-item main-tab" id="lesson-list-tab"><i class="fa fa-list"></i> Individual</a></div>\<' +
+                'lass="list-group-item main-tab" id="lesson-list-tab"><i class="fa fa-user"></i> Individual</a></div>\<' +
                 'div id="dash-sidebar-lower"></div></div><div class="col-md-8"><div id="dash-main"><h3>Lessons</h3>\<' +
                 'div class="recommend"><p class="recommend-header"><b>Recommended</b></p></div><div id="lesson-list"></div>\<' +
                 '/div></div><div class="col-md-2"><div id="dash-sidebar-right"></div></div></div>');
@@ -52,6 +52,13 @@ var snapWidth = 1100;
         else {
             return 0;
         }
+    };
+
+    dashUtils.clearNavBtns = function() {
+        $("#home-btn").empty();
+        $("#next-btn").empty();
+        $("#prev-btn").empty();
+        $("#current-lesson").empty();
     };
 
     //===========================================================================================
@@ -104,6 +111,58 @@ var snapWidth = 1100;
 
     };
 
+    dashUtils.updateSearchTeacherList = function(data) {
+        console.log(data);
+        var json = $.parseJSON(data);
+        if (json == -1) {
+            $("#courses-by-teacher-list").append('<h4 class="search-error">Please Enter A Username</h4>');
+        }
+        else if (json == -2) {
+            $("#courses-by-teacher-list").append('<h4 class="search-error">That Username Does Not Exist</h4>');
+        }
+        else if (json.length == 0) {
+            $("#courses-by-teacher-list").append('<h4 class="search-error">That User Is Not Teaching Any Classes</h4>');
+        }
+        else {
+            _.each(json, function (course) {
+                $("#courses-by-teacher-list").append(new StudentClassSearchItemView({model:course['fields'], id:course['pk']}).render().el);
+            }, this);
+        }
+    };
+
+    dashUtils.updateSearchNameList = function(data) {
+        console.log(data);
+        var json = $.parseJSON(data);
+        if (json == -1) {
+            $("#courses-by-name-list").append('<h4 class="search-error">Please Enter A Search</h4>');
+        }
+        else if (json.length == 0) {
+            $("#courses-by-name-list").append('<h4 class="search-error">No Courses Matched Your Search</h4>');
+        }
+        else {
+            _.each(json, function (course) {
+                $("#courses-by-name-list").append(new StudentClassSearchItemView({model:course['fields'], id:course['pk']}).render().el);
+            }, this);
+        }
+    };
+
+    dashUtils.refreshList = function(listId) {
+        var list = $('#' + listId);
+        _.each(list.find('.class-search-item'), function(child) {
+            console.log(child);
+            var jChild = $(child);
+            var id = parseInt(child.id.split("-")[2]);
+            console.log(id);
+            console.log(window.app.enrollmentQueueList);
+            if (jChild.hasClass('queued_class') && !(window.app.enrollmentQueueList.findWhere({ id: id }))) {
+                jChild.removeClass('queued_class');
+            }
+            else if (!jChild.hasClass('queued_class') && (window.app.enrollmentQueueList.findWhere({ id: id }))) {
+                jChild.addClass('queued_class');
+            }
+        });
+    };
+
     //===========================================================================================
     //              Functions for creating new models or updating models
     //===========================================================================================
@@ -146,8 +205,16 @@ var snapWidth = 1100;
                 var data = $.parseJSON(data);
                 dashUtils.updateLessonForm(data);
                 dashUtils.generateTeacherList();
+                window.location.href = "#teacher";
                 $(self).removeProp("disabled");
             });
+    };
+
+    dashUtils.clearStudentSearch = function() {
+        $('#student_search_navs').children('li').removeClass("active");
+        $("#courses-by-name").css('display', 'none');
+        $("#all-courses").css('display', 'none');
+        $("#courses-by-teacher").css('display', 'none');
     };
 
     dashUtils.addCourseToEnrollmentQueue = function(model) {
@@ -158,6 +225,19 @@ var snapWidth = 1100;
             return false;
         $(this).prop("disabled", true);
         window.app.enrollmentQueueList.add(model);
+
+        $(self).removeProp("disabled");
+        dashUtils.generateStudentEnrollmentQueue();
+    };
+
+    dashUtils.removeCourseFromEnrollmentQueue = function(model) {
+        var self = this;
+        console.log("removing from queue");
+        console.log(model);
+        if ($(this).prop("disabled"))
+            return false;
+        $(this).prop("disabled", true);
+        window.app.enrollmentQueueList.remove(model);
 
         $(self).removeProp("disabled");
         dashUtils.generateStudentEnrollmentQueue();
@@ -199,6 +279,8 @@ var snapWidth = 1100;
                 window.app.enrollmentQueueList = new EnrollmentQueueCollection();
                 $(self).removeProp("disabled");
                 window.app.studentList();
+                window.location.href = "#student"
+
             });
     };
 
@@ -275,7 +357,7 @@ var snapWidth = 1100;
             setInterval(loop, 1);
 
             //load if we have previous snaps
-            console.log(snaps_promise.responseText);
+//            console.log(snaps_promise.responseText);
             if (snaps_promise.responseText != "0")
             {
                 var resp = $.parseJSON(snaps_promise.responseText);
@@ -416,6 +498,23 @@ var snapWidth = 1100;
     //                       Functions to access models with ajax calls
     //===========================================================================================
 
+    dashUtils.getCoursesByName = function(name) {
+        return $.ajax({
+            crossDomain: false,
+            type: "GET",
+            data: {name: name},
+            url: "get_courses_by_name"
+        });
+    };
+
+    dashUtils.getCoursesByTeacher = function(name) {
+        return $.ajax({
+            crossDomain: false,
+            type: "GET",
+            data: {name: name},
+            url: "get_courses_by_teacher"
+        });
+    };
 
     dashUtils.getLessons = function(id) {
         return $.ajax({

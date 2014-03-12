@@ -1861,7 +1861,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         button = new PushButtonMorph(
             null,
             function () {
-                new VariableDialogMorph(
+                var newVariableBox = new VariableDialogMorph(
                     null,
                     function (pair) {
                         if (pair && !self.variables.silentFind(pair[0])) {
@@ -1873,11 +1873,15 @@ SpriteMorph.prototype.blockTemplates = function (category) {
                         }
                     },
                     self
-                ).prompt(
+                )
+
+                newVariableBox.prompt(
                     'Variable name',
                     null,
                     self.world()
                 );
+
+                ide.fixPopupLayout(newVariableBox, 20,20)
             },
             'Make a variable'
         );
@@ -1983,7 +1987,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         button.userMenu = helpMenu;
         button.selector = 'addCustomBlock';
         button.showHelp = BlockMorph.prototype.showHelp;
-        blocks.push(button);
+//        blocks.push(button);
     }
     return blocks;
 };

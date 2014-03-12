@@ -206,8 +206,6 @@ window.TeacherCourseView = Backbone.View.extend({
                 $('#course-separate-lessons').append("<p>Empty</p>")
             }
 
-
-
             $('#lessonManagerModal-' + json.id).on("click", "#save-lesson-updates-" + json.id, function() {
                 if ($("#save-lesson-updates-" + json.id).prop("disabled"))
                     return false;
@@ -261,10 +259,15 @@ window.TeacherLessonView = Backbone.View.extend({
             var students = resp[1];
             console.log(students);
 
-            // add course name to top
+            $('#dash-main').removeClass("hacky-hide");
+            $('#home-btn').html('<a href="#teacher/' + courseId + '"><div class="btn btn-default">Class List</div></a>');
+
 
             $(self.el).append('<div><h3>Course: ' + courseName + '</h3></div>');
             $(self.el).append('<div><h4>Lesson: ' + json.name + '</h4></div>');
+            $(self.el).append('<div><h5>Guide: ' + json.guide + '</h5></div>');
+
+            $(".student-tab").removeClass("active");
 
             var remake = dashUtils.checkStudentList();
             if (remake) {
@@ -307,7 +310,12 @@ window.TeacherLessonStudentWork = Backbone.View.extend({
     render:function (eventName) {
         var json = this.model.toJSON();
         var student_id = this.options.student_id;
-        $('#current-lesson').text(json.name);
+        var course_id = this.options.course_id;
+        $('#home-btn').html('<a href="#teacher/' + course_id + '"><div class="btn btn-default">Classes</div></a>\
+        <a href="#teacher/' + course_id + '/lesson/' + json.id + '"><div class="btn btn-default">Lesson</div></a>');
+
+        $('#current-lesson').text("Current Lesson: " + json.name);
+        $('#dash-main').addClass("hacky-hide");
         $(this.el).html(this.template(json));
         $('#dash-main').show();
         dashUtils.loadSnap(json.id, student_id);

@@ -130,6 +130,28 @@ def enroll_courses(request):
         print resp
         return HttpResponse(json.dumps(response(0, success_message)))
 
+@login_required
+def get_courses_by_teacher(request):
+    if request.is_ajax():
+        name = request.GET.get('name', False)
+        if not name:
+            return HttpResponse(-1)
+        teacher = WebUser.objects.filter(username=name)
+        if not teacher:
+            return HttpResponse(-2)
+        courses = Course.objects.filter(teachers__id = teacher[0].id)
+        coursesData = serializers.serialize("json", courses)
+        return HttpResponse(coursesData)
+
+@login_required
+def get_courses_by_name(request):
+    if request.is_ajax():
+        name = request.GET.get('name', False)
+        if not name:
+            return HttpResponse(-1)
+        courses = Course.objects.filter(name__contains=name)
+        coursesData = serializers.serialize("json", courses)
+        return HttpResponse(coursesData)
 
 @login_required()
 def get_lessons(request):

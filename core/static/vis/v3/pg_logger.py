@@ -36,6 +36,7 @@ import re
 import traceback
 import types
 import pdb
+import turtle_commands
 
 is_python3 = (sys.version_info[0] == 3)
 
@@ -382,9 +383,6 @@ class PGLogger(bdb.Bdb):
         self.breakpoints = []
 
         self.prev_lineno = -1 # keep track of previous line just executed
-
-        self.turtle_stream = open('turtle_commands', 'r+')
-
 
     def get_frame_id(self, cur_frame):
       return self.frame_ordered_ids[cur_frame]
@@ -879,10 +877,8 @@ class PGLogger(bdb.Bdb):
           e['unique_hash'] = hash_str
 
         #check to see if there were any turtle commands this round
-        self.turtle_stream.seek(0)
-        turtle_command = self.turtle_stream.read()
-        self.turtle_stream.seek(0)
-        self.turtle_stream.truncate()
+        turtle_command = turtle_commands.getTurtleCommand()
+        turtle_commands.setTurtleCommand("")
 
         if self.show_only_outputs:
           trace_entry = dict(line=lineno,

@@ -6,6 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
+var SnappyHeader = '<h5 id="snappy-title">SnapPy: A Graphical Python Tutorial</h5>'
+
 var AppRouter = Backbone.Router.extend({
 
     routes:{
@@ -28,7 +30,10 @@ var AppRouter = Backbone.Router.extend({
     //===========================================================================================
 
     lessonsList:function () {
+        dashUtils.clearNavBtns();
         dashUtils.checkDash();
+        $("#prev-btn").html(SnappyHeader);
+        $('#dash-main').removeClass("hacky-hide");
         if (this.teachingList) {
             delete this.teachingList;
         }
@@ -57,6 +62,9 @@ var AppRouter = Backbone.Router.extend({
     },
 
     lessonDetails:function (id) {
+        dashUtils.clearNavBtns();
+        $("#prev-btn").html(SnappyHeader);
+        $('#dash-main').removeClass("hacky-hide");
         var remake = dashUtils.checkDash();
         var self = this;
         if (this.lessonList && !remake) {
@@ -73,11 +81,16 @@ var AppRouter = Backbone.Router.extend({
     },
 
     snap:function (id) {
+        dashUtils.clearNavBtns();
+        $('#dash-main').removeClass("hacky-hide");
         var self = this;
         // we want to get all the appropriate models loaded before we start
         if (this.lessonList) {
             this.lesson = this.lessonList.get(id);
-            this.snapView = new SnapView({model:this.lesson});
+            this.lessonIndex = this.lessonList.indexOf(this.lesson);
+            this.nextLesson = this.lessonList.at(this.lessonIndex + 1);
+            this.prevLesson = this.lessonList.at(this.lessonIndex - 1);
+            this.snapView = new SnapView({model:this.lesson, nextModel: this.nextLesson, prevModel: this.prevLesson});
             $('#content').fadeOut(500).promise().done(function() {
                 $('#content').html(self.snapView.render().el);
             });
@@ -94,7 +107,10 @@ var AppRouter = Backbone.Router.extend({
     //===========================================================================================
 
     teacherList: function () {
+        dashUtils.clearNavBtns();
+        $('#dash-main').removeClass("hacky-hide");
         dashUtils.checkDash();
+        $("#prev-btn").html(SnappyHeader);
         if (this.lessonList) {
             delete this.lessonList;
         }
@@ -111,7 +127,10 @@ var AppRouter = Backbone.Router.extend({
     },
 
     teacherCourseDetails: function(id) {
+        dashUtils.clearNavBtns();
+        $("#prev-btn").html(SnappyHeader);
         var remake = dashUtils.checkCourseList(id);
+        $('#dash-main').removeClass("hacky-hide");
         var self = this;
         console.log("YO");
         if (this.teachingList && !remake) {
@@ -132,9 +151,12 @@ var AppRouter = Backbone.Router.extend({
     },
 
     teacherLessonDetails: function(id, lid) {
+        dashUtils.clearNavBtns();
         dashUtils.checkDash();
+        $("#prev-btn").html(SnappyHeader);
         var self = this;
         this.teacherLessonList = new CourseLessonCollection();
+        $('#dash-main').removeClass("hacky-hide");
 
         $(".main-tab").removeClass("active");
         $("#teacher-list-tab").addClass("active");
@@ -156,7 +178,10 @@ var AppRouter = Backbone.Router.extend({
     },
 
     teacherLessonStudentWork: function(id, lid, sid) {
+        dashUtils.clearNavBtns();
+        $("#prev-btn").html(SnappyHeader);
         var self = this;
+        $('#dash-main').removeClass("hacky-hide");
         if (self.teacherLesson) {
             if (self.teacherStudentWorkRequestId) {
                 delete self.teacherStudentWorkRequestId;
@@ -165,7 +190,7 @@ var AppRouter = Backbone.Router.extend({
             $(".student-tab").removeClass("active");
             $("#student-tab-" + sid).addClass("active");
 
-            this.studentWork = new TeacherLessonStudentWork({model:this.teacherLesson, student_id:sid});
+            this.studentWork = new TeacherLessonStudentWork({model:this.teacherLesson, student_id:sid, course_id:id});
             $("#dash-main").html(self.studentWork.render().el);
         }
         else {
@@ -180,7 +205,9 @@ var AppRouter = Backbone.Router.extend({
     //===========================================================================================
 
     studentList: function () {
+        dashUtils.clearNavBtns();
         dashUtils.checkDash();
+        $("#prev-btn").html(SnappyHeader);
         if (this.teachingList) {
             delete this.teachingList;
         }
@@ -188,6 +215,7 @@ var AppRouter = Backbone.Router.extend({
             delete this.lessonList;
         }
         var self = this;
+        $('#dash-main').removeClass("hacky-hide");
         $('#dash-main').empty();
         $('#dash-sidebar-lower').empty();
         $('#dash-main').append('<div id="student-class-list-container"></div>');
@@ -198,7 +226,10 @@ var AppRouter = Backbone.Router.extend({
     },
 
     studentCourseDetails: function(id) {
+        dashUtils.clearNavBtns();
+        $("#prev-btn").html(SnappyHeader);
         var remake = dashUtils.checkDash();
+        $('#dash-main').removeClass("hacky-hide");
         var self = this;
         if (this.studentClassList && !remake) {
             if (this.studentCourseRequestedId) {
@@ -218,7 +249,10 @@ var AppRouter = Backbone.Router.extend({
 
 
     studentLessonDetails: function(id, lid) {
+        dashUtils.clearNavBtns();
+        $("#prev-btn").html(SnappyHeader);
         var self = this;
+        $('#dash-main').removeClass("hacky-hide");
         this.studentLessonList = new CourseLessonCollection();
         $(".main-tab").removeClass("active");
         $("#student-list-tab").addClass("active");

@@ -63,10 +63,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     <script type="text/javascript" src="/static/vis/v3/js/opt-frontend-common.js"></script>
     <script type="text/javascript" src="/static/vis/v3/js/opt-frontend.js"></script>
     <link rel="stylesheet" href="/static/vis/v3/css/opt-frontend.css"/>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 
     <script type="text/javascript">
         window.onmessage = function(e){
             console.log(e.data);
+            window.location.href = "vis#";
             pyInputCodeMirror.setValue(e.data);
         };
     </script>
@@ -81,12 +83,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     <div id="codeInputPane"></div> <!-- populate with a CodeMirror instance -->
 
-    <p>
-        <button id="executeBtn" class="bigBtn" type="button">Visualize Execution</button>
-        <button style="margin-left: 10px;" id="clearBtn" class="bigBtn" type="button">Clear</button>
+    <p style="margin-top: 15px;">
+        <button style="margin-left: 155px;" id="executeBtn" class="btn btn-primary btn-lg" type="button">Visualize Execution</button>
+        <button style="margin-left: 10px;" id="clearBtn" class="btn btn-primary btn-lg" type="button">Clear</button>
     </p>
 
-    <p style="margin-top: 10px; line-height: 200%;">
+    <p style="margin-top: 10px; line-height: 200%; display: none;">
         Execute code using
         <select id="pythonVersionSelector">
             <option value="2">Python 2.7</option>

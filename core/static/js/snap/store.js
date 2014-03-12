@@ -285,7 +285,7 @@ SnapSerializer.prototype.init = function () {
     this.project = {};
     this.objects = {};
     this.mediaDict = {};
-    console.log("heresss");
+//    console.log("heresss");
 };
 
 // SnapSerializer saving:
@@ -293,7 +293,7 @@ SnapSerializer.prototype.init = function () {
 XML_Serializer.prototype.mediaXML = function (name) {
     // under construction....
 
-    console.log(name);
+//    console.log(name);
     var xml = '<media name="' +
             (name || 'untitled') +
             '" app="' + this.app +
@@ -309,7 +309,7 @@ XML_Serializer.prototype.mediaXML = function (name) {
         xml = xml + str;
     });
 
-    console.log(xml);
+//    console.log(xml);
     return xml + '</media>';
 };
 
@@ -318,7 +318,7 @@ XML_Serializer.prototype.mediaXML = function (name) {
 
 SnapSerializer.prototype.load = function (xmlString) {
     // public - answer a new Project represented by the given XML String
-    console.log(xmlString);
+//    console.log(xmlString);
     return this.loadProjectModel(this.parse(xmlString));
 };
 

@@ -141,6 +141,9 @@ function ExecutionVisualizer(domRootID, dat, params) {
 
   this.curInstr = 0;
 
+  this.execSpeed = 10;
+  this.executing = false;
+
   this.params = params;
   if (!this.params) {
     this.params = {}; // make it an empty object by default
@@ -261,18 +264,23 @@ ExecutionVisualizer.prototype.render = function() {
 
   var myViz = this; // to prevent confusion of 'this' inside of nested functions
 
+  var backBtn = '<div id="jmpStepBack", class="btn btn-default">&lt; Back</div>'
+  var lastBtn = '<div id="jmpLastInstr", class="btn btn-default">Last &gt;&gt;</div>'
+
   var codeDisplayHTML =
     '<div id="codeDisplayDiv">\
        <div id="pyCodeOutputDiv"/>\
        <div id="editCodeLinkDiv"><a id="editBtn">Edit code</a></div>\
        <div id="executionSlider"/>\
        <div id="vcrControls">\
-         <button id="jmpFirstInstr", type="button">&lt;&lt; First</button>\
-         <button id="jmpStepBack", type="button">&lt; Back</button>\
+         <div id="jmpFirstInstr", class="btn btn-default">&lt;&lt; First</div>\
          <span id="curInstr">Step ? of ?</span>\
-         <button id="jmpStepFwd", type="button">Forward &gt;</button>\
-         <button id="jmpLastInstr", type="button">Last &gt;&gt;</button>\
+         <div id="jmpStepFwd", class="btn btn-default">Forward &gt;</div>\
+         <div id="execAllInstr", class="btn btn-default">Execute &gt;&gt;</div>\
+         <div id="stopExecAll", class="btn btn-default"><span style="color:red;height:20px;width:16px;" class="glyphicon glyphicon-stop"></span></div>\
        </div>\
+       <div class="col-md-12"><div id="executionSpeedDiv"><span style="width:100%;"><p style="text-align: center; margin:0 0 0 0">Execution Speed</p></span><div id="executionSpeedSlider"/><span style="float:left;">Fast</span><span style="float:right;">Slow</span></div></div>\
+       <br>\
        <div id="errorOutput"/>\
        <div id="legendDiv"/>\
        <div id="stepAnnotationDiv">\
@@ -423,14 +431,14 @@ ExecutionVisualizer.prototype.render = function() {
       if (myViz.editAnnotationMode) {
         myViz.enterViewAnnotationsMode();
 
-        myViz.domRoot.find("#jmpFirstInstr,#jmpLastInstr,#jmpStepBack,#jmpStepFwd,#executionSlider,#editCodeLinkDiv,#stepAnnotationViewer").show();
+        myViz.domRoot.find("#jmpFirstInstr,#jmpLastInstr,#jmpStepBack,#jmpStepFwd,#execAllInstr,#stopExecAll,#executionSlider,#editCodeLinkDiv,#stepAnnotationViewer,#executionSpeedSlider").show();
         myViz.domRoot.find('#stepAnnotationEditor').hide();
         ab.html('Annotate this step');
       }
       else {
         myViz.enterEditAnnotationsMode();
 
-        myViz.domRoot.find("#jmpFirstInstr,#jmpLastInstr,#jmpStepBack,#jmpStepFwd,#executionSlider,#editCodeLinkDiv,#stepAnnotationViewer").hide();
+        myViz.domRoot.find("#jmpFirstInstr,#jmpLastInstr,#jmpStepBack,#jmpStepFwd,#execAllInstr,#stopExecAll,#executionSlider,#editCodeLinkDiv,#stepAnnotationViewer,#executionSpeedSlider").hide();
         myViz.domRoot.find('#stepAnnotationEditor').show();
         ab.html('Done annotating');
       }
@@ -499,15 +507,25 @@ ExecutionVisualizer.prototype.render = function() {
     myViz.stepForward();
   });
 
+  this.domRoot.find("#execAllInstr").click(function() {
+    myViz.executeAll();
+  });
+
+    this.domRoot.find("#stopExecAll").click(function() {
+        myViz.stopExec();
+    });
+
   // disable controls initially ...
   this.domRoot.find("#vcrControls #jmpFirstInstr").attr("disabled", true);
   this.domRoot.find("#vcrControls #jmpStepBack").attr("disabled", true);
   this.domRoot.find("#vcrControls #jmpStepFwd").attr("disabled", true);
   this.domRoot.find("#vcrControls #jmpLastInstr").attr("disabled", true);
+  this.domRoot.find("#vcrControls #execAllInstr").attr("disabled", true);
+  this.domRoot.find("#vcrControls #stopExecAll").attr("disabled", true);
 
 
 
-  // must postprocess curTrace prior to running precomputeCurTraceLayouts() ...
+    // must postprocess curTrace prior to running precomputeCurTraceLayouts() ...
   var lastEntry = this.curTrace[this.curTrace.length - 1];
 
   this.instrLimitReached = (lastEntry.event == 'instruction_limit_reached');
@@ -540,6 +558,23 @@ ExecutionVisualizer.prototype.render = function() {
       myViz.updateOutput();
     }
   });
+
+  // set up execution speed slider
+    var speedSlider = this.domRoot.find('#executionSpeedSlider');
+    speedSlider.slider({min: 10, max: 3010, step: 25});
+    speedSlider.find(".ui-slider-handle").unbind('keydown');
+    // make skinnier and taller
+    speedSlider.find(".ui-slider-handle").css('width', '0.7em');
+    speedSlider.find(".ui-slider-handle").css('height', '1.2em');
+    this.domRoot.find(".ui-widget-content").css('font-size', '0.9em');
+    this.domRoot.find('#executionSpeedSlider').bind('slide', function(evt, ui) {
+        // this is SUPER subtle. if this value was changed programmatically,
+        // then evt.originalEvent will be undefined. however, if this value
+        // was changed by a user-initiated event, then this code should be
+        // executed ...
+        myViz.execSpeed = ui.value;
+    });
+
 
 
   if (this.params.startingInstruction) {
@@ -848,7 +883,61 @@ ExecutionVisualizer.prototype.stepForward = function() {
   }
 
   return false;
-}
+};
+
+ExecutionVisualizer.prototype.executeAll = function() {
+    var myViz = this;
+    this.domRoot.find("#vcrControls #stopExecAll").attr("disabled", false);
+    var interval = myViz.execSpeed;
+    myViz.executing = true;
+
+    // disable all other buttons
+    var vcrControls = myViz.domRoot.find("#vcrControls");
+    vcrControls.find("#jmpFirstInstr").attr("disabled", true);
+    vcrControls.find("#jmpStepFwd").attr("disabled", true);
+    vcrControls.find("#execAllInstr").attr("disabled", true);
+    vcrControls.find("#execAllInstr").css('background-color', 'lightgreen');
+
+    function execLoop() {
+        if (myViz.executing) {
+            interval = myViz.execSpeed;
+            myViz.stepForward();
+            var totalInstrs = myViz.curTrace.length;
+            var isLastInstr = (myViz.curInstr == (totalInstrs-1));
+            if (!isLastInstr) {
+                setTimeout( execLoop, interval );
+            }
+            else {
+                myViz.stopExec();
+            }
+        }
+    }
+    setTimeout(execLoop, interval );
+};
+
+ExecutionVisualizer.prototype.stopExec = function() {
+    var myViz = this;
+    myViz.executing = false;
+    var vcrControls = myViz.domRoot.find("#vcrControls");
+    this.domRoot.find("#vcrControls #stopExecAll").attr("disabled", true);
+    vcrControls.find("#jmpFirstInstr").attr("disabled", false);
+    vcrControls.find("#jmpStepFwd").attr("disabled", false);
+    vcrControls.find("#execAllInstr").attr("disabled", false);
+    vcrControls.find("#execAllInstr").css('background-color', 'white');
+
+    var totalInstrs = myViz.curTrace.length;
+    var isLastInstr = (myViz.curInstr == (totalInstrs-1));
+
+    if (this.curInstr == 0) {
+        vcrControls.find("#jmpFirstInstr").attr("disabled", true);
+    }
+    if (isLastInstr) {
+        vcrControls.find("#jmpStepFwd").attr("disabled", true);
+        vcrControls.find("#execAllInstr").attr("disabled", true);
+    }
+};
+
+
 
 // returns true if action successfully taken
 ExecutionVisualizer.prototype.stepBack = function() {
@@ -1307,6 +1396,13 @@ ExecutionVisualizer.prototype.updateOutput = function(smoothTransition) {
   vcrControls.find("#jmpStepBack").attr("disabled", false);
   vcrControls.find("#jmpStepFwd").attr("disabled", false);
   vcrControls.find("#jmpLastInstr").attr("disabled", false);
+  vcrControls.find("#execAllInstr").attr("disabled", false);
+
+  if (this.executing) {
+      vcrControls.find("#jmpFirstInstr").attr("disabled", true);
+      vcrControls.find("#jmpStepFwd").attr("disabled", true);
+      vcrControls.find("#execAllInstr").attr("disabled", true);
+  }
 
   if (this.curInstr == 0) {
     vcrControls.find("#jmpFirstInstr").attr("disabled", true);
@@ -1315,6 +1411,7 @@ ExecutionVisualizer.prototype.updateOutput = function(smoothTransition) {
   if (isLastInstr) {
     vcrControls.find("#jmpLastInstr").attr("disabled", true);
     vcrControls.find("#jmpStepFwd").attr("disabled", true);
+      vcrControls.find("#execAllInstr").attr("disabled", true);
   }
 
 

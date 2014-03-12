@@ -79,11 +79,24 @@ window.LessonView = Backbone.View.extend({
 });
 
 window.SnapView = Backbone.View.extend({
+    initialize : function (options) {
+        this.options = options || {};
+    },
+
     template:_.template($('#snap-template').html()),
 
     render:function (eventName) {
         var json = this.model.toJSON();
-        $('#current-lesson').text(json.name);
+        $('#current-lesson').text("Current Lesson: " + json.name);
+        $('#home-btn').html('<a href="#solo/' + json.id + '"><div class="btn btn-default">Lesson List</div></a>');
+        if (this.options.nextModel) {
+            var jsonNext = this.options.nextModel.toJSON();
+            $('#next-btn').html('<a href="#solo/' + jsonNext.id + '/snap"><div class="btn btn-default">Next Lesson: ' + jsonNext.name + '</div></a>');
+        }
+        if (this.options.prevModel) {
+            var jsonPrev = this.options.prevModel.toJSON();
+            $('#prev-btn').html('<a href="#solo/' + jsonPrev.id + '/snap"><div class="btn btn-default">Previous Lesson: ' + jsonPrev.name + '</div></a>');
+        }
         $(this.el).html(this.template(json));
         $('#content').show();
         dashUtils.loadSnap(json.id);

@@ -102,6 +102,7 @@ IDE_Morph.uber = Morph.prototype;
 
 // IDE_Morph preferences settings and skins
 
+
 IDE_Morph.prototype.setDefaultDesign = function () {
     MorphicPreferences.isFlat = false;
     SpriteMorph.prototype.paletteColor = new Color(55, 55, 55);
@@ -191,14 +192,15 @@ function IDE_Morph(isAutoFill) {
     this.init(isAutoFill);
 }
 
+
 IDE_Morph.prototype.init = function (isAutoFill) {
     // global font setting
     MorphicPreferences.globalFontFamily = 'Helvetica, Arial';
 
     // restore saved user preferences
     this.userLanguage = null; // user language preference for startup
+    this.setFlatDesign();
     this.applySavedSettings();
-
     // additional properties:
     this.cloudMsg = null;
     this.source = 'local';
@@ -246,6 +248,7 @@ IDE_Morph.prototype.init = function (isAutoFill) {
 
     // override inherited properites:
     this.color = this.backgroundColor;
+    console.log(this);
 };
 
 IDE_Morph.prototype.openIn = function (world) {
@@ -1445,7 +1448,7 @@ IDE_Morph.prototype.createCorralBar = function () {
     paintbutton.setLeft(
         this.corralBar.left() + padding + newbutton.width() + padding
     );
-    this.corralBar.add(paintbutton);
+//    this.corralBar.add(paintbutton);
 };
 
 IDE_Morph.prototype.createCorral = function () {
@@ -1607,9 +1610,9 @@ IDE_Morph.prototype.fixLayout = function (situation) {
         this.spriteBar.fixLayout(situation);
 
         // iframe Visualizer
-        if (this.currentTab === 'code') {
+        if (this.currentTab === 'code' && !(this.isAppMode)) {
             var he = ((this.bottom() - this.spriteBar.bottom()) / 2) - padding + 3;
-            var wi = this.spriteBar.width() - padding + 1;
+            var wi = this.spriteBar.width() - padding - 2;
             $(this.codeEditorId).height(he).width(wi);
             $(this.codeEditorId).css({
                 left: this.spriteBar.bottomLeft().x,
@@ -1933,13 +1936,15 @@ IDE_Morph.prototype.applySavedSettings = function () {
         click = this.getSetting('click'),
         longform = this.getSetting('longform');
 
-    // design
-    if (design === 'flat') {
-        this.setFlatDesign();
-    } else {
-        this.setDefaultDesign();
-    }
+//    // design
+//    if (design === 'flat') {
+//        this.setFlatDesign();
+//    } else {
+//        this.setDefaultDesign();
+//    }
 
+    //only allow for flat design
+    this.setFlatDesign();
     // blocks zoom
     if (zoom) {
         SyntaxElementMorph.prototype.setScale(zoom);
@@ -2080,27 +2085,27 @@ IDE_Morph.prototype.snapMenu = function () {
     menu = new MenuMorph(this);
     menu.addItem('About...', 'aboutSnap');
     menu.addLine();
-    menu.addItem(
-        'Reference manual',
-        function () {
-            window.open('help/SnapManual.pdf', 'SnapReferenceManual');
-        }
-    );
+//    menu.addItem(
+//        'Reference manual',
+//        function () {
+//            window.open('help/SnapManual.pdf', 'SnapReferenceManual');
+//        }
+//    );
     menu.addItem(
         'Snap! website',
         function () {
             window.open('http://snap.berkeley.edu/', 'SnapWebsite');
         }
     );
-    menu.addItem(
-        'Download source',
-        function () {
-            window.open(
-                'http://snap.berkeley.edu/snapsource/snap.zip',
-                'SnapSource'
-            );
-        }
-    );
+//    menu.addItem(
+//        'Download source',
+//        function () {
+//            window.open(
+//                'http://snap.berkeley.edu/snapsource/snap.zip',
+//                'SnapSource'
+//            );
+//        }
+//    );
     if (world.isDevMode) {
         menu.addLine();
         menu.addItem(
@@ -2318,13 +2323,13 @@ IDE_Morph.prototype.settingsMenu = function () {
         'settings menu prefer empty slots hint',
         true
     );
-    addPreference(
-        'Long form input dialog',
-        'toggleLongFormInputDialog',
-        InputSlotDialogMorph.prototype.isLaunchingExpanded,
-        'uncheck to use the input\ndialog in short form',
-        'check to always show slot\ntypes in the input dialog'
-    );
+//    addPreference(
+//        'Long form input dialog',
+//        'toggleLongFormInputDialog',
+//        InputSlotDialogMorph.prototype.isLaunchingExpanded,
+//        'uncheck to use the input\ndialog in short form',
+//        'check to always show slot\ntypes in the input dialog'
+//    );
     addPreference(
         'Virtual keyboard',
         'toggleVirtualKeyboard',
@@ -2389,19 +2394,19 @@ IDE_Morph.prototype.settingsMenu = function () {
         'check to rasterize\nSVGs on import',
         true
     );
-    addPreference(
-        'Flat design',
-        function () {
-            if (MorphicPreferences.isFlat) {
-                return self.defaultDesign();
-            }
-            self.flatDesign();
-        },
-        MorphicPreferences.isFlat,
-        'uncheck for default\nGUI design',
-        'check for alternative\nGUI design',
-        false
-    );
+//    addPreference(
+//        'Flat design',
+//        function () {
+//            if (MorphicPreferences.isFlat) {
+//                return self.defaultDesign();
+//            }
+//            self.flatDesign();
+//        },
+//        MorphicPreferences.isFlat,
+//        'uncheck for default\nGUI design',
+//        'check for alternative\nGUI design',
+//        false
+//    );
     addPreference(
         'Sprite Nesting',
         function () {
@@ -2413,35 +2418,35 @@ IDE_Morph.prototype.settingsMenu = function () {
         'check to enable\nsprite composition',
         true
     );
-    menu.addLine(); // everything below this line is stored in the project
-    addPreference(
-        'Thread safe scripts',
-        function () {stage.isThreadSafe = !stage.isThreadSafe; },
-        this.stage.isThreadSafe,
-        'uncheck to allow\nscript reentrance',
-        'check to disallow\nscript reentrance'
-    );
-    addPreference(
-        'Prefer smooth animations',
-        'toggleVariableFrameRate',
-        StageMorph.prototype.frameRate,
-        'uncheck for greater speed\nat variable frame rates',
-        'check for smooth, predictable\nanimations across computers'
-    );
-    addPreference(
-        'Codification support',
-        function () {
-            StageMorph.prototype.enableCodeMapping =
-                !StageMorph.prototype.enableCodeMapping;
-            self.currentSprite.blocksCache.variables = null;
-            self.currentSprite.paletteCache.variables = null;
-            self.refreshPalette();
-        },
-        StageMorph.prototype.enableCodeMapping,
-        'uncheck to disable\nblock to text mapping features',
-        'check for block\nto text mapping features',
-        false
-    );
+//    menu.addLine(); // everything below this line is stored in the project
+//    addPreference(
+//        'Thread safe scripts',
+//        function () {stage.isThreadSafe = !stage.isThreadSafe; },
+//        this.stage.isThreadSafe,
+//        'uncheck to allow\nscript reentrance',
+//        'check to disallow\nscript reentrance'
+//    );
+//    addPreference(
+//        'Prefer smooth animations',
+//        'toggleVariableFrameRate',
+//        StageMorph.prototype.frameRate,
+//        'uncheck for greater speed\nat variable frame rates',
+//        'check for smooth, predictable\nanimations across computers'
+//    );
+//    addPreference(
+//        'Codification support',
+//        function () {
+//            StageMorph.prototype.enableCodeMapping =
+//                !StageMorph.prototype.enableCodeMapping;
+//            self.currentSprite.blocksCache.variables = null;
+//            self.currentSprite.paletteCache.variables = null;
+//            self.refreshPalette();
+//        },
+//        StageMorph.prototype.enableCodeMapping,
+//        'uncheck to disable\nblock to text mapping features',
+//        'check for block\nto text mapping features',
+//        false
+//    );
     menu.popup(world, pos);
 };
 
@@ -2455,19 +2460,19 @@ IDE_Morph.prototype.projectMenu = function () {
     menu = new MenuMorph(this);
     menu.addItem('Project notes...', 'editProjectNotes');
     menu.addLine();
-    menu.addItem(
-        'New',
-        function () {
-            self.confirm(
-                'Replace the current project with a new one?',
-                'New Project',
-                function () {
-                    self.newProject();
-                }
-            );
-        }
-    );
-    menu.addItem('Open...', 'openProjectsBrowser');
+//    menu.addItem(
+//        'New',
+//        function () {
+//            self.confirm(
+//                'Replace the current project with a new one?',
+//                'New Project',
+//                function () {
+//                    self.newProject();
+//                }
+//            );
+//        }
+//    );
+//    menu.addItem('Open...', 'openProjectsBrowser');
     if (!this.isTeacher) {
     menu.addItem(
         'Save',
@@ -2548,57 +2553,57 @@ IDE_Morph.prototype.projectMenu = function () {
         shiftClicked ? new Color(100, 0, 0) : null
     );
 
-    menu.addItem(
-        'Export blocks...',
-        function () {self.exportGlobalBlocks(); },
-        'show global custom block definitions as XML\nin a new browser window'
-    );
-
-    menu.addLine();
-    menu.addItem(
-        'Import tools',
-        function () {
-            self.droppedText(
-                self.getURL(
-                    'http://snap.berkeley.edu/snapsource/tools.xml'
-                ),
-                'tools'
-            );
-        },
-        'load the official library of\npowerful blocks'
-    );
-    menu.addItem(
-        'Libraries...',
-        function () {
-            // read a list of libraries from an external file,
-            var libMenu = new MenuMorph(this, 'Import library'),
-                libUrl = 'http://snap.berkeley.edu/snapsource/libraries/' +
-                    'LIBRARIES';
-
-            function loadLib(name) {
-                var url = 'http://snap.berkeley.edu/snapsource/libraries/'
-                    + name
-                    + '.xml';
-                self.droppedText(self.getURL(url), name);
-            }
-
-            self.getURL(libUrl).split('\n').forEach(function (line) {
-                if (line.length > 0) {
-                    libMenu.addItem(
-                        line.substring(line.indexOf('\t') + 1),
-                        function () {
-                            loadLib(
-                                line.substring(0, line.indexOf('\t'))
-                            );
-                        }
-                    );
-                }
-            });
-
-            libMenu.popup(world, pos);
-        },
-        'Select categories of additional blocks to add to this project.'
-    );
+//    menu.addItem(
+//        'Export blocks...',
+//        function () {self.exportGlobalBlocks(); },
+//        'show global custom block definitions as XML\nin a new browser window'
+//    );
+//
+//    menu.addLine();
+//    menu.addItem(
+//        'Import tools',
+//        function () {
+//            self.droppedText(
+//                self.getURL(
+//                    'http://snap.berkeley.edu/snapsource/tools.xml'
+//                ),
+//                'tools'
+//            );
+//        },
+//        'load the official library of\npowerful blocks'
+//    );
+//    menu.addItem(
+//        'Libraries...',
+//        function () {
+//            // read a list of libraries from an external file,
+//            var libMenu = new MenuMorph(this, 'Import library'),
+//                libUrl = 'http://snap.berkeley.edu/snapsource/libraries/' +
+//                    'LIBRARIES';
+//
+//            function loadLib(name) {
+//                var url = 'http://snap.berkeley.edu/snapsource/libraries/'
+//                    + name
+//                    + '.xml';
+//                self.droppedText(self.getURL(url), name);
+//            }
+//
+//            self.getURL(libUrl).split('\n').forEach(function (line) {
+//                if (line.length > 0) {
+//                    libMenu.addItem(
+//                        line.substring(line.indexOf('\t') + 1),
+//                        function () {
+//                            loadLib(
+//                                line.substring(0, line.indexOf('\t'))
+//                            );
+//                        }
+//                    );
+//                }
+//            });
+//
+//            libMenu.popup(world, pos);
+//        },
+//        'Select categories of additional blocks to add to this project.'
+//    );
 
     menu.popup(world, pos);
 };
@@ -2717,6 +2722,7 @@ IDE_Morph.prototype.aboutSnap = function () {
         },
         'License...'
     );
+    licenseBtn.hide();
     btn3 = dlg.addButton(
         function () {
             dlg.body.text = versions;
@@ -2733,6 +2739,7 @@ IDE_Morph.prototype.aboutSnap = function () {
         },
         'Modules...'
     );
+    btn3.hide();
     btn4 = dlg.addButton(
         function () {
             dlg.body.text = creditsTxt;
@@ -2749,9 +2756,11 @@ IDE_Morph.prototype.aboutSnap = function () {
         },
         'Credits...'
     );
+    btn4.hide();
     translatorsBtn.hide();
     dlg.fixLayout();
     dlg.drawNew();
+    this.fixPopupLayout(dlg, 0,0);
 };
 
 IDE_Morph.prototype.editProjectNotes = function () {
@@ -2760,7 +2769,7 @@ IDE_Morph.prototype.editProjectNotes = function () {
         text = new TextMorph(this.projectNotes || ''),
         ok = dialog.ok,
         self = this,
-        size = 250,
+        size = 260,
         world = this.world();
 
     frame.padding = 6;
@@ -2794,6 +2803,7 @@ IDE_Morph.prototype.editProjectNotes = function () {
         text.edit();
     };
 
+    dialog.isDraggable = false;
     dialog.labelString = 'Project Notes';
     dialog.createLabel();
     dialog.addBody(frame);
@@ -2803,7 +2813,7 @@ IDE_Morph.prototype.editProjectNotes = function () {
     dialog.fixLayout();
     dialog.drawNew();
     dialog.popUp(world);
-    dialog.setCenter(world.center());
+    this.fixPopupLayout(dialog,170, 0);
     text.edit();
 };
 
@@ -2852,7 +2862,7 @@ IDE_Morph.prototype.rawSaveProject = function (name) {
                 str = this.serializer.serialize(this.stage);
 //                localStorage['-snap-project-' + name] = str;
                 console.log(str);
-                saveSnap(name, str, window.lessonId);
+                dashUtils.saveSnap(name, str, window.lessonId);
 //                location.hash = '#open:' + str;
 //                this.showMessage('Saved!', 1);
             } catch (err) {
@@ -3349,6 +3359,17 @@ IDE_Morph.prototype.toggleAppMode = function (appMode) {
                 s.adjustScrollBars();
             });
     }
+    console.log(this.currentTab);
+    if (this.currentTab === 'code') {
+        if (this.isAppMode) {
+            console.log("app mode");
+            $(this.codeEditorId).css("display", "none");
+        } else {
+            console.log("not app mode");
+            $(this.codeEditorId).css("display", "inline");
+        }
+    }
+
     this.setExtent(this.world().extent()); // resume trackChanges
 };
 
@@ -3442,6 +3463,11 @@ IDE_Morph.prototype.toggleEditorSize = function (isSmall) {
     }
 };
 
+IDE_Morph.prototype.fixPopupLayout = function(popup, x, y) {
+    popup.setPosition(new Point(620, 463).addX(x).addY(y));
+    popup.isDraggable = false;
+};
+
 IDE_Morph.prototype.openProjectsBrowser = function () {
     new ProjectDialogMorph(this, 'open').popUp();
 };
@@ -3450,7 +3476,9 @@ IDE_Morph.prototype.saveProjectsBrowser = function () {
     if (this.source === 'examples') {
         this.source = 'local'; // cannot save to examples
     }
-    new ProjectDialogMorph(this, 'save').popUp();
+    var saveBrowser = new ProjectDialogMorph(this, 'save');
+    saveBrowser.popUp();
+    this.fixPopupLayout(saveBrowser, 10, 0);
 };
 
 // IDE_Morph localization
@@ -3574,12 +3602,14 @@ IDE_Morph.prototype.userSetBlocksScale = function () {
         });
     };
 
-    new DialogBoxMorph(
+    var zoomBox = new DialogBoxMorph(
         null,
         function (num) {
             self.setBlocksScale(num);
         }
-    ).withKey('zoomBlocks').prompt(
+    );
+
+    zoomBox.withKey('zoomBlocks').prompt(
         'Zoom blocks',
         SyntaxElementMorph.prototype.scale.toString(),
         this.world(),
@@ -3599,6 +3629,8 @@ IDE_Morph.prototype.userSetBlocksScale = function () {
         12, // slider max
         action // slider action
     );
+
+    this.fixPopupLayout(zoomBox, 10,0);
 };
 
 IDE_Morph.prototype.setBlocksScale = function (num) {
@@ -6444,17 +6476,17 @@ CodeboxMorph.prototype.computeCodeString = function (block, codeBox, indentation
                             string = string + value;
                         }
                         else {
-                            string = string + ' (' + codeBox.computeCodeString(input, codeBox, noIndent, imports) + ') ';
+                            string = string + '(' + codeBox.computeCodeString(input, codeBox, noIndent, imports) + ')';
                         }
                     }
                     else if (input instanceof ReporterBlockMorph) {
-                        string = string + ' (' + codeBox.computeCodeString(input, codeBox, noIndent, imports) + ') ';
+                        string = string + '(' + codeBox.computeCodeString(input, codeBox, noIndent, imports) + ')';
                     }
                 }
             }
         );
     }
-    if (numChildren > 0) {
+    if (block instanceof CommandBlockMorph || block instanceof CSlotMorph && numChildren > 0) {
         nextBlock = block.children[numChildren - 1];
         if (numChildren > 1) {
             insideBlock = block.children[numChildren - 2];
@@ -6522,6 +6554,7 @@ CodeboxMorph.prototype.writeCodeString = function (block, codeBox, x, y) {
         initialX = x,
         coords;
 
+    console.log(block);
     if (block.code) {
         block.code.forEach(function(text, index) {
                 // label each code instance by its index
@@ -6535,6 +6568,8 @@ CodeboxMorph.prototype.writeCodeString = function (block, codeBox, x, y) {
                             value = '_';
                         }
                         coords = codeBox.addCode(value, x, y, block);
+                        console.log('inpcords');
+                        console.log(coords);
                         x = coords.x; y = coords.y;
                     }
                     else if (input instanceof BooleanSlotMorph) {
@@ -6544,27 +6579,33 @@ CodeboxMorph.prototype.writeCodeString = function (block, codeBox, x, y) {
                             x = coords.x; y = coords.y;
                         }
                         else {
-                            coords = codeBox.addCode(' (', x, y, block);
+                            coords = codeBox.addCode('(', x, y, block);
                             x = coords.x; y = coords.y;
                             coords = codeBox.writeCodeString(input, codeBox, x ,y);
                             x = coords.x; y = coords.y;
-                            coords = codeBox.addCode(') ', x, y, block);
+                            coords = codeBox.addCode(')', x, y, block);
                             x = coords.x; y = coords.y;
                         }
                     }
                     else if (input instanceof ReporterBlockMorph) {
-                        coords = codeBox.addCode(' (', x, y, block);
+//                        console.log(coords);
+                        coords = codeBox.addCode('(', x, y, block);
                         x = coords.x; y = coords.y;
+                        console.log('repcords');
+                        console.log(coords);
                         coords = codeBox.writeCodeString(input, codeBox, x ,y);
+//                        console.log(coords);
+//                        for (var aa = 1; aa < 100000; aa++) {var abc = 1 }
                         x = coords.x; y = coords.y;
-                        coords = codeBox.addCode(') ', x, y, block);
+                        coords = codeBox.addCode(')', x, y, block);
+//                        console.log(coords);
                         x = coords.x; y = coords.y;
                     }
                 }
             }
         );
     }
-    if (numChildren > 0) {
+    if (block instanceof CommandBlockMorph || block instanceof CSlotMorph && numChildren > 0) {
         nextBlock = block.children[numChildren - 1];
         if (numChildren > 1) {
             insideBlock = block.children[numChildren - 2];
@@ -6580,7 +6621,12 @@ CodeboxMorph.prototype.writeCodeString = function (block, codeBox, x, y) {
             y = coords.y;
         }
     }
-    return new Point(x,y);
+
+    console.log("finalcords");
+    var ret = new Point(x,y);
+    console.log(ret);
+
+    return ret;
 };
 
 CodeboxMorph.prototype.writeCSlot = function (block, codeBox, x ,y) {
