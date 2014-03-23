@@ -22,10 +22,55 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="dashboard.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/core/templates/core/dashboard.html">
+      <file leaf-file-name="dash-utils.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/static/js/dash/dash-utils.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="303" column="82" selection-start="13524" selection-end="13524" vertical-scroll-proportion="0.82529116">
+            <state line="97" column="42" selection-start="3881" selection-end="3882" vertical-scroll-proportion="143.57692">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="141" column="52" selection-start="5311" selection-end="5311" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/front/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="86" column="44" selection-start="2751" selection-end="2751" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/front/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dashboard.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/static/js/dash/dashboard.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="46" column="24" selection-start="1563" selection-end="1564" vertical-scroll-proportion="-12.307693">
               <folding />
             </state>
           </provider>
@@ -40,66 +85,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dash-utils.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/static/js/dash/dash-utils.js">
+      <file leaf-file-name="dashboard.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/templates/core/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="96" selection-start="1273" selection-end="1273" vertical-scroll-proportion="-15.384615">
+            <state line="99" column="0" selection-start="3346" selection-end="3346" vertical-scroll-proportion="-3.84">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dash.css" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="dash.css" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/static/css/dash.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="259" column="20" selection-start="3855" selection-end="3855" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="141" column="52" selection-start="5311" selection-end="5311" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#46#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dashboard.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/static/js/dash/dashboard.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="40" selection-start="183" selection-end="195" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="student.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/static/js/dash/student.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="94" column="53" selection-start="2593" selection-end="2593" vertical-scroll-proportion="-4.923077">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="backbone.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/static/js/lib/backbone.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="620" column="8" selection-start="25638" selection-end="25638" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="backbone.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/front/static/js/libraries/backbone.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="276" column="8" selection-start="11368" selection-end="11368" vertical-scroll-proportion="0.0">
+            <state line="101" column="24" selection-start="1671" selection-end="1671" vertical-scroll-proportion="0.6486091">
               <folding />
             </state>
           </provider>
@@ -108,7 +106,7 @@
       <file leaf-file-name="teacher.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/static/js/dash/teacher.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="314" column="103" selection-start="12436" selection-end="12436" vertical-scroll-proportion="0.0">
+            <state line="110" column="0" selection-start="3596" selection-end="3596" vertical-scroll-proportion="-5.576923">
               <folding />
             </state>
           </provider>
@@ -124,29 +122,29 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/core/static/js/snap/objects.js" />
         <option value="$PROJECT_DIR$/core/static/js/dash/individual.js" />
         <option value="$PROJECT_DIR$/core/static/js/snap/gui.js" />
         <option value="$PROJECT_DIR$/core/static/vis/v3/css/opt-frontend.css" />
         <option value="$PROJECT_DIR$/core/templates/core/visualizer.html" />
         <option value="$PROJECT_DIR$/core/static/vis/v3/turtle_commands.py" />
-        <option value="$PROJECT_DIR$/core/static/js/dash/teacher.js" />
         <option value="$PROJECT_DIR$/core/static/js/dash/dashboard.js" />
         <option value="$PROJECT_DIR$/core/static/vis/v3/css/pytutor.css" />
         <option value="$PROJECT_DIR$/core/static/vis/v3/js/pytutor.js" />
         <option value="$PROJECT_DIR$/core/urls.py" />
         <option value="$PROJECT_DIR$/core/views.py" />
         <option value="$PROJECT_DIR$/core/static/js/dash/student.js" />
-        <option value="$PROJECT_DIR$/core/static/css/dash.css" />
         <option value="$PROJECT_DIR$/core/static/js/dash/dash-utils.js" />
+        <option value="$PROJECT_DIR$/core/static/js/dash/teacher.js" />
+        <option value="$PROJECT_DIR$/front/views.py" />
         <option value="$PROJECT_DIR$/core/templates/core/dashboard.html" />
+        <option value="$PROJECT_DIR$/core/static/css/dash.css" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="33" />
+    <option name="x" value="38" />
     <option name="y" value="22" />
-    <option name="width" value="1388" />
+    <option name="width" value="1357" />
     <option name="height" value="828" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -447,25 +445,6 @@
       <option name="MULTIPROCESS" value="false" />
       <method />
     </configuration>
-    <configuration default="true" type="tests" factoryName="Unittests">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <module name="imcode" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="PUREUNITTEST" value="true" />
-      <method />
-    </configuration>
     <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -485,6 +464,25 @@
       <option name="runNoReload" value="false" />
       <option name="useCustomRunCommand" value="false" />
       <option name="customRunCommand" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <module name="imcode" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -547,15 +545,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="33" y="22" width="1388" height="828" extended-state="0" />
+    <frame x="38" y="22" width="1357" height="828" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23087431" sideWeight="0.99856937" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22262248" sideWeight="0.7691257" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22918202" sideWeight="0.7691257" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -564,6 +561,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23087431" sideWeight="0.99856937" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -624,134 +622,113 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/core/static/vis/v3/css/pytutor.css">
+    <entry file="file://$PROJECT_DIR$/core/static/js/snap/executeVisualizer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="756" column="17" selection-start="17380" selection-end="17380" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/vis/v3/css/codemirror.css">
+    <entry file="file://$PROJECT_DIR$/front/templates/front/layout.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/vis/v3/js/pytutor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="885" column="2" selection-start="32544" selection-end="32544" vertical-scroll-proportion="9.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/js/snap/gui.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1232" column="5" selection-start="38816" selection-end="38817" vertical-scroll-proportion="-8.423077">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="0" selection-start="1256" selection-end="1256" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="141" column="52" selection-start="5311" selection-end="5311" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#46#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/js/lib/backbone.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="620" column="8" selection-start="25638" selection-end="25638" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/front/static/js/libraries/backbone.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="276" column="8" selection-start="11368" selection-end="11368" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/js/dash/teacher.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="314" column="103" selection-start="12436" selection-end="12436" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/js/dash/individual.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/js/dash/dashboard.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="40" selection-start="183" selection-end="195" vertical-scroll-proportion="0.0">
+        <state line="10" column="41" selection-start="203" selection-end="302" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/static/js/dash/student.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="94" column="53" selection-start="2593" selection-end="2593" vertical-scroll-proportion="-4.923077">
+        <state line="94" column="53" selection-start="2593" selection-end="2593" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/static/js/lib/backbone.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="620" column="8" selection-start="25638" selection-end="25638" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front/static/js/libraries/backbone.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="276" column="8" selection-start="11368" selection-end="11368" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/static/vis/v3/js/pytutor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="927" column="44" selection-start="34132" selection-end="34132" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1394472320000" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/static/js/dash/dash-utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="97" column="42" selection-start="3881" selection-end="3882" vertical-scroll-proportion="143.57692">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/static/js/dash/teacher.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="110" column="0" selection-start="3596" selection-end="3596" vertical-scroll-proportion="-5.576923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="141" column="52" selection-start="5311" selection-end="5311" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="86" column="44" selection-start="2751" selection-end="2751" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/static/js/dash/dashboard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="24" selection-start="1563" selection-end="1564" vertical-scroll-proportion="-12.307693">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/static/js/dash/individual.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/templates/core/dashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="99" column="0" selection-start="3346" selection-end="3346" vertical-scroll-proportion="-3.84">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/static/css/dash.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="259" column="20" selection-start="3855" selection-end="3855" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/js/dash/dash-utils.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="96" selection-start="1273" selection-end="1273" vertical-scroll-proportion="-15.384615">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/templates/core/dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="303" column="82" selection-start="13524" selection-end="13524" vertical-scroll-proportion="0.82529116">
+        <state line="101" column="24" selection-start="1671" selection-end="1671" vertical-scroll-proportion="0.6486091">
           <folding />
         </state>
       </provider>

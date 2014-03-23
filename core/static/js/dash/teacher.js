@@ -116,7 +116,7 @@ window.TeacherCourseRegisterView = Backbone.View.extend({
         });
 
         $( document ).on( "keyup", "#create-lesson-guide", function() {
-            $("#lesson-guide-preview-text").text($('#create-lesson-guide').val());
+            $("#lesson-guide-preview-text").html($('#create-lesson-guide').val());
         });
 
         return this;

@@ -90,7 +90,7 @@ body {
 
 #lesson-guide {
     height: 800px;
-    padding-right: 0px;
+    padding-right: 15px;
     padding-left: 25px;
     width: 20%;
     min-width: 290px;
@@ -99,6 +99,7 @@ body {
     background-color: #ffffff;
     color: #428bca;
     border-radius: 5px;
+    margin-bottom: 50px;
 }
 
 #lesson-guide-preview {
