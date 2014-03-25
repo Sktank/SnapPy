@@ -356,6 +356,7 @@ var snapWidth = 1100;
             ide.openIn(world);
             setInterval(loop, 1);
 
+            $('body').trigger('loaded');
             //load if we have previous snaps
 //            console.log(snaps_promise.responseText);
             if (snaps_promise.responseText != "0")

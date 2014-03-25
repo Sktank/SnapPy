@@ -4134,6 +4134,85 @@ IDE_Morph.prototype.prompt = function (message, callback, choices, key) {
     );
 };
 
+IDE_Morph.prototype.highlightItem = function(button, add, item) {
+    if (button) {
+        var morph = this[item];
+        console.log(morph);
+        console.log(add);
+        if (add) {
+            if (morph.backgroundColor) {
+                this[item + 'Color'] = morph.backgroundColor;
+            }
+            else if (morph.color) {
+                morph.backgroundColor = morph.color;
+                this[item + 'Color'] = morph.backgroundColor;
+            }
+            else {
+                this[item + 'Color'] = new Color(255, 255, 255);
+            }
+            morph.backgroundColor = new Color(255, 252, 189);
+        }
+        else {
+            morph.backgroundColor = this[item + 'Color'];
+
+        }
+        console.log(morph.backgroundColor);
+        morph.setColor(morph.backgroundColor);
+        this.changed();
+    }
+};
+
+IDE_Morph.prototype.highlightSprite = function(add) {
+    var sprite = this.currentSprite;
+//    console.log(sprite);
+    if (add) {
+
+    }
+    else {
+
+    }
+};
+
+IDE_Morph.prototype.highlightPalette = function(add) {
+    var palette = this.palette;
+    if (add) {
+
+    }
+    else {
+
+    }
+};
+
+IDE_Morph.prototype.highlightBlocks = function(add) {
+    if (add) {
+
+    }
+    else {
+
+    }
+}
+
+IDE_Morph.prototype.highlightScripts = function(add) {
+    var scripts = this.spriteEditor;
+    if (add) {
+
+    }
+    else {
+
+    }
+};
+
+IDE_Morph.prototype.highlightSave = function(add) {
+
+    if (add) {
+
+    }
+    else {
+
+    }
+}
+
+
 // ProjectDialogMorph ////////////////////////////////////////////////////
 
 // ProjectDialogMorph inherits from DialogBoxMorph:

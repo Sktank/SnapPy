@@ -98,8 +98,8 @@ window.SnapView = Backbone.View.extend({
             $('#prev-btn').html('<a href="#solo/' + jsonPrev.id + '/snap"><div class="btn btn-default">Previous Lesson: ' + jsonPrev.name + '</div></a>');
         }
         $(this.el).html(this.template(json));
-        $('#content').show();
         dashUtils.loadSnap(json.id);
+        $('#content').show();
         return this;
     }
 });
