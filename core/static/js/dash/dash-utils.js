@@ -25,7 +25,8 @@ var snapWidth = 1100;
                 'id="student-list-tab"><i class="fa fa-compass"></i> Student</a><a href="#solo" \c' +
                 'lass="list-group-item main-tab" id="lesson-list-tab"><i class="fa fa-user"></i> Individual</a></div>\<' +
                 'div id="dash-sidebar-lower"></div></div><div class="col-md-8"><div id="dash-main"><h3>Lessons</h3>\<' +
-                'div class="recommend"><p class="recommend-header"><b>Recommended</b></p></div><div id="lesson-list"></div>\<' +
+                'div class="recommend"><p class="recommend-header"><b>Recommended to complete lessons in order</b></p>\ +' +
+                '</div><div id="lesson-list"></div>\<' +
                 '/div></div><div class="col-md-2"><div id="dash-sidebar-right"></div></div></div>');
             return 1;
         }

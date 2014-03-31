@@ -28,6 +28,7 @@ body {
     min-height: 100px;
     margin-bottom: -1px;
     padding: 20px;
+    cursor: pointer;
 }
 
 .active-container {

@@ -91,11 +91,11 @@ window.SnapView = Backbone.View.extend({
         $('#home-btn').html('<a href="#solo/' + json.id + '"><div class="btn btn-default">Lesson List</div></a>');
         if (this.options.nextModel) {
             var jsonNext = this.options.nextModel.toJSON();
-            $('#next-btn').html('<a href="#solo/' + jsonNext.id + '/snap"><div class="btn btn-default">Next Lesson: ' + jsonNext.name + '</div></a>');
+            $('#next-btn').html('<a href="#solo/' + jsonNext.id + '/snap"><div class="btn btn-default">Next Lesson</div></a>');
         }
         if (this.options.prevModel) {
             var jsonPrev = this.options.prevModel.toJSON();
-            $('#prev-btn').html('<a href="#solo/' + jsonPrev.id + '/snap"><div class="btn btn-default">Previous Lesson: ' + jsonPrev.name + '</div></a>');
+            $('#prev-btn').html('<a href="#solo/' + jsonPrev.id + '/snap"><div class="btn btn-default">Previous Lesson</div></a>');
         }
         $(this.el).html(this.template(json));
         dashUtils.loadSnap(json.id);

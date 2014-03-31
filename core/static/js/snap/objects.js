@@ -173,7 +173,7 @@ SpriteMorph.prototype.categories =
         'other'
     ];
 
-SpriteMorph.prototype.blockColor = {
+SpriteMorph.prototype.normalBlockColor = {
     motion : new Color(74, 108, 212),
     looks : new Color(143, 86, 227),
     sound : new Color(207, 74, 217),
@@ -185,6 +185,21 @@ SpriteMorph.prototype.blockColor = {
     lists : new Color(217, 77, 17),
     other: new Color(150, 150, 150)
 };
+
+SpriteMorph.prototype.highlightedBlockColor = {
+    motion : new Color(255, 242, 95),
+    looks : new Color(255, 242, 95),
+    sound : new Color(255, 242, 95),
+    pen : new Color(255, 242, 95),
+    control : new Color(255, 242, 95),
+    sensing : new Color(255, 242, 95),
+    operators : new Color(255, 242, 95),
+    variables : new Color(255, 242, 95),
+    lists : new Color(255, 242, 95),
+    other: new Color(255, 242, 95)
+};
+
+SpriteMorph.prototype.blockColor = SpriteMorph.prototype.normalBlockColor;
 
 SpriteMorph.prototype.paletteColor = new Color(55, 55, 55);
 SpriteMorph.prototype.paletteTextColor = new Color(230, 230, 230);
@@ -1520,6 +1535,7 @@ SpriteMorph.prototype.variableBlock = function (varName) {
     block.category = 'variables';
     block.setSpec(varName);
     block.isDraggable = true;
+    block.code = [varName];
     return block;
 };
 
@@ -1992,14 +2008,14 @@ SpriteMorph.prototype.blockTemplates = function (category) {
     return blocks;
 };
 
-SpriteMorph.prototype.palette = function (category) {
-    if (!this.paletteCache[category]) {
-        this.paletteCache[category] = this.freshPalette(category);
+SpriteMorph.prototype.palette = function (category, highlight) {
+    if (!this.paletteCache[category] || highlight) {
+        this.paletteCache[category] = this.freshPalette(category, highlight);
     }
     return this.paletteCache[category];
 };
 
-SpriteMorph.prototype.freshPalette = function (category) {
+SpriteMorph.prototype.freshPalette = function (category, highlight) {
     var palette = new ScrollFrameMorph(null, null, this.sliderColor),
         unit = SyntaxElementMorph.prototype.fontSize,
         x = 0,
@@ -2105,7 +2121,7 @@ SpriteMorph.prototype.freshPalette = function (category) {
     // primitives:
 
     blocks = this.blocksCache[category];
-    if (!blocks) {
+    if (!blocks || highlight) {
         blocks = self.blockTemplates(category);
         if (this.isCachingPrimitives) {
             self.blocksCache[category] = blocks;

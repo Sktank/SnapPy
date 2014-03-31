@@ -22,51 +22,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="dash-utils.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/static/js/dash/dash-utils.js">
+      <file leaf-file-name="gui.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/static/js/snap/gui.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="358" column="40" selection-start="13590" selection-end="13590" vertical-scroll-proportion="-9.653846">
+            <state line="3489" column="20" selection-start="109536" selection-end="109536" vertical-scroll-proportion="-13.038462">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/front/views.py">
+      <file leaf-file-name="dash-utils.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/static/js/dash/dash-utils.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="266" column="5" selection-start="12551" selection-end="12551" vertical-scroll-proportion="3.694309">
-              <folding>
-                <element signature="e#53#88#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="scriptsPaneTexture.gif" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/static/img/scriptsPaneTexture.gif">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gui.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/static/js/snap/gui.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="4151" column="13" selection-start="128858" selection-end="128858" vertical-scroll-proportion="-12.115385">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="settings.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/imcode/settings.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="21" selection-start="1215" selection-end="1215" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1395701628000" expanded="true" signature="157:712" placeholder="..." />
-              </folding>
+            <state line="25" column="113" selection-start="1290" selection-end="1290" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -74,27 +43,16 @@
       <file leaf-file-name="dash.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/static/css/dash.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="106" column="21" selection-start="1739" selection-end="1739" vertical-scroll-proportion="0.0">
+            <state line="30" column="20" selection-start="584" selection-end="584" vertical-scroll-proportion="54.76923">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="morphic.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/static/js/snap/morphic.js">
+      <file leaf-file-name="dashboard.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/static/js/dash/dashboard.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2549" column="16" selection-start="68047" selection-end="68047" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="individual.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/static/js/dash/individual.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="100" column="36" selection-start="3105" selection-end="3105" vertical-scroll-proportion="0.0">
+            <state line="23" column="56" selection-start="766" selection-end="766" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -103,7 +61,43 @@
       <file leaf-file-name="dashboard.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/templates/core/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="100" column="37" selection-start="3380" selection-end="3384" vertical-scroll-proportion="-2.7843137">
+            <state line="42" column="14" selection-start="1619" selection-end="1619" vertical-scroll-proportion="-1.28">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/front/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="469" column="69" selection-start="28453" selection-end="28453" vertical-scroll-proportion="8.54991">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="teacher.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/static/js/dash/teacher.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="student.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/static/js/dash/student.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="individual.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/static/js/dash/individual.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="93" column="114" selection-start="2713" selection-end="2713" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -112,7 +106,7 @@
       <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="141" column="52" selection-start="5311" selection-end="5311" vertical-scroll-proportion="0.0">
+            <state line="372" column="8" selection-start="13113" selection-end="13158" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -128,8 +122,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/core/templates/core/visualizer.html" />
-        <option value="$PROJECT_DIR$/core/static/vis/v3/turtle_commands.py" />
         <option value="$PROJECT_DIR$/core/static/js/dash/dashboard.js" />
         <option value="$PROJECT_DIR$/core/static/vis/v3/css/pytutor.css" />
         <option value="$PROJECT_DIR$/core/static/vis/v3/js/pytutor.js" />
@@ -137,21 +129,23 @@
         <option value="$PROJECT_DIR$/core/views.py" />
         <option value="$PROJECT_DIR$/core/static/js/dash/student.js" />
         <option value="$PROJECT_DIR$/core/static/js/dash/teacher.js" />
-        <option value="$PROJECT_DIR$/core/templates/core/dashboard.html" />
-        <option value="$PROJECT_DIR$/core/static/js/dash/individual.js" />
-        <option value="$PROJECT_DIR$/core/static/js/dash/dash-utils.js" />
-        <option value="$PROJECT_DIR$/core/static/js/snap/gui.js" />
         <option value="$PROJECT_DIR$/imcode/settings.py" />
+        <option value="$PROJECT_DIR$/core/static/js/snap/threads.js" />
+        <option value="$PROJECT_DIR$/core/static/js/snap/objects.js" />
+        <option value="$PROJECT_DIR$/core/static/js/snap/gui.js" />
+        <option value="$PROJECT_DIR$/core/templates/core/dashboard.html" />
+        <option value="$PROJECT_DIR$/core/static/js/dash/dash-utils.js" />
         <option value="$PROJECT_DIR$/core/static/css/dash.css" />
+        <option value="$PROJECT_DIR$/core/static/js/dash/individual.js" />
         <option value="$PROJECT_DIR$/front/views.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="52" />
+    <option name="x" value="37" />
     <option name="y" value="22" />
-    <option name="width" value="1388" />
-    <option name="height" value="828" />
+    <option name="width" value="1403" />
+    <option name="height" value="878" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -207,83 +201,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="imcode" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="imcode" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="imcode" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="imcode" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="imcode" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="imcode" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="imcode" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="imcode" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="imcode" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -359,7 +277,59 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="img" />
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="snap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="imcode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="imcode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="imcode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="imcode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dash" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -539,15 +509,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="52" y="22" width="1388" height="828" extended-state="0" />
+    <frame x="37" y="22" width="1403" height="878" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23087431" sideWeight="0.99856937" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21611254" sideWeight="0.99856937" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22910663" sideWeight="0.7691257" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22808269" sideWeight="0.78388745" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -621,112 +591,106 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/js/dash/teacher.js">
+    <entry file="file://$PROJECT_DIR$/core/serializers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="0" selection-start="3596" selection-end="3596" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/static/js/snap/widgets.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1584" column="25" selection-start="43678" selection-end="43678" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/js/dash/student.js">
+    <entry file="file://$PROJECT_DIR$/core/static/js/snap/threads.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="94" column="53" selection-start="2593" selection-end="2593" vertical-scroll-proportion="0.0" />
+        <state line="2900" column="0" selection-start="83472" selection-end="83472" vertical-scroll-proportion="-6.8846154">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/js/snap/byob.js">
+    <entry file="file://$PROJECT_DIR$/core/static/js/snap/objects.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="2424" column="26" selection-start="71398" selection-end="71402" vertical-scroll-proportion="-6.8846154">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/js/snap/blocks.js">
+    <entry file="file://$PROJECT_DIR$/core/static/js/snap/morphic.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3042" column="21" selection-start="94436" selection-end="94436" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/js/dash/dashboard.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="24" selection-start="1563" selection-end="1564" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/js/dash/individual.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="36" selection-start="3105" selection-end="3105" vertical-scroll-proportion="0.0">
+        <state line="8584" column="9" selection-start="231062" selection-end="231062" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/templates/core/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="37" selection-start="3380" selection-end="3384" vertical-scroll-proportion="-2.7843137">
+        <state line="42" column="14" selection-start="1619" selection-end="1619" vertical-scroll-proportion="-1.28">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/static/js/dash/dash-utils.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="358" column="40" selection-start="13590" selection-end="13590" vertical-scroll-proportion="-9.653846">
+        <state line="25" column="113" selection-start="1290" selection-end="1290" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/static/css/dash.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="20" selection-start="584" selection-end="584" vertical-scroll-proportion="54.76923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/static/js/dash/teacher.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/static/js/dash/student.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/static/js/dash/individual.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="93" column="114" selection-start="2713" selection-end="2713" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="141" column="52" selection-start="5311" selection-end="5311" vertical-scroll-proportion="0.0" />
+        <state line="372" column="8" selection-start="13113" selection-end="13158" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/img/scriptsPaneTexture.gif">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/js/snap/morphic.js">
+    <entry file="file://$PROJECT_DIR$/core/static/js/dash/dashboard.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2549" column="16" selection-start="68047" selection-end="68047" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state line="23" column="56" selection-start="766" selection-end="766" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/static/js/snap/gui.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4151" column="13" selection-start="128858" selection-end="128858" vertical-scroll-proportion="-12.115385">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imcode/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="21" selection-start="1215" selection-end="1215" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1395701628000" expanded="true" signature="157:712" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/static/css/dash.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="106" column="21" selection-start="1739" selection-end="1739" vertical-scroll-proportion="0.0">
+        <state line="3489" column="20" selection-start="109536" selection-end="109536" vertical-scroll-proportion="-13.038462">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/front/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="266" column="5" selection-start="12551" selection-end="12551" vertical-scroll-proportion="3.694309">
-          <folding>
-            <element signature="e#53#88#0" expanded="true" />
-          </folding>
+        <state line="469" column="69" selection-start="28453" selection-end="28453" vertical-scroll-proportion="8.54991">
+          <folding />
         </state>
       </provider>
     </entry>

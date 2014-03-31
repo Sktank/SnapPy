@@ -157,6 +157,10 @@ IDE_Morph.prototype.setFlatDesign = function () {
     IDE_Morph.prototype.backgroundColor = new Color(200, 200, 200);
     IDE_Morph.prototype.frameColor = new Color(255, 255, 255);
 
+    IDE_Morph.prototype.highlightedColor = new Color(255, 252, 189);
+    IDE_Morph.prototype.groupColor = new Color(230, 230, 230);
+    IDE_Morph.prototype.scriptsEditorColor = IDE_Morph.prototype.groupColor;
+
     IDE_Morph.prototype.groupColor = new Color(230, 230, 230);
     IDE_Morph.prototype.sliderColor = SpriteMorph.prototype.sliderColor;
     IDE_Morph.prototype.buttonLabelColor = new Color(70, 70, 70);
@@ -874,7 +878,7 @@ IDE_Morph.prototype.createCategories = function () {
     this.add(this.categories);
 };
 
-IDE_Morph.prototype.createPalette = function () {
+IDE_Morph.prototype.createPalette = function (highlight) {
     // assumes that the logo pane has already been created
     // needs the categories pane for layout
     var self = this;
@@ -883,7 +887,7 @@ IDE_Morph.prototype.createPalette = function () {
         this.palette.destroy();
     }
 
-    this.palette = this.currentSprite.palette(this.currentCategory);
+    this.palette = this.currentSprite.palette(this.currentCategory, highlight);
     this.palette.isDraggable = false;
     this.palette.acceptsDrops = true;
     this.palette.contents.acceptsDrops = false;
@@ -1237,7 +1241,17 @@ IDE_Morph.prototype.createSpriteEditor = function () {
             this.exitCodeMode();
         }
         scripts.isDraggable = false;
-        scripts.color = this.groupColor;
+
+//        if (highlighted) {
+//            console.log('highlighted');
+//            scripts.color = this.highlightedColor;
+//        }
+//        else {
+//            scripts.color = this.scriptsEditorColor;
+//        }
+
+//        console.log(this.scriptsEditorColor);
+        scripts.color = this.scriptsEditorColor;
         scripts.texture = this.scriptsPaneTexture;
 
         this.spriteEditor = new ScrollFrameMorph(
@@ -1627,6 +1641,7 @@ IDE_Morph.prototype.fixLayout = function (situation) {
         if (this.currentTab === 'scripts' || this.currentTab === 'code') {
             if (this.spriteEditor.isVisible) {
                 this.spriteEditor.setPosition(this.spriteBar.bottomLeft());
+                this.spriteEditor.setColor(this.highlightedColor);
                 this.spriteEditor.setExtent(new Point(
                     this.spriteBar.width(),
                     (this.bottom() - this.spriteEditor.top()) / 2
@@ -1807,10 +1822,10 @@ IDE_Morph.prototype.droppedBinary = function (anArrayBuffer, name) {
 
 // IDE_Morph button actions
 
-IDE_Morph.prototype.refreshPalette = function (shouldIgnorePosition) {
+IDE_Morph.prototype.refreshPalette = function (shouldIgnorePosition, highlight) {
     var oldTop = this.palette.contents.top();
 
-    this.createPalette();
+    this.createPalette(highlight);
     this.fixLayout('refreshPalette');
     if (!shouldIgnorePosition) {
         this.palette.contents.setTop(oldTop);
@@ -4162,55 +4177,43 @@ IDE_Morph.prototype.highlightItem = function(button, add, item) {
     }
 };
 
-IDE_Morph.prototype.highlightSprite = function(add) {
-    var sprite = this.currentSprite;
-//    console.log(sprite);
-    if (add) {
-
-    }
-    else {
-
-    }
-};
-
-IDE_Morph.prototype.highlightPalette = function(add) {
-    var palette = this.palette;
-    if (add) {
-
-    }
-    else {
-
+IDE_Morph.prototype.highlightBlocks = function(button, add) {
+    if (button) {
+        if (add) {
+            SpriteMorph.prototype.blockColor = SpriteMorph.prototype.highlightedBlockColor;
+            this.refreshPalette(true, true);
+        }
+        else {
+            SpriteMorph.prototype.blockColor = SpriteMorph.prototype.normalBlockColor;
+            this.refreshPalette(true, true);
+        }
     }
 };
 
-IDE_Morph.prototype.highlightBlocks = function(add) {
-    if (add) {
-
-    }
-    else {
-
-    }
-}
-
-IDE_Morph.prototype.highlightScripts = function(add) {
-    var scripts = this.spriteEditor;
-    if (add) {
-
-    }
-    else {
-
+IDE_Morph.prototype.highlightScripts = function(button, add) {
+    if (button) {
+        if (add) {
+            IDE_Morph.prototype.scriptsEditorColor = IDE_Morph.prototype.highlightedColor;
+            this.createSpriteEditor();
+            this.fixLayout();
+        }
+        else {
+            IDE_Morph.prototype.scriptsEditorColor = IDE_Morph.prototype.groupColor;
+            this.createSpriteEditor();
+            this.fixLayout();
+        }
     }
 };
-
-IDE_Morph.prototype.highlightSave = function(add) {
-
-    if (add) {
-
-    }
-    else {
-
-    }
-}
+//
+//IDE_Morph.prototype.highlightSave = function(add) {
+//
+//    if (add) {
+//
+//    }
+//    else {
+//
+//    }
+//}
 
 
 // ProjectDialogMorph ////////////////////////////////////////////////////
