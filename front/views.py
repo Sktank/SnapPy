@@ -111,7 +111,7 @@ guide1 = "<h3>Welcome!</h3><p>Hello there and welcome to the first Snappy Lesson
 </p>\
 <p>\
 Lets start off with a quick introduction to some of the different tools available to you in the snappy programming\
- environment. The main areas we will be using are the palette (left), scripts editor (top center), and stage (top right).\
+ environment. In the following bullet points, mouse over the titles to highlight the location of each corresponding section.\
 </p>\
 <br>\
 <ul>\

@@ -797,7 +797,7 @@ IDE_Morph.prototype.createCategories = function () {
     this.categories.silentSetWidth(this.logo.width()); // width is fixed
 
     function addCategoryButton(category) {
-        var labelWidth = 75,
+        var labelWidth = 150,
             colors = [
                 self.frameColor,
                 self.frameColor.darker(50),
@@ -841,7 +841,7 @@ IDE_Morph.prototype.createCategories = function () {
         var buttonWidth = self.categories.children[0].width(),
             buttonHeight = self.categories.children[0].height(),
             border = 3,
-            rows =  Math.ceil((self.categories.children.length) / 2),
+            rows =  Math.ceil((self.categories.children.length)),
             xPadding = (self.categories.width()
                 - border
                 - buttonWidth * 2) / 3,
@@ -854,8 +854,8 @@ IDE_Morph.prototype.createCategories = function () {
 
         self.categories.children.forEach(function (button) {
             i += 1;
-            row = Math.ceil(i / 2);
-            col = 2 - (i % 2);
+            row = Math.ceil(i);
+            col = 1.5;
             button.setPosition(new Point(
                 l + (col * xPadding + ((col - 1) * buttonWidth)),
                 t + (row * yPadding + ((row - 1) * buttonHeight) + border)
@@ -1133,43 +1133,43 @@ IDE_Morph.prototype.createSpriteBar = function () {
     tab.fixLayout();
     tabBar.add(tab);
 
-    tab = new TabMorph(
-        tabColors,
-        null, // target
-        function () {tabBar.tabTo('costumes'); },
-        localize('Costumes'), // label
-        function () {  // query
-            return self.currentTab === 'costumes';
-        }
-    );
-    tab.padding = 3;
-    tab.corner = tabCorner;
-    tab.edge = 1;
-    tab.labelShadowOffset = new Point(-1, -1);
-    tab.labelShadowColor = tabColors[1];
-    tab.labelColor = this.buttonLabelColor;
-    tab.drawNew();
-    tab.fixLayout();
-    tabBar.add(tab);
-
-    tab = new TabMorph(
-        tabColors,
-        null, // target
-        function () {tabBar.tabTo('sounds'); },
-        localize('Sounds'), // label
-        function () {  // query
-            return self.currentTab === 'sounds';
-        }
-    );
-    tab.padding = 3;
-    tab.corner = tabCorner;
-    tab.edge = 1;
-    tab.labelShadowOffset = new Point(-1, -1);
-    tab.labelShadowColor = tabColors[1];
-    tab.labelColor = this.buttonLabelColor;
-    tab.drawNew();
-    tab.fixLayout();
-    tabBar.add(tab);
+//    tab = new TabMorph(
+//        tabColors,
+//        null, // target
+//        function () {tabBar.tabTo('costumes'); },
+//        localize('Costumes'), // label
+//        function () {  // query
+//            return self.currentTab === 'costumes';
+//        }
+//    );
+//    tab.padding = 3;
+//    tab.corner = tabCorner;
+//    tab.edge = 1;
+//    tab.labelShadowOffset = new Point(-1, -1);
+//    tab.labelShadowColor = tabColors[1];
+//    tab.labelColor = this.buttonLabelColor;
+//    tab.drawNew();
+//    tab.fixLayout();
+//    tabBar.add(tab);
+//
+//    tab = new TabMorph(
+//        tabColors,
+//        null, // target
+//        function () {tabBar.tabTo('sounds'); },
+//        localize('Sounds'), // label
+//        function () {  // query
+//            return self.currentTab === 'sounds';
+//        }
+//    );
+//    tab.padding = 3;
+//    tab.corner = tabCorner;
+//    tab.edge = 1;
+//    tab.labelShadowOffset = new Point(-1, -1);
+//    tab.labelShadowColor = tabColors[1];
+//    tab.labelColor = this.buttonLabelColor;
+//    tab.drawNew();
+//    tab.fixLayout();
+//    tabBar.add(tab);
 
     tab = new TabMorph(
         tabColors,
@@ -1438,7 +1438,7 @@ IDE_Morph.prototype.createCorralBar = function () {
     newbutton.fixLayout();
     newbutton.setCenter(this.corralBar.center());
     newbutton.setLeft(this.corralBar.left() + padding);
-    this.corralBar.add(newbutton);
+//    this.corralBar.add(newbutton);
 
     paintbutton = new PushButtonMorph(
         this,
@@ -1479,7 +1479,7 @@ IDE_Morph.prototype.createCorral = function () {
 
     this.corral.stageIcon = new SpriteIconMorph(this.stage);
     this.corral.stageIcon.isDraggable = false;
-    this.corral.add(this.corral.stageIcon);
+//    this.corral.add(this.corral.stageIcon);
 
     frame = new ScrollFrameMorph(null, null, this.sliderColor);
     frame.acceptsDrops = false;
