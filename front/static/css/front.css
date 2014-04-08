@@ -15,6 +15,14 @@ body {
     border: 2px solid black;
     text-align: center;
 }
+#home-footer {
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    padding: 10px;
+    border: 2px solid black;
+    text-align: center;
+    margin-top: -5px;
+}
 
 #front-nav-bar{
     background-color: white;
