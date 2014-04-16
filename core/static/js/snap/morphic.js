@@ -2564,7 +2564,7 @@ Morph.prototype.drawNew = function () {
     this.image = newCanvas(this.extent());
     var context = this.image.getContext('2d');
     context.fillStyle = this.color.toString();
-//    console.log("morph width, height = " + this.width() + ", " + this.height())
+//    //console.log("morph width, height = " + this.width() + ", " + this.height())
     context.fillRect(0, 0, this.width(), this.height());
     if (this.cachedTexture) {
         this.drawCachedTexture();
@@ -4585,7 +4585,7 @@ CursorMorph.prototype.processKeyDown = function (event) {
         default:
         // this.inspectKeyEvent(event);
     }
-//    console.log(this.target);
+//    //console.log(this.target);
     // notify target's parent of key event
     this.target.escalateEvent('reactToKeystroke', event);
 };
@@ -6105,11 +6105,11 @@ MouseSensorMorph.prototype.unTouch = function () {
 };
 
 MouseSensorMorph.prototype.mouseEnter = function () {
-//    console.log(JSON.stringify(this.color));
+//    //console.log(JSON.stringify(this.color));
     var col = {"r":21,"g":102,"b":17,"a":1};
-//    console.log(JSON.stringify(col));
+//    //console.log(JSON.stringify(col));
     if (JSON.stringify(this.color) == JSON.stringify(col)) {
-//        console.log('entering green');
+//        //console.log('entering green');
         this.alpha = 1;
     }
     else {
@@ -6127,7 +6127,7 @@ MouseSensorMorph.prototype.mouseDownLeft = function () {
 };
 
 MouseSensorMorph.prototype.mouseClickLeft = function () {
-//    console.log('im clicked');
+//    //console.log('im clicked');
     this.color = new Color(21, 102, 17);
     this.downStep = 0.005;
     this.drawNew();
@@ -8636,10 +8636,10 @@ ScrollFrameMorph.prototype.init = function (scroller, size, sliderColor) {
     };
     this.vBar.isDraggable = false;
     this.add(this.vBar);
-//    console.log('------------');
-//    console.log(scroller);
-//    console.log(this);
-//    console.log('------------');
+//    //console.log('------------');
+//    //console.log(scroller);
+//    //console.log(this);
+//    //console.log('------------');
 };
 
 ScrollFrameMorph.prototype.adjustScrollBars = function () {
@@ -9421,14 +9421,14 @@ HandMorph.prototype.grab = function (aMorph) {
 };
 
 HandMorph.prototype.drop = function () {
-//    console.log(this);
+//    //console.log(this);
     var target, morphToDrop;
     if (this.children.length !== 0) {
         morphToDrop = this.children[0];
         target = this.dropTargetFor(morphToDrop);
-//        console.log(target);
-//        console.log(morphToDrop);
-//        console.log("----");
+//        //console.log(target);
+//        //console.log(morphToDrop);
+//        //console.log("----");
         this.changed();
         target.add(morphToDrop);
         morphToDrop.changed();
@@ -9943,16 +9943,16 @@ function WorldMorph(aCanvas, fillPage, isTeacher) {
 // WorldMorph initialization:
 
 WorldMorph.prototype.init = function (aCanvas, fillPage, isTeacher) {
-    console.log(aCanvas);
-//    console.log($('#world').css('height'));
+    //console.log(aCanvas);
+//    //console.log($('#world').css('height'));
     this.canvasH = $('#' + aCanvas.id).css('height');
     this.canvasW = $('#' + aCanvas.id).css('width');
-//    console.log(this.canvasH);
-//    console.log(this.canvasW);
+//    //console.log(this.canvasH);
+//    //console.log(this.canvasW);
     WorldMorph.uber.init.call(this);
     this.color = new Color(205, 205, 205); // (130, 130, 130)
     this.alpha = 1;
-//    console.log(aCanvas);
+//    //console.log(aCanvas);
 //    if (fillPage) {
     this.bounds = new Rectangle(0, 0, aCanvas.width, aCanvas.height);
 //    }
@@ -9976,8 +9976,8 @@ WorldMorph.prototype.init = function (aCanvas, fillPage, isTeacher) {
     if (this.useFillPage === undefined) {
         this.useFillPage = true;
     }
-//    console.log('fsefes');
-//    console.log(this.useFillPage);
+//    //console.log('fsefes');
+//    //console.log(this.useFillPage);
     this.isDevMode = false;
     this.broken = [];
     this.hand = new HandMorph(this);
@@ -10027,11 +10027,11 @@ WorldMorph.prototype.fillPage = function () {
         clientWidth = window.innerWidth,
         self = this;
 
-//    console.log(this.worldCanvas.height);
-//    console.log(this.worldCanvas.width);
+//    //console.log(this.worldCanvas.height);
+//    //console.log(this.worldCanvas.width);
 //
-//    console.log(clientHeight);
-//    console.log(clientWidth);
+//    //console.log(clientHeight);
+//    //console.log(clientWidth);
 
 
     if (pos.x > 0) {
@@ -10186,7 +10186,7 @@ WorldMorph.prototype.initEventListeners = function () {
     var canvas = this.worldCanvas, self = this;
 
     if (self.useFillPage) {
-//        console.log(self.useFillPage);
+//        //console.log(self.useFillPage);
         self.fillPage();
     } else {
 //        this.setWidth(this.canvasW);

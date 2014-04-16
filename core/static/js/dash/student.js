@@ -38,8 +38,8 @@ window.StudentCourseListView = Backbone.View.extend({
     },
 
     render:function (eventName) {
-        console.log('rendering list');
-        console.log(this.model.models);
+        //console.log('rendering list');
+        //console.log(this.model.models);
         // render the lesson view headers
         $(".list-group-item").removeClass("active");
         $("#student-list-tab").addClass("active");
@@ -90,7 +90,7 @@ window.StudentClassSearchView = Backbone.View.extend({
         $(self.el).html(self.template());
 
         $(self.el).on('click', '#search-by-teacher-tab', function() {
-            console.log("here");
+            //console.log("here");
             dashUtils.clearStudentSearch();
             dashUtils.refreshList('courses-by-teacher-list');
             $(self.el).find('#search-by-teacher-tab').parent().addClass("active");
@@ -98,7 +98,7 @@ window.StudentClassSearchView = Backbone.View.extend({
 
         });
         $(self.el).on('click', '#search-by-name-tab', function() {
-            console.log("here");
+            //console.log("here");
             dashUtils.clearStudentSearch();
             dashUtils.refreshList('courses-by-name-list');
             $(self.el).find('#search-by-name-tab').parent().addClass("active");
@@ -106,7 +106,7 @@ window.StudentClassSearchView = Backbone.View.extend({
 
         });
         $(self.el).on('click', '#browse-all-tab', function() {
-            console.log("here");
+            //console.log("here");
             dashUtils.clearStudentSearch();
             dashUtils.refreshList('all-courses');
             $(self.el).find('#browse-all-tab').parent().addClass("active");
@@ -158,7 +158,7 @@ window.StudentClassSearchItemView = Backbone.View.extend({
             this.model.id = this.options.id;
             json = _.clone(this.model)
         }
-        console.log(json);
+        //console.log(json);
         $(self.el).addClass("col-md-4").html(self.template(json));
         $(self.el).find("#search-course-" + json.id).addClass('class-search-item');
         if (window.app.studentClassList.findWhere({ id: json.id })) {
@@ -238,7 +238,7 @@ window.StudentCourseView = Backbone.View.extend({
         $(self.el).append('<h5>Lessons</h5>');
         promise.success(function (data) {
             var lessons = $.parseJSON(data)[0];
-            console.log(data);
+            //console.log(data);
             _.each(lessons, function (lesson) {
                 $(self.el).append('<a id="course-' + json.id + '-lesson-' + lesson['pk'] + '" href="#student/' +
                     json.id + '/lesson/' + lesson['pk'] + '">' + lesson['fields']['name'] + '</a><br>');
@@ -260,12 +260,12 @@ window.StudentLessonView = Backbone.View.extend({
 
     render:function (eventName) {
         var json = this.model.toJSON();
-        console.log(this);
+        //console.log(this);
         var course_id = this.options.course;
         var self = this;
         $('#home-btn').html('<a href="#student/' + course_id + '"><div class="btn btn-default">Class List</div></a>');
         $(self.el).append('<h5>Lessons</h5>');
-        console.log(course_id);
+        //console.log(course_id);
         $('#current-lesson').text("Course: " + course_id + ", Lesson: " + json.name);
         $(self.el).html(self.template(json));
         $('#content').show();

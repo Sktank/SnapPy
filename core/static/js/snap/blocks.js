@@ -1781,8 +1781,8 @@ BlockMorph.prototype.init = function () {
 BlockMorph.prototype.receiver = function () {
     // answer the object to which I apply (whose method I represent)
     var up = this.parent;
-//    console.log('up');
-//    console.log(up);
+//    //console.log('up');
+//    //console.log(up);
     while (!!up) {
         if (up.owner) {
             return up.owner;
@@ -2551,7 +2551,7 @@ BlockMorph.prototype.eraseHoles = function (context) {
 // BlockMorph highlighting
 
 BlockMorph.prototype.addHighlight = function (oldHighlight) {
-    console.log('addHighlight');
+    ////console.log('addHighlight');
     var isHidden = !this.isVisible,
         highlight;
 
@@ -2602,7 +2602,7 @@ BlockMorph.prototype.toggleHighlight = function () {
 };
 
 BlockMorph.prototype.highlight = function (color, blur, border) {
-    console.log('Highlight');
+    ////console.log('Highlight');
     var highlight = new BlockHighlightMorph(),
         fb = this.fullBounds(),
         edge = useBlurredShadows && !MorphicPreferences.isFlat ?
@@ -2848,11 +2848,11 @@ BlockMorph.prototype.fullCopy = function () {
 // BlockMorph events
 
 BlockMorph.prototype.mouseClickLeft = function () {
-    console.log('clicked');
+    ////console.log('clicked');
     var top = this.topBlock(),
         receiver = top.receiver(),
         stage;
-    console.log(receiver);
+    ////console.log(receiver);
     if (top instanceof PrototypeHatBlockMorph) {
         return top.mouseClickLeft();
     }
@@ -3850,7 +3850,7 @@ ReporterBlockMorph.uber = BlockMorph.prototype;
 // ReporterBlockMorph instance creation:
 
 function ReporterBlockMorph(isPredicate) {
-//    console.log('reporter in play');
+//    //console.log('reporter in play');
     this.init(isPredicate);
 }
 
@@ -3863,7 +3863,7 @@ ReporterBlockMorph.prototype.init = function (isPredicate) {
 // ReporterBlockMorph drag & drop:
 
 ReporterBlockMorph.prototype.snap = function (hand) {
-    console.log('snapp');
+    ////console.log('snapp');
     // this is where we want to add the blocks code to the sprites codebase
 
     // passing the hand is optional (for when blocks are dragged & dropped)
@@ -3879,7 +3879,7 @@ ReporterBlockMorph.prototype.snap = function (hand) {
         return null;
     }
 
-    console.log(scripts);
+    ////console.log(scripts);
 
     scripts.clearDropHistory();
     scripts.lastDroppedBlock = this;
@@ -3887,13 +3887,13 @@ ReporterBlockMorph.prototype.snap = function (hand) {
     target = scripts.closestInput(this, hand);
 
     // if closest target is null, a new script has been added
-    console.log('closest target = ' + target);
+    ////console.log('closest target = ' + target);
 
     if (target !== null) {
         // has been added as input to another block
         scripts.lastReplacedInput = target;
         scripts.lastDropTarget = target.parent;
-        console.log('dropped onto block' + target.parent);
+        ////console.log('dropped onto block' + target.parent);
         if (target instanceof MultiArgMorph) {
             scripts.lastPreservedBlocks = target.inputs();
             scripts.lastReplacedInput = target.fullCopy();
@@ -3903,7 +3903,7 @@ ReporterBlockMorph.prototype.snap = function (hand) {
             this.snapSound.play();
         }
     }
-    console.log(scripts);
+    ////console.log(scripts);
     this.startLayout();
     this.fixBlockColor();
     this.endLayout();
@@ -4532,7 +4532,7 @@ ScriptsMorph.prototype.init = function (owner) {
     this.lastNextBlock = null;
 
     ScriptsMorph.uber.init.call(this);
-//    console.log('owner = ' + this.owner);
+//    //console.log('owner = ' + this.owner);
     this.setColor(new Color(70, 70, 70));
 };
 
@@ -4564,7 +4564,7 @@ ScriptsMorph.prototype.step = function () {
     var hand = this.world().hand,
         block;
 
-//    console.log('hand = ' + hand);
+//    //console.log('hand = ' + hand);
 
     if (this.feedbackMorph.parent) {
         this.feedbackMorph.destroy();
@@ -5031,7 +5031,7 @@ ScriptsMorph.prototype.reactToDropOf = function (droppedMorph, hand) {
 };
 
 ScriptsMorph.prototype.reactToKeystroke = function(event) {
-    console.log('reacting');
+    ////console.log('reacting');
     var self = this;
     var waitTime = 10;
     setTimeout(function () {
@@ -10402,7 +10402,7 @@ CodeMorph.prototype.init = function (owner) {
     this.feedbackMorph = new BoxMorph();
 
     CodeMorph.uber.init.call(this);
-    console.log(this);
-    console.log('owner = ' + this.owner);
+    ////console.log(this);
+    ////console.log('owner = ' + this.owner);
     this.setColor(new Color(70, 70, 70));
 };

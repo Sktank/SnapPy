@@ -252,7 +252,7 @@ IDE_Morph.prototype.init = function (isAutoFill) {
 
     // override inherited properites:
     this.color = this.backgroundColor;
-    console.log(this);
+    ////console.log(this);
 };
 
 IDE_Morph.prototype.openIn = function (world) {
@@ -1233,7 +1233,7 @@ IDE_Morph.prototype.createSpriteEditor = function () {
     if (this.spriteEditor) {
         this.spriteEditor.destroy();
     }
-    console.log(this.currentTab);
+    ////console.log(this.currentTab);
     $(this.codeEditorId).css("display", "none");
 
     if (this.currentTab === 'scripts') {
@@ -1243,14 +1243,14 @@ IDE_Morph.prototype.createSpriteEditor = function () {
         scripts.isDraggable = false;
 
 //        if (highlighted) {
-//            console.log('highlighted');
+//            //console.log('highlighted');
 //            scripts.color = this.highlightedColor;
 //        }
 //        else {
 //            scripts.color = this.scriptsEditorColor;
 //        }
 
-//        console.log(this.scriptsEditorColor);
+//        //console.log(this.scriptsEditorColor);
         scripts.color = this.scriptsEditorColor;
         scripts.texture = this.scriptsPaneTexture;
 
@@ -1712,8 +1712,8 @@ IDE_Morph.prototype.setExtent = function (point) {
     }
     ext = point.max(minExt);
 //    ext = new Point(1100, 800);
-    console.log(ext.x);
-    console.log(ext.y);
+    ////console.log(ext.x);
+    ////console.log(ext.y);
     IDE_Morph.uber.setExtent.call(this, ext);
     this.fixLayout();
 };
@@ -2876,7 +2876,7 @@ IDE_Morph.prototype.rawSaveProject = function (name) {
             try {
                 str = this.serializer.serialize(this.stage);
 //                localStorage['-snap-project-' + name] = str;
-                console.log(str);
+                ////console.log(str);
                 dashUtils.saveSnap(name, str, window.lessonId);
 //                location.hash = '#open:' + str;
 //                this.showMessage('Saved!', 1);
@@ -3374,13 +3374,13 @@ IDE_Morph.prototype.toggleAppMode = function (appMode) {
                 s.adjustScrollBars();
             });
     }
-    console.log(this.currentTab);
+    ////console.log(this.currentTab);
     if (this.currentTab === 'code') {
         if (this.isAppMode) {
-            console.log("app mode");
+            ////console.log("app mode");
             $(this.codeEditorId).css("display", "none");
         } else {
-            console.log("not app mode");
+            ////console.log("not app mode");
             $(this.codeEditorId).css("display", "inline");
         }
     }
@@ -4152,8 +4152,8 @@ IDE_Morph.prototype.prompt = function (message, callback, choices, key) {
 IDE_Morph.prototype.highlightItem = function(button, add, item) {
     if (button) {
         var morph = this[item];
-        console.log(morph);
-        console.log(add);
+        ////console.log(morph);
+        ////console.log(add);
         if (add) {
             if (morph.backgroundColor) {
                 this[item + 'Color'] = morph.backgroundColor;
@@ -4171,7 +4171,7 @@ IDE_Morph.prototype.highlightItem = function(button, add, item) {
             morph.backgroundColor = this[item + 'Color'];
 
         }
-        console.log(morph.backgroundColor);
+        ////console.log(morph.backgroundColor);
         morph.setColor(morph.backgroundColor);
         this.changed();
     }
@@ -6480,7 +6480,7 @@ CodeboxMorph.prototype.updateList = function () {
         x = label.right() + (padding * 2);
         y -= padding;
         codeString = self.computeCodeStringWithImports(headBlock);
-        console.log(codeString);
+        ////console.log(codeString);
         self.code_string[index] = codeString;
         button = new PushButtonMorph(
             self, // the IDE is the target
@@ -6636,7 +6636,7 @@ CodeboxMorph.prototype.writeCodeString = function (block, codeBox, x, y) {
         initialX = x,
         coords;
 
-    console.log(block);
+    ////console.log(block);
     if (block.code) {
         block.code.forEach(function(text, index) {
                 // label each code instance by its index
@@ -6650,8 +6650,8 @@ CodeboxMorph.prototype.writeCodeString = function (block, codeBox, x, y) {
                             value = '_';
                         }
                         coords = codeBox.addCode(value, x, y, block);
-                        console.log('inpcords');
-                        console.log(coords);
+                        ////console.log('inpcords');
+                        ////console.log(coords);
                         x = coords.x; y = coords.y;
                     }
                     else if (input instanceof BooleanSlotMorph) {
@@ -6670,17 +6670,17 @@ CodeboxMorph.prototype.writeCodeString = function (block, codeBox, x, y) {
                         }
                     }
                     else if (input instanceof ReporterBlockMorph) {
-//                        console.log(coords);
+//                        //console.log(coords);
                         coords = codeBox.addCode('(', x, y, block);
                         x = coords.x; y = coords.y;
-                        console.log('repcords');
-                        console.log(coords);
+                        ////console.log('repcords');
+                        ////console.log(coords);
                         coords = codeBox.writeCodeString(input, codeBox, x ,y);
-//                        console.log(coords);
+//                        //console.log(coords);
 //                        for (var aa = 1; aa < 100000; aa++) {var abc = 1 }
                         x = coords.x; y = coords.y;
                         coords = codeBox.addCode(')', x, y, block);
-//                        console.log(coords);
+//                        //console.log(coords);
                         x = coords.x; y = coords.y;
                     }
                 }
@@ -6704,9 +6704,9 @@ CodeboxMorph.prototype.writeCodeString = function (block, codeBox, x, y) {
         }
     }
 
-    console.log("finalcords");
+    ////console.log("finalcords");
     var ret = new Point(x,y);
-    console.log(ret);
+    ////console.log(ret);
 
     return ret;
 };

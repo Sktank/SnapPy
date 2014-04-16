@@ -133,7 +133,7 @@ ThreadManager.prototype.toggleProcess = function (block) {
 };
 
 ThreadManager.prototype.startProcess = function (block, isThreadSafe) {
-    console.log(block);
+    //console.log(block);
     var active = this.findProcess(block),
         top = block.topBlock(),
         newProc;
@@ -147,7 +147,7 @@ ThreadManager.prototype.startProcess = function (block, isThreadSafe) {
     top.addHighlight();
     newProc = new Process(block.topBlock());
     this.processes.push(newProc);
-    console.log(newProc);
+    //console.log(newProc);
     return newProc;
 };
 
@@ -308,9 +308,9 @@ Process.prototype.isCatchingErrors = true;
 
 //every time a code is run, (clicked on for the first time) this function is called
 function Process(topBlock) {
-//    console.log('processing');
-//    console.log(topBlock);
-//    console.log(topBlock.inputs());
+//    //console.log('processing');
+//    //console.log(topBlock);
+//    //console.log(topBlock.inputs());
     // top block is a block morph
     this.topBlock = topBlock || null;
 
@@ -332,7 +332,7 @@ function Process(topBlock) {
         this.homeContext.receiver = topBlock.receiver();
         this.homeContext.variables.parentFrame =
             this.homeContext.receiver.variables;
-//        console.log(topBlock.blockSequence());
+//        //console.log(topBlock.blockSequence());
         this.context = new Context(
             null,
             topBlock.blockSequence(),
@@ -425,7 +425,7 @@ Process.prototype.pauseStep = function () {
 
 Process.prototype.evaluateContext = function () {
     var exp = this.context.expression;
-    console.log('eval: ' + exp);
+    //console.log('eval: ' + exp);
 
     this.frameCount += 1;
     if (exp instanceof Array) {
@@ -459,8 +459,8 @@ Process.prototype.evaluateBlock = function (block, argCount) {
     var rcvr = this.context.receiver || this.topBlock.receiver(),
         inputs = this.context.inputs;
 
-    console.log(rcvr);
-    console.log(inputs);
+    //console.log(rcvr);
+    //console.log(inputs);
 
     if (argCount > inputs.length) {
         this.evaluateNextInput(block);
@@ -2061,7 +2061,7 @@ Process.prototype.log = function (data) {
     if (this.homeContext.receiver) {
         world = this.homeContext.receiver.world();
         if (world.isDevMode) {
-            console.log('Snap! ' + data.asArray());
+            //console.log('Snap! ' + data.asArray());
         }
     }
 };
@@ -2648,7 +2648,7 @@ function Context(
     this.isImplicitLambda = false; // marks the end of a C-shaped slot
     this.isCustomBlock = false; // marks the end of a custom block's stack
     this.emptySlots = 0; // used for block reification
-//    console.log(this);
+//    //console.log(this);
 }
 
 Context.prototype.toString = function () {

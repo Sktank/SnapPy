@@ -28,8 +28,8 @@ window.LessonListView = Backbone.View.extend({
     },
 
     render:function (eventName) {
-        console.log('rendering list');
-        console.log(this.model.models);
+//        //console.log('rendering list');
+//        //console.log(this.model.models);
         // render the lesson view headers
         $(".list-group-item").removeClass("active");
         $("#lesson-list-tab").addClass("active");

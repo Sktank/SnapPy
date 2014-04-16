@@ -132,11 +132,11 @@ var AppRouter = Backbone.Router.extend({
         var remake = dashUtils.checkCourseList(id);
         $('#dash-main').removeClass("hacky-hide");
         var self = this;
-        console.log("YO");
+        //console.log("YO");
         if (this.teachingList && !remake) {
-            console.log("has the teaching list");
+            //console.log("has the teaching list");
             this.teacherCourse = this.teachingList.get(id);
-            console.log(this.teacherCourse);
+            //console.log(this.teacherCourse);
             this.teacherCourseView = new TeacherCourseView({model:this.teacherCourse});
             $('.container-details').remove();
             $('.active-container').removeClass("active-container");
@@ -144,7 +144,7 @@ var AppRouter = Backbone.Router.extend({
 
         }
         else {
-            console.log("does not have the teaching list");
+            //console.log("does not have the teaching list");
             this.teacherCourseRequestedId = id;
             this.teacherList();
         }
@@ -163,13 +163,13 @@ var AppRouter = Backbone.Router.extend({
 
         this.teacherLessonList.fetch({
             success: function(collection){
-                console.log("teacher lesson details" + id + "," + lid);
+                //console.log("teacher lesson details" + id + "," + lid);
                 self.teacherLesson = self.teacherLessonList.get(lid);
                 self.teacherLessonView = new TeacherLessonView({model:self.teacherLesson, course_id:id});
                 $('#dash-main').html(self.teacherLessonView.render().el);
 
                 if (self.teacherStudentWorkRequestId) {
-                    console.log("back to student work");
+                    //console.log("back to student work");
                     self.teacherLessonStudentWork(id, lid, self.teacherStudentWorkRequestId)
                 }
             }
@@ -186,7 +186,7 @@ var AppRouter = Backbone.Router.extend({
             if (self.teacherStudentWorkRequestId) {
                 delete self.teacherStudentWorkRequestId;
             }
-            console.log("now I have a lesson");
+            //console.log("now I have a lesson");
             $(".student-tab").removeClass("active");
             $("#student-tab-" + sid).addClass("active");
 
@@ -194,7 +194,7 @@ var AppRouter = Backbone.Router.extend({
             $("#dash-main").html(self.studentWork.render().el);
         }
         else {
-            console.log("no lesson");
+            //console.log("no lesson");
             self.teacherStudentWorkRequestId = sid;
             self.teacherLessonDetails(id, lid);
         }
@@ -256,12 +256,12 @@ var AppRouter = Backbone.Router.extend({
         this.studentLessonList = new CourseLessonCollection();
         $(".main-tab").removeClass("active");
         $("#student-list-tab").addClass("active");
-        console.log("student lesson details" + id + "," + lid);
+        //console.log("student lesson details" + id + "," + lid);
         this.studentLessonList.fetch({
             success: function(collection){
-                console.log("student lesson details" + id + "," + lid);
+                //console.log("student lesson details" + id + "," + lid);
                 self.studentLesson = self.studentLessonList.get(lid);
-                console.log(self.studentLessonList);
+                //console.log(self.studentLessonList);
                 self.studentLessonView = new StudentLessonView({model:self.studentLesson, course:id});
                 $('#content').fadeOut(500).promise().done(function() {
                     $('#content').html(self.studentLessonView.render().el);

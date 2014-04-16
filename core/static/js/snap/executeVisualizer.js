@@ -15,10 +15,10 @@ window.onmessage = function(e) {
         command,
         args;
 
-    console.log('snap: ' + data);
+    ////console.log('snap: ' + data);
     data = data.replace(/\s/g, '');
     command_list = data.split(':');
-    console.log(command_list);
+    ////console.log(command_list);
     command = command_list[0];
     args = command_list;
     args.splice(0,1);
@@ -27,7 +27,7 @@ window.onmessage = function(e) {
     function executeVisualizerCode(message, args) {
         block = SpriteMorph.prototype.blockForSelector(message, true);
         block.parent = window.ide.currentSprite.scripts;
-        console.log(block.inputs());
+        ////console.log(block.inputs());
         for (var i = 0; i < args.length; i++) {
             block.inputs()[i].setContents(args[i]);
         }

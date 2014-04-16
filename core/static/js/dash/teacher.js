@@ -37,8 +37,8 @@ window.TeacherCourseListView = Backbone.View.extend({
     },
 
     render:function (eventName) {
-        console.log('rendering list');
-        console.log(this.model.models);
+        //console.log('rendering list');
+        //console.log(this.model.models);
         // render the lesson view headers
         $(".list-group-item").removeClass("active");
         $("#teacher-list-tab").addClass("active");
@@ -129,7 +129,7 @@ window.TeacherCourseView = Backbone.View.extend({
     template:_.template($('#teacher-course-details').html()),
 
     render:function (eventName) {
-        console.log("course view");
+        //console.log("course view");
         var json = this.model.toJSON();
         var promise = dashUtils.getLessons(json.id);
         var self = this;
@@ -142,7 +142,7 @@ window.TeacherCourseView = Backbone.View.extend({
             var lessons = $.parseJSON(data);
             var currentLessons = lessons[0];
             var separateLessons = lessons[1];
-            console.log(lessons);
+            //console.log(lessons);
 
 
     //TODO: Current Lessons and Separate Lessons should really call the same function because so much duplicate code!
@@ -159,7 +159,7 @@ window.TeacherCourseView = Backbone.View.extend({
                         '</p></a>');
                     $('#lessonManagerModal-' + json.id).on("click", '#current-lesson-' + json.id + "-" + lesson['pk'],
                         function() {
-                        console.log(lesson['pk']);
+                        //console.log(lesson['pk']);
                         if ($('#current-lesson-' + json.id + "-" + lesson['pk']).hasClass('active')) {
                             var i = removeLessonQueue.indexOf(lesson['pk']);
                             if(i != -1) {
@@ -186,7 +186,7 @@ window.TeacherCourseView = Backbone.View.extend({
                         '</p></a>');
                     $('#lessonManagerModal-' + json.id).on("click", '#seperate-lesson-' + json.id + "-" + lesson['pk'],
                         function() {
-                        console.log(lesson['pk']);
+                        //console.log(lesson['pk']);
                         if ($('#seperate-lesson-' + json.id + "-" + lesson['pk']).hasClass('active')) {
                             var i = addLessonQueue.indexOf(lesson['pk']);
                             if(i != -1) {
@@ -246,9 +246,9 @@ window.TeacherLessonView = Backbone.View.extend({
         var self = this;
         var router = window.app;
         var course_id = self.options.course_id;
-        console.log(json);
+        //console.log(json);
 
-        console.log(this.model);
+        //console.log(this.model);
         var promise = dashUtils.getCourseAndStudents(course_id);
 
         promise.success(function (data) {
@@ -257,7 +257,7 @@ window.TeacherLessonView = Backbone.View.extend({
             var courseName = course[0]['fields']['name'];
             var courseId = course[0]['pk'];
             var students = resp[1];
-            console.log(students);
+            //console.log(students);
 
             $('#dash-main').removeClass("hacky-hide");
             $('#home-btn').html('<a href="#teacher/' + courseId + '"><div class="btn btn-default">Class List</div></a>');

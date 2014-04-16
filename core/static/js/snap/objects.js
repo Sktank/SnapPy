@@ -636,7 +636,7 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'control',
             spec: 'repeat %n %c',
             defaults: [10],
-            code: ['for _ in range(0,', '):']
+            code: ['for _ in range(', '):']
         },
         doUntil: {
             type: 'command',
