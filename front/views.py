@@ -124,7 +124,8 @@ sprite around to create all sorts of cool designs.\
 <li><b id='highlight-palette'>Palette:</b> The palette is located on the left side. It is filled with 'blocks' that allow you to manipulate \
 the sprite in our stage.  The topmost block should say 'move 10 steps.' If this is not the case, you probably \
 changed your block category. By default you start out in the motion category. You can access different block categories by clicking on the category \
-buttons, located directly above the list of blocks. The five categories are motion, control, operators, pen, and variables. Try clicking on a different category to see different types of\
+buttons, located directly above the list of blocks. The five categories are motion, control, operators, pen, and variables. Try clicking \
+on a different category to see different types of\
  blocks. When you are done, go back to the motion category.\
 </li><br>\
 <li><b id='highlight-blocks'>Blocks:</b> Blocks allow you to move the sprite around and create things in the stage. Try clicking \
@@ -145,7 +146,8 @@ If ever your sprite goes off the stage, you can always bring it back to the midd
    between clicking the move forward and turn left blocks.\
 </li><br>\
 <li><b id='highlight-save'>Saving:</b> To save your progress on a particular lesson, click the button with the paper icon in the top\
- left and  select save. This will open a menu for you to enter a name for your creation and finish saving. Your last save will load automatically when you come back to this lesson.\
+ left and  select save. This will open a menu for you to enter a name for your creation and finish saving. Your last save will load automatically \
+ when you come back to this lesson.\
 </li>\
 </ul>\
 <hr>\
@@ -179,7 +181,8 @@ $('#highlight-save').mouseenter(function() {ide.highlightItem(this, true, 'saveB
 .mouseleave(function() {ide.highlightItem(this, false, 'saveBtn')});\
 \
 })</script>"
-desc1 = 'An introduction to the basic features of snappy and how to use them. Key terms: stage, sprite, palette, block, scripts editor, script, saving.'
+desc1 = 'An introduction to the basic features of snappy and how to use them. Key terms: stage, sprite, palette, block, \
+scripts editor, script, saving.'
 
 
 guide2 = "<h3>Lesson 2</h3><p>Welcome to the second Snappy lesson. In this lesson we are going to explore\
@@ -219,7 +222,7 @@ No worries! You can always clear the screen with the clear block.\
 <br>\
 <hr>\
 <h3>Operators</h3>\
-<p>Before we get too carried away making awesome designs, lets take a second and explore the power of \
+<p>Before we get too carried away making awesome designs, let's take a second and explore the power of \
 operators. All of the operator blocks can be found in the Operators category, which is light green. \
 Operators allow you to take advantage of math when creating designs. They allow you to do basic things \
 such as addition and subtraction, but also give you more complex capabilities such as generating random numbers.\
@@ -236,11 +239,11 @@ another block to see what happens.  For example, you could try putting the [pick
 <h3>Putting It All Together</h3>\
 <h5>Drawing A Triangle</h5>\
 <p>\
-Now that we know how to draw lines and we know what operators are, lets combine these two skills to make \
+Now that we know how to draw lines and we know what operators are, let's combine these two skills to make \
 scripts that draw some cool shapes.\
 </p><br>\
 <p>\
-Lets start out by drawing a triangle. To do this, first make sure that your screen is clear and your \
+Let's start out by drawing a triangle. To do this, first make sure that your screen is clear and your \
 sprite is centered in the middle. Next, attach a move forward block to the bottom of a pen down block \
 and then attach a turn block to the bottom of that.  After you do this, place a division operator inside \
 of the turn block. Since a triangle is comprised of 3 angles that add up to 360 degrees, each angle should \
@@ -302,7 +305,7 @@ times. The three types of loops that snap provides are:\
 conditions usually involve variables, we will look at this type of loop more in the future.\
 </ul>\
 <br>\
-Now, lets make a circle with a loop. To start, we need to recreate the code we used to make shapes in the \
+Now, let's make a circle with a loop. To start, we need to recreate the code we used to make shapes in the \
 previous lesson. To do this you will need a move block, a turn block, and a division operator block. Once\
  you have done this, drag the repeat 10 block into your scripts editor and place your previous code inside \
  of it. Then, change the loop's parameter, 10, to the value of your division block's divisor. Clicking once \
@@ -323,15 +326,18 @@ sure that your operator divisor was equal to the number of loops that you were d
 <p>\
 To use variables in snap, go to the Variables category. Once there, click on the block that says, 'Make a \
 variable.' This allows you to create your own variable. You are allowed to name it whatever you want, \
-however keep in mind that the best names are ones that are compact, descriptive, and contain no spaces. For example in this project, a good variable name might be 'sides' or 'steps'. Once \
+however keep in mind that the best names are ones that are compact, descriptive, and contain no spaces. \
+For example in this project, a good variable name might be 'sides' or 'steps'. Once \
 you have created a variable, notice that a new block representing your variable appears in your palette. You \
 can drag this block and drop it in any parameter spot on other blocks. To use our variable, we first need to set\
- its value. This can be done with the set block, located directly below your variable's block. To use the set block, pick the variable you want to set from the dropdown, change the \
-input parameter to the value you want to set your variable to, and click the block. Notice that you can see the value of your variables on the stage.\
+ its value. This can be done with the set block, located directly below your variable's block. To use the set block, \
+ pick the variable you want to set from the dropdown, change the \
+input parameter to the value you want to set your variable to, and click the block. Notice that you can see the value \
+of your variables on the stage.\
 </p>\
 <br>\
 <p>\
-To see how we might actually use variables, lets go back to our shape drawing exercise. Rather than \
+To see how we might actually use variables, let's go back to our shape drawing exercise. Rather than \
 entering a value for the divisor and repeat value, drop your variable in those parameter slots. Then\
 , before everything, add a set block that sets your variable to a number. If you click this new script \
 you will notice that it will draw a shape with as many sides as you set your variable to be. Changing the \
@@ -382,7 +388,7 @@ guide4 = "<h3>Introduction to Python</h3><p>\
 In this lesson we will begin learning the python programming language! Why do this? \
 Well, the reason is that while snap is awesome for making designs, it can be overly \
 bulky and tedious for many problems. Furthermore, snap blocks can only be used inside \
-this application, where as a textual programming language like python was used to build \
+this application, whereas a textual programming language like python was used to build \
 this application. In fact, many popular websites such as Youtube and Reddit are built with \
 python. Luckily for us, many of the concepts we used to draw shapes, such as scripts, parameters, " \
          "variables and loops have direct counterparts in python.</p><br><hr><p><h4>The Code View</h4>\
@@ -395,8 +401,9 @@ As you probably noticed, when you were snapping blocks together in the scripts E
          " python code corresponds to, simply mouse over the python code and the corresponding block will get " \
          "highlighted.</p><br><hr><h4>Executing Python</h4>\
 Snappy also gives you the ability to execute your python code directly. To see how this works, try dragging out a" \
-         " [move 10 steps] block into the scripts editor. Find the corresponding python code that is generated and" \
-         " click the edit button that is next to it. This will bring up the Code Editor. The Code Editor allows you " \
+         " [move 10 steps] block into the scripts editor. Under 'Generated Python Code,' a corresponding line of code" \
+         " reading, 'turtle.forward(10)' should have appeared." \
+         " Click the edit button that is next to this and yo will bring up the Code Editor. The Code Editor allows you " \
          "to edit your python scripts. Only moving 10 steps forward is hardly noticeable, so try changing the 10 to " \
          "100. </p><br>\
 <p>Before executing your script, notice that the first line says, 'import turtle.' This line of code allows " \
@@ -404,7 +411,7 @@ Snappy also gives you the ability to execute your python code directly. To see h
          " any given time you will only be using a few of them, it would be wasteful to include everything by" \
          " default.  Therefore, libraries are used to allow a user to include only what they need for a project." \
          " The turtle library allows us to manipulate a turtle, another name for our sprite. Libraries allow us " \
-         "to use, functions. Functions are similar in many respects to snap blocks.  You pass functions parameters " \
+         "to use functions. Functions are similar in many respects to snap blocks.  You pass functions parameters " \
          "and they either return something (like an operator) or they do something (like a movement block). Forward " \
          "is an example of a function in the python turtle library that does something. To run functions that are" \
          " part of a library, the syntax is:<br><br><b>library.function(parameters)</b><br><br>\
@@ -430,7 +437,7 @@ In this lesson we will explore how python handles some more of snap's blocks. We
 <h4>Drawing a Square with Variables</h4>\
 If you have a piece of paper in front of you, try drawing a square spiral on it. You will notice that it is very" \
          " similar to drawing a square, however after every two sides drawn, the side length increases. Therefore," \
-         " the first part of drawing a square spiral is drying the sides of a square where the side length is based" \
+         " the first part of drawing a square spiral is drawing the sides of a square where the side length is based" \
          " on a variable. To start off, make a variable and set this variable to 1. Then, put your pen down, move " \
          "a number of steps based on your variable, and turn 360 / 4 = 90 degrees. When moving forward, I recommend" \
          " using the multiplication operator to move forward 10 times your variable. Once you have created this, " \
@@ -441,12 +448,12 @@ Now lets take a look at the python code generated for this script. In python, th
          "value is by using the = sign. For example, to set a variable named, myVar, to 5, I would write: " \
          "myVar = 5. When doing this, a variable must always be on the left side of the equals sign. The = " \
          "sign then sets the variable on the left side to the value of whatever is on the right side. " \
-         "Alternatively, as we will see later, if we want to check if two values are equal, we use the == operator.\
+         "Don't confuse this with ==, which as we'll see later, checks if two values are equal.\
 </p><br>\
 <p>After setting the value of our variable, we put our pen down. This is done by calling the pendown function from " \
-         "the turtle library. Functions are noticeable in python because they always have parenthesis after them. " \
-         "These parenthesis are where you would put a function's parameters. However, because the pendown function" \
-         " does not take any parameters, nothing will be inside of its parameters. </p><br><p>\
+         "the turtle library. Functions are noticeable in python because they always have parentheses after them. " \
+         "These parentheses are where you would put a function's parameters. However, because the pendown function" \
+         " does not take any parameters, nothing will be inside of its parentheses. </p><br><p>\
 The next command is the turtle.forward function that moves our sprite forward. The parameter here is how far forward " \
          "we want to go. When drawing a side, we want to move forward the value of our parameter times 10. To do this " \
          "in python, just pass as a parameter your variable multiplied by the number 10. To reference a variable, " \
@@ -467,8 +474,8 @@ guide6 = "<h3>Drawing a Complete Spiral</h3>\
 Welcome to the last snappy lesson. In this lesson we will finish making our spiral in python. " \
          "In the previous lesson we saw how code to draw a square could be used to draw a spiral. However, " \
          "we definitely wouldn't want to draw a big spiral with this code because it would require manual labor to draw every side. " \
-         "Therefore, like we did previously when drawing polygons, lets automate this process with loops. Before we begin," \
-         "recreate your code from last lesson here. As a refresher, it should use a variable to draw one side of a square and then turn 90" \
+         "Therefore, like we did previously when drawing polygons, let's automate this process with loops. Before we begin, " \
+         "recreate your code from last lesson here. As a refresher, it should use a variable to draw one side of a square and then turn 90 " \
          "degrees.</p><br>\
 <p>\
 The first thing to consider is that we want to draw two sides of the same length before incrementing the length. " \
@@ -476,20 +483,13 @@ The first thing to consider is that we want to draw two sides of the same length
          "want to repeat our movements twice, do not put the set variable or pendown blocks inside this loop. " \
          "Clicking on this new script should draw two sides of a square.\
 </p><br><p>\
-Lets look at the python code for this script. The only new piece is the loop which in python is represented " \
-         "by, 'for _ in range(0,2):'. When actually running this, the _ should be replaced by the name of a " \
-         "new variable. When the loop is run, it creates a variable with the name you put in place of the _ " \
-         "and sets this variable to the first range parameter (i.e. 0). Then, after every iteration of the " \
-         "loop, it increments this variable by 1, and runs the loop again if this variable is less than the second " \
-         "parameter given for range (i.e. 2).</p><br><p>\
-In this specific loop, the _ variable will be set to 0 first. Since 0 is less than 2, we will run everything in " \
-         "the loop. Then the variable will be set to 1. Since 1 is less than 2, everything in the loop will be " \
-         "run again. The variable will then be set to 2. Since 2 is not less than 2, the loop will not be run " \
-         "again.</p><br><p>\
-<p>The last question is how to specify what is inside of a loop in python. In snap, things inside a loop are " \
-         "contained within its 'C'. In python, this is done using indentation. To define code as part of a " \
+Let's look at the python code for this script. The only new piece is the loop which in python is represented " \
+         "by, 'for _ in range(2):'. When actually running this in python, the _ should be replaced by the name of a " \
+         "new variable. For 'for _ in range(k)', the variable _ goes from 0, 1, ..., k-1. </p><br><p>\
+<p>The last question is how to specify what is inside of a loop in python. In snap, things inside a loop block are " \
+         "contained within the block's 'C'. In python, this is done using indentation. To define code as part of a " \
          "loop, we indent it after defining the loop. Typically we use one tab, or four spaces, to indent.</p><br><p>\
-If you are confused about how loop variables are, try running our current python. To do this, click the edit " \
+If you are confused about how loop variables work, try running our current python script. To do this, click the edit " \
          "button in the code view, replace the _ with a variable name in the code editor, and start the python " \
          "visualizer. This time, notice that on the right side of the visualizer, the current state of your " \
          "variables is shown as you step through your python code. Using this, watch how your loop variable " \
@@ -503,7 +503,7 @@ The last thing to do is to increment our side length variable by 1 after drawing
          "length. This incrementation of our variable should be done outside our inner loop, but inside " \
          "our outer conditional loop. Clicking on this script should automate the process of drawing a " \
          "spiral!</p><br><p>\
-Now, before we finish, lets see how this works in python. To use a conditional loop in python, we use " \
+Now, before we finish, let's see how this works in python. To use a conditional loop in python, we use " \
          "the syntax 'while condition:'. This repeats the loop as long as the condition is still true. " \
          "If we want to repeat the loop only while the condition is false, as in this case, we write " \
          "'while not condition:'. The condition that we are stopping on is when our variable equals 10. " \
