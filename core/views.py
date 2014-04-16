@@ -1,4 +1,3 @@
-from StdSuites.AppleScript_Suite import record
 from django.contrib.auth import logout
 import json
 from django.core import serializers
@@ -32,12 +31,6 @@ def web_exec_py2(request):
     ret = proc.stdout.read()
     return HttpResponse(ret, content_type="text/plain")
 
-def execute(command, the_stdin):
-    proc = Popen(command.split(" "), stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    result = proc.communicate(input = the_stdin)
-    return record(stdout = result[0].decode("UTF-8"),
-        stderr = result[1].decode("UTF-8"),
-        returncode = proc.returncode)
 
 
 #===========================================================================================
