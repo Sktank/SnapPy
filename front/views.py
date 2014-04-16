@@ -106,11 +106,11 @@ def createLessons(webUser):
 
 
 
-guide1 = "<h3>Welcome!</h3><p>Hello there and welcome to the first Snappy Lesson! Snappy is a graphical environment that will allow you " \
+guide1 = "<h3>Welcome!</h3><p>Hello there and welcome to the first Snappy lesson! Snappy is a graphical environment that will allow you " \
          "to explore the fundamentals of programming while building awesome graphical creations. \
 </p>\
 <p>\
-Lets start off with a quick introduction to some of the different tools available to you in the snappy programming\
+Let's start off with a quick introduction to some of the different tools available to you in the snappy programming\
  environment. In the following bullet points, mouse over the titles to highlight the location of each corresponding section.\
 </p>\
 <br>\
@@ -122,9 +122,9 @@ is the place where our drawings are going to go.\
 sprite around to create all sorts of cool designs.\
 </li><br>\
 <li><b id='highlight-palette'>Palette:</b> The palette is located on the left side. It is filled with 'blocks' that allow you to manipulate \
-the sprite in our stage.  The top most block should say 'move 10 steps.' If this is not the case, you probably \
-clicked on a block category other than motion. You can access different block categories by clicking on the category \
-buttons, located directly above the list of blocks. Try clicking on a different category to see different types of\
+the sprite in our stage.  The topmost block should say 'move 10 steps.' If this is not the case, you probably \
+changed your block category. By default you start out in the motion category. You can access different block categories by clicking on the category \
+buttons, located directly above the list of blocks. The five categories are motion, control, operators, pen, and variables. Try clicking on a different category to see different types of\
  blocks. When you are done, go back to the motion category.\
 </li><br>\
 <li><b id='highlight-blocks'>Blocks:</b> Blocks allow you to move the sprite around and create things in the stage. Try clicking \
@@ -145,7 +145,7 @@ If ever your sprite goes off the stage, you can always bring it back to the midd
    between clicking the move forward and turn left blocks.\
 </li><br>\
 <li><b id='highlight-save'>Saving:</b> To save your progress on a particular lesson, click the button with the paper icon in the top\
- left and  select save. This will open a menu for you to enter a name for your creation and finish saving.\
+ left and  select save. This will open a menu for you to enter a name for your creation and finish saving. Your last save will load automatically when you come back to this lesson.\
 </li>\
 </ul>\
 <hr>\
@@ -182,7 +182,7 @@ $('#highlight-save').mouseenter(function() {ide.highlightItem(this, true, 'saveB
 desc1 = 'An introduction to the basic features of snappy and how to use them. Key terms: stage, sprite, palette, block, scripts editor, script, saving.'
 
 
-guide2 = "<h3>Lesson 2</h3><p>Welcome to the second Snappy Lesson. In this lesson we are going to explore\
+guide2 = "<h3>Lesson 2</h3><p>Welcome to the second Snappy lesson. In this lesson we are going to explore\
  different kinds of blocks and see how they can be used to create shapes like triangles, circles, and squares.\
 </p>\
 <br>\
@@ -191,7 +191,7 @@ guide2 = "<h3>Lesson 2</h3><p>Welcome to the second Snappy Lesson. In this lesso
 <h5>Movement</h5>\
 <p>\
 The first lesson should have gotten you started with the basics of moving your sprite around. Sprite movement\
- important to drawing because we use our sprite to create lines! By this point, you should be familiar moving\
+ is important to drawing because we use our sprite to create lines! By this point, you should be familiar moving\
   your sprite forward, turning it left or right, and resetting it back to the middle. Additionally, if you ever \
   want to place your sprite at a specific spot, you can drag it anywhere in the stage with your mouse.\
 </p>\
@@ -213,7 +213,7 @@ As you probably noticed, when you move your sprite around, nothing is being draw
 </li>\
 <br>\
 </ul>\
-Try putting your pen down and then moving forward. Pretty cool eh? Don't like your first creation? \
+Try putting your pen down and then moving forward several times. Pretty cool eh? Don't like your first creation? \
 No worries! You can always clear the screen with the clear block.\
 </p>\
 <br>\
@@ -230,7 +230,7 @@ Notice that if you click on an operator, it will simply report its value and not
 Furthermore, notice that operators cannot be attached to the bottom or top of another block. Instead, they can \
 only be placed inside the editable part of another block.  Take a moment and try putting an operator inside of \
 another block to see what happens.  For example, you could try putting the [pick random 1 to 10] block inside a \
-[move forward] block. This should move your sprite forward by a random number of steps between 1 and 10.\
+[move () steps] block. This should move your sprite forward by a random number of steps between 1 and 10.\
 <br>\
 <hr>\
 <h3>Putting It All Together</h3>\
@@ -290,14 +290,14 @@ Obviously we don't want to sit and click our block hundreds of times, so we need
 </p>\
 <br>\
 <p>\
-In Snap, you can find loop blocks in the control category. Loop blocks are shaped like a 'C' and allow you to put\
+In Snap, you can find loop blocks in the Control category. Loop blocks are shaped like a 'C' and allow you to put\
 things inside of them. Based on the type of loop, the blocks inside of the loop will be run a certain amount of\
 times. The three types of loops that snap provides are:\
 <br>\
 <ul>\
-<li><b>Forever:</b> Continues to execute the code inside of the loop block forever until you tell it to stop.\
+<li><b>Forever:</b> Continues to execute the code inside of the loop block forever. To tell it to stop, click on that block again.\
 <li><b>Repeat 10:</b> Executes the code inside of the loop block 10 times. Note that 10 is only the default\
-value and can be changed to any number of times.\
+ value and can be changed to any number of times.\
 <li><b>Repeat until:</b> Executes the code inside of the loop block until a condition is met. As these \
 conditions usually involve variables, we will look at this type of loop more in the future.\
 </ul>\
@@ -321,12 +321,13 @@ sure that your operator divisor was equal to the number of loops that you were d
  to be variables, and then set value of those variables. </p>\
 <br>\
 <p>\
-To use variables in snap, go to the variables category. Once there, click on the block that says, 'Make a \
-variable.' This allows you to create your own  variable. You are allowed to name is whatever you want, \
-however keep in mind that the best names are ones that are compact, descriptive, and contain no spaces. Once \
+To use variables in snap, go to the Variables category. Once there, click on the block that says, 'Make a \
+variable.' This allows you to create your own variable. You are allowed to name it whatever you want, \
+however keep in mind that the best names are ones that are compact, descriptive, and contain no spaces. For example in this project, a good variable name might be 'sides' or 'steps'. Once \
 you have created a variable, notice that a new block representing your variable appears in your palette. You \
 can drag this block and drop it in any parameter spot on other blocks. To use our variable, we first need to set\
- its value. This can be done with the set block, located directly below your variable's block.\
+ its value. This can be done with the set block, located directly below your variable's block. To use the set block, pick the variable you want to set from the dropdown, change the \
+input parameter to the value you want to set your variable to, and click the block. Notice that you can see the value of your variables on the stage.\
 </p>\
 <br>\
 <p>\
